@@ -5,6 +5,6 @@ namespace _Project.Scripts.Features.Basket.BasketSpawning
 {
     public interface IBasketSpawner
     {
-        public void SpawnBasket(Vector2Int size, Margin margin);
+        public void SpawnBasket(GameObject prefab, Vector2Int size, Margin margin);
     }
 }

@@ -5,9 +5,9 @@ namespace _Project.Scripts.Features.Basket.BasketSpawning
 {
     public class BasketSpawner: IBasketSpawner
     {
-        public void SpawnBasket(Vector2Int size, Margin margin)
+        public void SpawnBasket(GameObject prefab, Vector2Int size, Margin margin)
         {
-            var basket = Object.Instantiate(Resources.Load<GameObject>("Basket"), Vector3.zero, Quaternion.identity);
+            var basket = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
             basket.name = "Basket";
             
             var basketController = basket.AddComponent<BasketController>();
