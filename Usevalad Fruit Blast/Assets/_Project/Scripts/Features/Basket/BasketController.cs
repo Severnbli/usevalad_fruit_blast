@@ -26,11 +26,6 @@ namespace _Project.Scripts.Features.Basket
             UpdatePosition();
         }
 
-        public void FixedUpdate()
-        {
-            UpdateBasket();
-        }
-
         public void UpdatePosition()
         {
             float edgeY = _targetCamera.transform.position.y

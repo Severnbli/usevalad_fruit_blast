@@ -166,12 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f8286abcb894c03909c75043473ee48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 4, y: 6}
-  margin:
-    _top: 1.5
-    _left: 0.2
-    _right: 0.2
-    _bottom: 1
+  prefab: {fileID: 4825581960821441835, guid: ae7a861ded38d334db79f6a011db7974, type: 3}
+  config: {fileID: 11400000, guid: 8c9fb530397166f4f9b2db6d3f86a215, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
