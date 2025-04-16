@@ -5,7 +5,7 @@ namespace _Project.Scripts.System
 {
     public class System: MonoBehaviour
     {
-        [SerializeField] private MonoBehaviour[] installers;
+        [SerializeField] private MonoBehaviour[] _installers;
 
         public void Start()
         {
@@ -14,7 +14,7 @@ namespace _Project.Scripts.System
 
         private void Setup()
         {
-            foreach (var installer in installers)
+            foreach (var installer in _installers)
             {
                 if (installer is ISystemInstaller systemInstaller)
                 {

@@ -6,7 +6,10 @@ namespace _Project.Configs.Basket
     [CreateAssetMenu(fileName = "BasketConfig", menuName = "Configs/Basket Config")]
     public class BasketConfig: ScriptableObject
     {
-        public Vector2Int size;
-        public Margin margin;
+        [SerializeField] private Vector2Int _size;
+        [SerializeField] private Margin _margin;
+        
+        public Vector2Int Size => _size;
+        public Margin Margin => _margin;
     }
 }
