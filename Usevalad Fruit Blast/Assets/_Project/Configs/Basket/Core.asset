@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b33d2df9bfd4f16be33d7e813708d82, type: 3}
   m_Name: Core
   m_EditorClassIdentifier: 
-  size: {x: 0, y: 0}
-  margin:
-    _top: 0
-    _left: 0
-    _right: 0
-    _bottom: 0
+  _size: {x: 4, y: 6}
+  _margin:
+    _top: 1.5
+    _left: 0.5
+    _right: 0.5
+    _bottom: 1
