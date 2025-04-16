@@ -7,7 +7,7 @@ namespace _Project.Scripts.System
     {
         [SerializeField] private MonoBehaviour[] _installers;
 
-        public void Start()
+        public void Awake()
         {
             Setup();
         }
