@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using _Project.Scripts.Features.Physics.Objects;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics
@@ -12,7 +12,7 @@ namespace _Project.Scripts.Features.Physics
         public void Update()
         {
             ApplyForces();
-            // ResolveCollisions();
+            ResolveCollisions();
             MoveEntities();
         }
 
@@ -25,9 +25,12 @@ namespace _Project.Scripts.Features.Physics
                     continue;
                 }
                 
-                var totalForces = Vector3.zero;
-                
-                totalForces.y -= entity.GravityFactor * BaseGravity;
+                var totalForces = Vector2.zero;
+
+                if (entity.UseGravity)
+                {
+                    totalForces.y -= entity.GravityFactor * BaseGravity * Time.deltaTime;
+                }
 
                 entity.Velocity += totalForces;
             }
@@ -35,14 +38,25 @@ namespace _Project.Scripts.Features.Physics
 
         private void ResolveCollisions()
         {
-            // TODO: physics objects collisions
-            throw new NotImplementedException();
+            for (int i = 0; i < Entities.Count - 1; i++)
+            {
+                for (int j = i + 1; j < Entities.Count; j++)
+                {
+                    Entities[i].ResolveCollision(Entities[j]);
+                }
+            }
         }
 
         private void MoveEntities()
         {
             foreach (var entity in Entities)
             {
+                if (entity.IsStatic)
+                {
+                    entity.Velocity = Vector3.zero;
+                    continue;
+                }
+                
                 entity.transform.Translate(entity.Velocity * Time.deltaTime);
             }
         }

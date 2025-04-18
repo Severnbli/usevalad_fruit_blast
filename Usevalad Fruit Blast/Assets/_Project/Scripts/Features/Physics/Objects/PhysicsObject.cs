@@ -1,7 +1,8 @@
-﻿using _Project.Scripts.Repositories;
+﻿using _Project.Scripts.Features.Physics.Services.Collisions;
+using _Project.Scripts.Repositories;
 using UnityEngine;
 
-namespace _Project.Scripts.Features.Physics
+namespace _Project.Scripts.Features.Physics.Objects
 {
     public abstract class PhysicsObject: MonoBehaviour
     {
@@ -11,13 +12,17 @@ namespace _Project.Scripts.Features.Physics
         [SerializeField] private float _gravityFactor;
         [SerializeField] private float _bouncinessFactor;
         [SerializeField] private bool _isStatic;
+        [SerializeField] private bool _useGravity = true;
 
-        public Vector3 Velocity { get; set; } = new();
+        private CollisionResolver _collisionResolver = new();
+
+        public Vector2 Velocity { get; set; }
         
         public float Mass { get => _mass; set => _mass = value; }
-        public float GravityFactor { get => _gravityFactor / 1000f; set => _gravityFactor = value; }
+        public float GravityFactor { get => _gravityFactor; set => _gravityFactor = value; }
         public float BouncinessFactor { get => _bouncinessFactor; set => _bouncinessFactor = value; }
         public bool IsStatic { get => _isStatic; set => _isStatic = value; }
+        public bool UseGravity { get => _useGravity; set => _useGravity = value; }
         
         public virtual void Start()
         {
@@ -32,6 +37,18 @@ namespace _Project.Scripts.Features.Physics
             engine.Entities.Add(this);
         }
         
+        public abstract void Accept(IShapeVisitor visitor, PhysicsObject other);
+        public abstract void AcceptCircle(IShapeVisitor visitor, PhysicsCircle c);
+        public abstract void AcceptRectangle(IShapeVisitor visitor, PhysicsRectangle r);
+        
         public abstract float GetArea();
+
+        public void ResolveCollision(PhysicsObject other)
+        {
+            var visitor = new CollisionResolver();
+            Accept(visitor, other);
+        }
+
+        public abstract Vector2 GetCenter();
     }
 }

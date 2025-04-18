@@ -2,8 +2,8 @@
 
 namespace _Project.Scripts.Repositories
 {
-    public class Context
+    public static class Context
     {
-        public static readonly GameObject Container = new();
+        public static readonly GameObject Container = new("Container");
     }
 }

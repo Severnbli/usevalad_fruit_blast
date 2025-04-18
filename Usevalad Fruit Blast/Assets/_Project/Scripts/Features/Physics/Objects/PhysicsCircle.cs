@@ -1,14 +1,16 @@
-﻿using System;
+﻿using _Project.Scripts.Features.Physics.Services.Collisions;
 using UnityEngine;
+using NotImplementedException = System.NotImplementedException;
 
-namespace _Project.Scripts.Features.Physics
+namespace _Project.Scripts.Features.Physics.Objects
 {
     public class PhysicsCircle: PhysicsObject
     {
         [Header("Circle settings")]
         [Space(5)]
         [SerializeField] private Vector2 _point;
-        [SerializeField] private float _radius;
+
+        [SerializeField] private float _radius; // Must be better than zero
 
         public Vector2 Point
         {
@@ -36,6 +38,26 @@ namespace _Project.Scripts.Features.Physics
             Gizmos.DrawWireSphere(new Vector3(point.x, point.y), Radius);
             
             Gizmos.color = baseColor;
+        }
+
+        public override void Accept(IShapeVisitor visitor, PhysicsObject other)
+        {
+            other.AcceptCircle(visitor, this);
+        }
+
+        public override void AcceptCircle(IShapeVisitor visitor, PhysicsCircle c)
+        {
+            visitor.Visit(c, this);
+        }
+
+        public override void AcceptRectangle(IShapeVisitor visitor, PhysicsRectangle r)
+        {
+            visitor.Visit(r, this);
+        }
+
+        public override Vector2 GetCenter()
+        {
+            return Point;
         }
     }
 }
