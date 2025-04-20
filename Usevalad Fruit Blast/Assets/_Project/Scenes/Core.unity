@@ -122,52 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &518535438
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 518535439}
-  - component: {fileID: 518535440}
-  m_Layer: 0
-  m_Name: BasketInstaller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &518535439
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 518535438}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1313983514}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &518535440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 518535438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f8286abcb894c03909c75043473ee48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 4825581960821441835, guid: ae7a861ded38d334db79f6a011db7974, type: 3}
-  _config: {fileID: 11400000, guid: a30e539f57713cf48b41c1779fba4209, type: 2}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,11 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26bede290564fb2a9978b1de4b91ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mass: 20
-  _gravityFactor: 0
-  _bouncinessFactor: 0.2
-  _isStatic: 1
-  _useGravity: 0
+  _isCollide: 0
   _pointA: {x: -0.5, y: -0.5}
   _pointB: {x: 0.5, y: 0.5}
 --- !u!212 &998472888
@@ -393,9 +343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df991ac071049d4a4c3ac22902e6810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _installers:
-  - {fileID: 518535440}
-  - {fileID: 1344062644}
+  _commonConfig: {fileID: 11400000, guid: 25397c3af73c63c4d99fe27d92d89695, type: 2}
+  _mainCamera: {fileID: 519420031}
 --- !u!4 &1313983514
 Transform:
   m_ObjectHideFlags: 0
@@ -408,54 +357,8 @@ Transform:
   m_LocalPosition: {x: 0.15787342, y: 0.37146693, z: 0.04504037}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 518535439}
-  - {fileID: 1344062645}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1344062643
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1344062645}
-  - component: {fileID: 1344062644}
-  m_Layer: 0
-  m_Name: PhysicsEngineInstaller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1344062644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1344062643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fddc546ea8b495a84fc2842656bb390, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1344062645
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1344062643}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1313983514}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1917181881
 GameObject:
@@ -487,11 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64cce272daf64063b60630e32d28f5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mass: 18
-  _gravityFactor: 3
-  _bouncinessFactor: 0.1
-  _isStatic: 0
-  _useGravity: 1
+  _isCollide: 0
   _point: {x: 0, y: 0}
   _radius: 0.5
 --- !u!212 &1917181883
