@@ -1,15 +1,22 @@
 ﻿using System.Collections.Generic;
-using _Project.Scripts.Features.Physics.Objects;
+using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.Physics.Colliders;
+using _Project.Scripts.Features.Physics.Forces;
+using _Project.Scripts.Features.Physics.Kinematics;
+using _Project.Scripts.Features.Physics.Services.Collisions;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics
 {
-    public class PhysicsEngine: MonoBehaviour
-    {
-        public static readonly float BaseGravity = 9.8f; 
-        public List<PhysicsObject> Entities { get; } = new();
-
-        public void Update()
+    public class PhysicsEngine: BaseFeature
+    { 
+        private readonly CollisionResolver _collisionResolver = new();
+        
+        public List<BaseCollider> Colliders { get; } = new();
+        public List<KinematicBody> KinematicBodies { get; } = new();
+        public List<ForceProvider> ForceProviders { get; } = new();
+        
+        public void FixedUpdate()
         {
             ApplyForces();
             ResolveCollisions();
@@ -18,47 +25,40 @@ namespace _Project.Scripts.Features.Physics
 
         private void ApplyForces()
         {
-            foreach (var entity in Entities)
+            foreach (var kinematicBody in KinematicBodies)
             {
-                if (entity.IsStatic)
+                foreach (var forceProvider in ForceProviders)
                 {
-                    continue;
+                    kinematicBody.ApplyForce(forceProvider.GetForce() * Time.deltaTime);
                 }
-                
-                var totalForces = Vector2.zero;
-
-                if (entity.UseGravity)
-                {
-                    totalForces.y -= entity.GravityFactor * BaseGravity * Time.deltaTime;
-                }
-
-                entity.Velocity += totalForces;
             }
         }
 
         private void ResolveCollisions()
         {
-            for (int i = 0; i < Entities.Count - 1; i++)
+            for (int i = 0; i < Colliders.Count - 1; i++)
             {
-                for (int j = i + 1; j < Entities.Count; j++)
+                for (int j = i + 1; j < Colliders.Count; j++)
                 {
-                    Entities[i].ResolveCollision(Entities[j]);
+                    Colliders[i].ResolveCollision(Colliders[j], _collisionResolver);
                 }
             }
         }
 
         private void MoveEntities()
         {
-            foreach (var entity in Entities)
+            foreach (var kinematicBody in KinematicBodies)
             {
-                if (entity.IsStatic)
+                if (kinematicBody.IsStatic)
                 {
-                    entity.Velocity = Vector3.zero;
+                    kinematicBody.Velocity = Vector3.zero;
                     continue;
                 }
                 
-                entity.transform.Translate(entity.Velocity * Time.deltaTime);
+                kinematicBody.transform.Translate(kinematicBody.Velocity * Time.deltaTime);
             }
         }
+
+        public override void Init(IFeatureConfig config) {}
     }
 }
