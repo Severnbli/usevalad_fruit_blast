@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.Common.Dimensions;
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Physics.Colliders;
+using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.System;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
         private RectangleCollider _leftCollider;
         private RectangleCollider _rightCollider;
         private RectangleCollider _bottomCollider;
+        private DynamicBody _dynamicBody;
         
         public Margin Margin { get => _margin; set => _margin = value; }
         public Vector2 Size { get => _size; set => _size = value; }
@@ -27,6 +29,10 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             _leftCollider = _fieldCatcher.AddComponent<RectangleCollider>();
             _rightCollider = _fieldCatcher.AddComponent<RectangleCollider>();
             _bottomCollider = _fieldCatcher.AddComponent<RectangleCollider>();
+            
+            _dynamicBody = _fieldCatcher.AddComponent<DynamicBody>();
+            _dynamicBody.IsStatic = true;
+            _dynamicBody.UseGravity = false;
         }
         
         public void UpdateCatcher()

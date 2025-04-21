@@ -1,4 +1,4 @@
-﻿using _Project.Scripts.Features.Physics.Kinematics;
+﻿using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Services.Collisions;
 using _Project.Scripts.Features.Physics.Services.Visitors;
 using _Project.Scripts.System;
@@ -11,7 +11,7 @@ namespace _Project.Scripts.Features.Physics.Colliders
         [SerializeField] private bool _isCollide;
         
         public bool IsCollide { get => _isCollide; }
-        public KinematicBody KinematicBody { get; set; }
+        public DynamicBody DynamicBody { get; set; }
         
         public virtual void Start()
         {
