@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Physics.Colliders;
+using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Forces;
-using _Project.Scripts.Features.Physics.Kinematics;
 using _Project.Scripts.Features.Physics.Services.Collisions;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics
 {
-    public class PhysicsEngine: BaseFeature
+    public class PhysicsEngine : BaseFeature
     { 
         private readonly CollisionResolver _collisionResolver = new();
         
         public List<BaseCollider> Colliders { get; } = new();
-        public List<KinematicBody> KinematicBodies { get; } = new();
+        public List<DynamicBody> DynamicBodies { get; } = new();
         public List<ForceProvider> ForceProviders { get; } = new();
         
         public void FixedUpdate()
@@ -25,11 +25,11 @@ namespace _Project.Scripts.Features.Physics
 
         private void ApplyForces()
         {
-            foreach (var kinematicBody in KinematicBodies)
+            foreach (var dynamicBody in DynamicBodies)
             {
                 foreach (var forceProvider in ForceProviders)
                 {
-                    kinematicBody.ApplyForce(forceProvider.GetForce() * Time.deltaTime);
+                    dynamicBody.ApplyForce(forceProvider.GetForce() * Time.deltaTime);
                 }
             }
         }
@@ -47,15 +47,15 @@ namespace _Project.Scripts.Features.Physics
 
         private void MoveEntities()
         {
-            foreach (var kinematicBody in KinematicBodies)
+            foreach (var dynamicBody in DynamicBodies)
             {
-                if (kinematicBody.IsStatic)
+                if (dynamicBody.IsStatic)
                 {
-                    kinematicBody.Velocity = Vector3.zero;
+                    dynamicBody.Velocity = Vector3.zero;
                     continue;
                 }
                 
-                kinematicBody.transform.Translate(kinematicBody.Velocity * Time.deltaTime);
+                dynamicBody.transform.Translate(dynamicBody.Velocity * Time.deltaTime);
             }
         }
 

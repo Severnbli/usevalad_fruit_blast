@@ -2,9 +2,9 @@
 using _Project.Scripts.System;
 using UnityEngine;
 
-namespace _Project.Scripts.Features.Physics.Kinematics
+namespace _Project.Scripts.Features.Physics.Dynamic
 {
-    public class KinematicBody : MonoBehaviour
+    public class DynamicBody: MonoBehaviour
     {
         [SerializeField] private float _mass = 1f;
         [SerializeField] private float _gravityFactor = 1f;
@@ -26,7 +26,7 @@ namespace _Project.Scripts.Features.Physics.Kinematics
 
             foreach (var collider in colliders)
             {
-                collider.KinematicBody = this;
+                collider.DynamicBody = this;
             }
             
             if (!Context.Container.TryGetComponent(out PhysicsEngine engine))
@@ -35,14 +35,14 @@ namespace _Project.Scripts.Features.Physics.Kinematics
                 return;
             }
             
-            engine.KinematicBodies.Add(this);
+            engine.DynamicBodies.Add(this);
         }
         
         protected void OnDestroy()
         {
             if (Context.Container != null && Context.Container.TryGetComponent(out PhysicsEngine engine))
             {
-                engine.KinematicBodies.Remove(this);
+                engine.DynamicBodies.Remove(this);
             }
         }
         
