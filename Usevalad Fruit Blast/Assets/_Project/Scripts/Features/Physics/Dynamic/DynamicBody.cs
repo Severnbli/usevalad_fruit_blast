@@ -1,9 +1,12 @@
 ﻿using _Project.Scripts.Features.Physics.Colliders;
+using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.System;
 using UnityEngine;
 
+
 namespace _Project.Scripts.Features.Physics.Dynamic
 {
+    [RequireComponent(typeof(BaseCollider))]
     public class DynamicBody: MonoBehaviour
     {
         [SerializeField] private float _mass = 1f;
