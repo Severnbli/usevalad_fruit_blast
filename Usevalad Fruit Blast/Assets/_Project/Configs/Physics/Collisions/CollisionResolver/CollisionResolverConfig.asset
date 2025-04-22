@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: CollisionResolverConfig
   m_EditorClassIdentifier: 
   _positionCorrectionPercent: 0.25
-  _positionCorrectionSlop: 0.1
+  _positionCorrectionSlop: 0

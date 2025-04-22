@@ -65,7 +65,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
             
             CalculateMinSeparationNormalAndDepth(r, c, out var normal, out var depth);
 
-            ResolveCollision(r, c, normal, depth);
+            ResolveCollision(r, c, -normal, depth);
         }
 
         private void ResolveCollision(BaseCollider obj1, BaseCollider obj2, Vector2 normal, float depth)

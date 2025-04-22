@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ballScales:
   - 1
+  - 0.8
+  - 2
+  - 1.4
+  - 0.9
   _colors:
   - {r: 0.7584905, g: 0.30196503, b: 0.30196503, a: 1}
   - {r: 0.5580807, g: 0.93962264, b: 0.22515482, a: 1}
