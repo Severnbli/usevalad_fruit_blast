@@ -1,13 +1,10 @@
 ﻿using _Project.Scripts.Common.Configs;
 using _Project.Scripts.Features.Common;
-using _Project.Scripts.Features.Field.FieldCatcher;
-using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
-using _Project.Scripts.Features.Field.FieldProvider;
-using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Gizmo.GizmoDrawer.PhysicsGizmoDrawer;
 using _Project.Scripts.Features.Gizmo.GizmoProvider.BaseGizmoProvider;
-using _Project.Scripts.Features.Physics;
+using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Forces.GravityForce;
+using _Project.Scripts.Features.Random;
 using UnityEngine;
 
 namespace _Project.Scripts.System
@@ -15,8 +12,6 @@ namespace _Project.Scripts.System
     public class SystemConfigurator : MonoBehaviour
     {
         [SerializeField] private CommonConfig _commonConfig;
-        [SerializeField] private FieldCatcher _fieldCatcher;
-        [SerializeField] private FieldProvider _fieldProvider;
 
         private void OnEnable()
         {
@@ -42,10 +37,13 @@ namespace _Project.Scripts.System
                 Debug.LogError("Check setups: container is not found!");
             }
             
-            Context.Container.AddFeature<PhysicsEngine>(null);
+            Context.Container.AddFeature<PhysicsEngine>(_commonConfig.PhysicsEngineConfig);
             Context.Container.AddFeature<BaseGizmoProvider>(_commonConfig.BaseGizmoProviderConfig);
             Context.Container.AddFeature<PhysicsGizmoDrawer>(null);
             Context.Container.AddFeature<GravityForceProvider>(_commonConfig.GravityForceProviderConfig);
+            Context.Container.AddFeature<RandomProvider>(_commonConfig.RandomProviderConfig);
+            
+            _commonConfig.BallSpawner.Init(null);
         }
 
         private void OnDisable()

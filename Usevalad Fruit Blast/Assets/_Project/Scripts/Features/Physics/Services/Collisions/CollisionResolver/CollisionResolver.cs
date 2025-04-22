@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
+using _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver.Config;
 using _Project.Scripts.Features.Physics.Services.Visitors;
 using UnityEngine;
 
@@ -9,6 +10,14 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
     {
         private float _positionCorrectionPercent = 0.25f;
         private float _positionCorrectionSlop = 0.1f;
+        
+        public CollisionResolver() {}
+
+        public CollisionResolver(CollisionResolverConfig config)
+        {
+            _positionCorrectionPercent = config.PositionCorrectionPercent;
+            _positionCorrectionSlop = config.PositionCorrectionSlop;
+        }
         
         public void Visit(CircleCollider c1, CircleCollider c2)
         {
