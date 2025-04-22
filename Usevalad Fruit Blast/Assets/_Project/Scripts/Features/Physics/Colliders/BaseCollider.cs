@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Features.Physics.Dynamic;
+using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver;
 using _Project.Scripts.Features.Physics.Services.Visitors;
 using _Project.Scripts.System;
