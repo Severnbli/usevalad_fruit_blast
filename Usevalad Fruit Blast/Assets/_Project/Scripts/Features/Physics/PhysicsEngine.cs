@@ -9,7 +9,8 @@ using UnityEngine;
 namespace _Project.Scripts.Features.Physics
 {
     public class PhysicsEngine : BaseFeature
-    { 
+    {
+        [SerializeField] private float _minimalBodySpeed = 0.1f;
         private readonly CollisionResolver _collisionResolver = new();
         
         public List<BaseCollider> Colliders { get; } = new();
@@ -49,7 +50,7 @@ namespace _Project.Scripts.Features.Physics
         {
             foreach (var dynamicBody in DynamicBodies)
             {
-                if (dynamicBody.IsStatic)
+                if (dynamicBody.IsStatic || dynamicBody.Velocity.magnitude < _minimalBodySpeed)
                 {
                     dynamicBody.Velocity = Vector3.zero;
                     continue;
