@@ -2,16 +2,17 @@
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
+using _Project.Scripts.Features.Physics.Engine.Config;
 using _Project.Scripts.Features.Physics.Forces;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver;
 using UnityEngine;
 
-namespace _Project.Scripts.Features.Physics
+namespace _Project.Scripts.Features.Physics.Engine
 {
     public class PhysicsEngine : BaseFeature
     {
         [SerializeField] private float _minimalBodySpeed = 0.1f;
-        private readonly CollisionResolver _collisionResolver = new();
+        private CollisionResolver _collisionResolver;
         
         public List<BaseCollider> Colliders { get; } = new();
         public List<DynamicBody> DynamicBodies { get; } = new();
@@ -60,6 +61,16 @@ namespace _Project.Scripts.Features.Physics
             }
         }
 
-        public override void Init(IFeatureConfig config) {}
+        public override void Init(IFeatureConfig config)
+        {
+            if (config is not PhysicsEngineConfig physicsEngineConfig)
+            {
+                return;
+            }
+            
+            _collisionResolver = new(physicsEngineConfig.CollisionResolverConfig);
+            
+            _minimalBodySpeed = physicsEngineConfig.MinimalBodySpeed;
+        }
     }
 }
