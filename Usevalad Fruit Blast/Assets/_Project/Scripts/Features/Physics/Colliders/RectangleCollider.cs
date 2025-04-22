@@ -61,5 +61,11 @@ namespace _Project.Scripts.Features.Physics.Colliders
             
             return massCenter;
         }
+
+        public override void GetBoundingRectangle(out Vector2 min, out Vector2 max)
+        {
+            min = PointA;
+            max = PointB;
+        }
     }
 }

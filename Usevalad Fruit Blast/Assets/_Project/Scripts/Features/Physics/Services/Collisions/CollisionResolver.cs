@@ -9,121 +9,85 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
     {
         public void Visit(CircleCollider c1, CircleCollider c2)
         {
-            var c1Point = c1.Point;
-            var c1Radius = c1.Radius;
-            var c2Point = c2.Point;
-            var c2Radius = c2.Radius;
-            
-            double dx = c1Point.x - c2Point.x;
-            double dy = c1Point.y - c2Point.y;
-            double d = c1Radius + c2Radius;
-
-            if (dx * dx + dy * dy > d * d)
+            if (!IsCirclesCollide(c1, c2))
             {
                 return;
             }
             
-            var penetrationVec = c2Point - c1Point;
-            ResolveCollision(c1, c2, penetrationVec.normalized, c1Radius + c2Radius - penetrationVec.magnitude);
+            var normal = c1.Point - c2.Point;
+            var displacement = c1.Radius + c2.Radius - normal.magnitude;
+            
+            ResolveCollision(c1, c2, normal.normalized, displacement);
         }
 
         public void Visit(RectangleCollider r1, RectangleCollider r2)
         {
-            var r1PointA = r1.PointA;
-            var r1PointB = r1.PointB;
-            var r2PointA = r2.PointA;
-            var r2PointB = r2.PointB;
-
-            if (r1PointA.y > r2PointB.y || r2PointA.y > r1PointB.y
-                                        || r1PointA.x > r2PointB.x || r2PointA.x > r1PointB.x)
+            if (!IsRectanglesCollide(r1, r2))
             {
                 return;
             }
-            
-            var dx = Mathf.Min(r1PointB.x, r2PointB.x) - Mathf.Max(r1PointA.x, r2PointA.x);
-            var dy = Mathf.Min(r1PointB.y, r2PointB.y) - Mathf.Max(r1PointA.y, r2PointA.y);
 
-            Vector2 normal;
-            float displacement;
-            
-            if (dx < dy)
-            {
-                normal = r1.GetCenter().x < r2.GetCenter().x ? Vector2.left : Vector2.right;
-                displacement = dx;
-            }
-            else
-            {
-                normal = r1.GetCenter().y < r2.GetCenter().y ? Vector2.down : Vector2.up;
-                displacement = dy;
-            }
-            
-            ResolveCollision(r1, r2, normal, displacement);
+            CalculateMinSeparationNormalAndDepth(r1, r2, out var normal, out var depth);
+
+            ResolveCollision(r1, r2, normal, depth);
         }
 
         public void Visit(CircleCollider c, RectangleCollider r)
         {
-            Visit(r, c);
+            if (!IsCircleRectangleCollider(c, r))
+            {
+                return;
+            }
+            
+            CalculateMinSeparationNormalAndDepth(c, r, out var normal, out var depth);
+
+            ResolveCollision(c, r, normal, depth);
         }
         
         public void Visit(RectangleCollider r, CircleCollider c)
         {
-            var rPointA = r.PointA;
-            var rPointB = r.PointB;
-            var cPoint = c.Point;
-            var cRadius = c.Radius;
-
-            if (cPoint.x + cRadius < rPointA.x || rPointB.x < cPoint.x - cRadius
-                                               || cPoint.y + cRadius < rPointA.y || rPointB.y < cPoint.y - cRadius)
+            if (!IsCircleRectangleCollider(c, r))
             {
                 return;
             }
+            
+            CalculateMinSeparationNormalAndDepth(r, c, out var normal, out var depth);
 
-            var p = new Vector2(
-                Mathf.Clamp(cPoint.x, rPointA.x, rPointB.x),
-                Mathf.Clamp(cPoint.y, rPointA.y, rPointB.y)
+            ResolveCollision(r, c, normal, depth);
+        }
+
+        private void CalculateMinSeparationNormalAndDepth(BaseCollider obj1, BaseCollider obj2, 
+            out Vector2 normal, out float depth)
+        {
+            obj1.GetBoundingRectangle(out var minPos1, out var maxPos1);
+            obj2.GetBoundingRectangle(out var minPos2, out var maxPos2);
+            
+            var distanceToLowerX = Mathf.Abs(maxPos1.x - minPos2.x);
+            var distanceToUpperX = Mathf.Abs(maxPos2.x - minPos1.x);
+            var distanceToLowerY = Mathf.Abs(maxPos1.y - minPos2.y);
+            var distanceToUpperY = Mathf.Abs(maxPos2.y - minPos1.y);
+            
+            depth = Mathf.Min(
+                Mathf.Min(distanceToLowerX, distanceToUpperX),
+                Mathf.Min(distanceToLowerY, distanceToUpperY)
             );
             
-            Vector2 d = cPoint - p;
-            float dist = d.magnitude;
-
-            if (dist >= cRadius)
-                return;
-
-            Vector2 normal;
-            if (dist > 0f)
+            if (distanceToLowerX.Equals(depth))
             {
-                normal = d / dist;
+                normal = Vector2.left;
+            }
+            else if (distanceToUpperX.Equals(depth))
+            {
+                normal = Vector2.right;
+            }
+            else if (distanceToLowerY.Equals(depth))
+            {
+                normal = Vector2.down;
             }
             else
             {
-                var left = cPoint.x - rPointA.x;
-                var right = rPointB.x - cPoint.x;
-                var up = rPointB.y - cPoint.y;
-                var down = cPoint.y - rPointA.y;
-
-                var min = Mathf.Min(left, right, up, down);
-                
-                if (min.Equals(left))
-                {
-                    normal = Vector2.left;
-                }
-                else if (min.Equals(right))
-                {
-                    normal = Vector2.right;
-                }
-                else if (min.Equals(up))
-                {
-                    normal = Vector2.up;
-                }
-                else
-                {
-                    normal = Vector2.down;
-                }
+                normal = Vector2.up;
             }
-
-            var displacement = cRadius - dist;
-
-            ResolveCollision(r, c, normal, displacement);
         }
 
         private void ResolveCollision(BaseCollider obj1, BaseCollider obj2, Vector2 normal, float depth)
@@ -169,8 +133,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
 
         private void PositionalCorrection(DynamicBody obj1, DynamicBody obj2, Vector2 normal, float depth)
         {
-            const float percent = 0.2f;
-            const float slop = 0.05f;
+            const float percent = 0.5f;
+            const float slop = 0.01f;
 
             var correctionDepth = Mathf.Max(depth - slop, 0f);
             var correction = correctionDepth / (obj1.Mass + obj2.Mass) * percent * normal;
@@ -184,6 +148,46 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
             {
                 obj2.transform.position -= new Vector3(correction.x, correction.y) * obj1.Mass;
             }
+        }
+
+        public static bool IsCirclesCollide(CircleCollider c1, CircleCollider c2)
+        {
+            var c1Point = c1.Point;
+            var c1Radius = c1.Radius;
+            var c2Point = c2.Point;
+            var c2Radius = c2.Radius;
+            
+            double dx = c1Point.x - c2Point.x;
+            double dy = c1Point.y - c2Point.y;
+            double d = c1Radius + c2Radius;
+
+            return !(dx * dx + dy * dy > d * d);
+        }
+
+        public static bool IsRectanglesCollide(RectangleCollider r1, RectangleCollider r2)
+        {
+            var r1PointA = r1.PointA;
+            var r1PointB = r1.PointB;
+            var r2PointA = r2.PointA;
+            var r2PointB = r2.PointB;
+
+            return !(r1PointA.y > r2PointB.y
+                   || r2PointA.y > r1PointB.y
+                   || r1PointA.x > r2PointB.x
+                   || r2PointA.x > r1PointB.x);
+        }
+
+        public static bool IsCircleRectangleCollider(CircleCollider c, RectangleCollider r)
+        {
+            var rPointA = r.PointA;
+            var rPointB = r.PointB;
+            var cPoint = c.Point;
+            var cRadius = c.Radius;
+
+            return !(cPoint.x + cRadius < rPointA.x
+                     || rPointB.x < cPoint.x - cRadius
+                     || cPoint.y + cRadius < rPointA.y
+                     || rPointB.y < cPoint.y - cRadius);
         }
     }
 }

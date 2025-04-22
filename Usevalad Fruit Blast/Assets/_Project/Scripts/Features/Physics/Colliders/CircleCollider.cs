@@ -51,6 +51,15 @@ namespace _Project.Scripts.Features.Physics.Colliders
             return Point;
         }
 
+        public override void GetBoundingRectangle(out Vector2 min, out Vector2 max)
+        {
+            var point = Point;
+            var radius = Radius;
+            
+            min = new Vector2(point.x - radius, point.y - radius);
+            max = new Vector2(point.x + radius, point.y + radius);
+        }
+
         public override bool Equals(object other)
         {
             return other is CircleCollider otherCircle && Equals(otherCircle);
