@@ -3,7 +3,7 @@ using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Forces;
-using _Project.Scripts.Features.Physics.Services.Collisions;
+using _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics
