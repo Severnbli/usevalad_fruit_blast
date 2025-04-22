@@ -56,6 +56,106 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
             ResolveCollision(r, c, normal, depth);
         }
 
+        private void ResolveCollision(BaseCollider obj1, BaseCollider obj2, Vector2 normal, float depth)
+        {
+            if (ReferenceEquals(obj1.DynamicBody, null) || ReferenceEquals(obj2.DynamicBody, null))
+            {
+                return;
+            }
+            
+            if (ApplyImpulse(obj1.DynamicBody, obj2.DynamicBody, normal))
+            {
+                PositionalCorrection(obj1.DynamicBody, obj2.DynamicBody, normal, depth);
+            }
+        }
+
+        private bool ApplyImpulse(DynamicBody obj1, DynamicBody obj2, Vector2 normal)
+        {
+            if (obj1.IsStatic && obj2.IsStatic)
+            {
+                return false;
+            }
+            
+            var relativeVelocity = obj1.Velocity - obj2.Velocity;
+            var velocityAlongNormal = Vector2.Dot(relativeVelocity, normal);
+            
+            var massObj1 = obj1.IsStatic ? Mathf.Infinity : obj1.Mass;
+            var massObj2 = obj2.IsStatic ? Mathf.Infinity : obj2.Mass;
+            
+            var e = Mathf.Max(obj1.BouncinessFactor, obj2.BouncinessFactor);
+            var j = -(1f + e) * velocityAlongNormal / (1f / massObj1 + 1f / massObj2);
+            
+            var impulse = j * normal;
+            
+            if (!obj1.IsStatic)
+            {
+                obj1.Velocity += impulse / obj1.Mass;
+            }
+
+            if (!obj2.IsStatic)
+            {
+                obj2.Velocity -= impulse / obj2.Mass;
+            }
+            
+            return true;
+        }
+
+        private void PositionalCorrection(DynamicBody obj1, DynamicBody obj2, Vector2 normal, float depth)
+        {
+            const float percent = 0.25f;
+            const float slop = 0.1f;
+            
+            var correctionDepth = Mathf.Max(depth - slop, 0f);
+            var correction = correctionDepth * percent * normal;
+
+            Vector3 correctionObj1;
+            Vector3 correctionObj2;
+
+            var staticState = (obj1.IsStatic, obj2.IsStatic);
+
+            switch (staticState)
+            {
+                case (true, false):
+                {
+                    correction *= -1;
+
+                    correctionObj1 = Vector3.zero;
+                    correctionObj2 = new Vector3(correction.x, correction.y);
+                    
+                    break;
+                }
+
+                case (false, true):
+                {
+                    correctionObj1 = new Vector3(correction.x, correction.y);
+                    correctionObj2 = Vector3.zero;
+                    
+                    break;
+                }
+
+                case (false, false):
+                {
+                    correction *= (obj1.Mass + obj2.Mass);
+                
+                    correctionObj1 = new Vector3(correction.x, correction.y) * obj2.Mass;
+                    correctionObj2 = new Vector3(correction.x, correction.y) * obj1.Mass;
+                    
+                    break;
+                }
+
+                default:
+                {
+                    correctionObj1 = Vector3.zero;
+                    correctionObj2 = Vector3.zero;
+                    
+                    break;
+                }
+            }
+
+            obj1.transform.position += correctionObj1;
+            obj2.transform.position -= correctionObj2;
+        }
+        
         private void CalculateMinSeparationNormalAndDepth(BaseCollider obj1, BaseCollider obj2, 
             out Vector2 normal, out float depth)
         {
@@ -87,66 +187,6 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
             else
             {
                 normal = Vector2.up;
-            }
-        }
-
-        private void ResolveCollision(BaseCollider obj1, BaseCollider obj2, Vector2 normal, float depth)
-        {
-            if (ReferenceEquals(obj1.DynamicBody, null) || ReferenceEquals(obj2.DynamicBody, null))
-            {
-                return;
-            }
-            
-            if (ApplyImpulse(obj1.DynamicBody, obj2.DynamicBody, normal))
-            {
-                PositionalCorrection(obj1.DynamicBody, obj2.DynamicBody, normal, depth);
-            }
-        }
-
-        private bool ApplyImpulse(DynamicBody obj1, DynamicBody obj2, Vector2 normal)
-        {
-            if (obj1.IsStatic && obj2.IsStatic)
-            {
-                return false;
-            }
-            
-            var relativeVelocity = obj1.Velocity - obj2.Velocity;
-            var velocityAlongNormal = Vector2.Dot(relativeVelocity, normal);
-            
-            var e = Mathf.Min(obj1.BouncinessFactor, obj2.BouncinessFactor);
-            var j = -(1f + e) * velocityAlongNormal / (1f / obj1.Mass + 1f / obj2.Mass);
-            
-            var impulse = j * normal;
-            
-            if (!obj1.IsStatic)
-            {
-                obj1.Velocity += impulse / obj1.Mass;
-            }
-
-            if (!obj2.IsStatic)
-            {
-                obj2.Velocity -= impulse / obj2.Mass;
-            }
-            
-            return true;
-        }
-
-        private void PositionalCorrection(DynamicBody obj1, DynamicBody obj2, Vector2 normal, float depth)
-        {
-            const float percent = 0.5f;
-            const float slop = 0.01f;
-
-            var correctionDepth = Mathf.Max(depth - slop, 0f);
-            var correction = correctionDepth / (obj1.Mass + obj2.Mass) * percent * normal;
-
-            if (!obj1.IsStatic)
-            {
-                obj1.transform.position += new Vector3(correction.x, correction.y) * obj2.Mass;
-            }
-
-            if (!obj2.IsStatic)
-            {
-                obj2.transform.position -= new Vector3(correction.x, correction.y) * obj1.Mass;
             }
         }
 
