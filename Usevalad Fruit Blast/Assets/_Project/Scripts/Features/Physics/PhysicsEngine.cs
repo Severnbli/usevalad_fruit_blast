@@ -29,7 +29,7 @@ namespace _Project.Scripts.Features.Physics
             {
                 foreach (var forceProvider in ForceProviders)
                 {
-                    dynamicBody.ApplyForce(forceProvider.GetForce() * Time.deltaTime);
+                    dynamicBody.ApplyForce(forceProvider.GetForce() * Time.fixedDeltaTime);
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace _Project.Scripts.Features.Physics
                     continue;
                 }
                 
-                dynamicBody.transform.Translate(dynamicBody.Velocity * Time.deltaTime);
+                dynamicBody.transform.Translate(dynamicBody.Velocity * Time.fixedDeltaTime);
             }
         }
 
