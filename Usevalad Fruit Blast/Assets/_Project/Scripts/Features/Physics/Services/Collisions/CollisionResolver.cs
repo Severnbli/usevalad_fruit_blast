@@ -23,8 +23,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
                 return;
             }
             
-            var normal = c2Point - c1Point;
-            ResolveCollision(c1, c2, normal.normalized, c1Radius + c2Radius - normal.magnitude);
+            var penetrationVec = c2Point - c1Point;
+            ResolveCollision(c1, c2, penetrationVec.normalized, c1Radius + c2Radius - penetrationVec.magnitude);
         }
 
         public void Visit(RectangleCollider r1, RectangleCollider r2)
