@@ -3,10 +3,13 @@ using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Services.Visitors;
 using UnityEngine;
 
-namespace _Project.Scripts.Features.Physics.Services.Collisions
+namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver
 {
     public class CollisionResolver : IColliderVisitorWithOther
     {
+        private float _positionCorrectionPercent = 0.25f;
+        private float _positionCorrectionSlop = 0.1f;
+        
         public void Visit(CircleCollider c1, CircleCollider c2)
         {
             if (!IsCirclesCollide(c1, c2))
@@ -103,11 +106,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
 
         private void PositionalCorrection(DynamicBody obj1, DynamicBody obj2, Vector2 normal, float depth)
         {
-            const float percent = 0.25f;
-            const float slop = 0.1f;
-            
-            var correctionDepth = Mathf.Max(depth - slop, 0f);
-            var correction = correctionDepth * percent * normal;
+            var correctionDepth = Mathf.Max(depth - _positionCorrectionSlop, 0f);
+            var correction = correctionDepth * _positionCorrectionPercent * normal;
 
             Vector3 correctionObj1;
             Vector3 correctionObj2;
