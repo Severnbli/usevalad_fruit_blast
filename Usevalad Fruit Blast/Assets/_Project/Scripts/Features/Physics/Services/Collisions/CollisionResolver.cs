@@ -148,21 +148,12 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
             
             var relativeVelocity = obj1.Velocity - obj2.Velocity;
             var velocityAlongNormal = Vector2.Dot(relativeVelocity, normal);
-
-            // if (velocityAlongNormal > 0)
-            // {
-            //     return false;
-            // }
             
             var e = Mathf.Min(obj1.BouncinessFactor, obj2.BouncinessFactor);
             var j = -(1f + e) * velocityAlongNormal / (1f / obj1.Mass + 1f / obj2.Mass);
             
             var impulse = j * normal;
             
-            // Debug.Log($"normal: {normal}");
-            // Debug.Log($"relativeVelocity: {relativeVelocity}, velocityAlongNormal: {velocityAlongNormal}, j: {j}");
-            // Debug.Log($"Impulse: {impulse}, obj1.Velocity: {obj1.Velocity}, obj2.Velocity: {obj2.Velocity}");
-
             if (!obj1.IsStatic)
             {
                 obj1.Velocity += impulse / obj1.Mass;
@@ -173,8 +164,6 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
                 obj2.Velocity -= impulse / obj2.Mass;
             }
             
-            // Debug.Log($"obj1.Velocity: {obj1.Velocity}, obj2.Velocity: {obj2.Velocity}");
-
             return true;
         }
 
