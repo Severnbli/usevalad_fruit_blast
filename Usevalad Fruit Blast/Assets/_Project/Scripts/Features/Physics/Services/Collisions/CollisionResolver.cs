@@ -58,7 +58,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
 
         private void ResolveCollision(BaseCollider obj1, BaseCollider obj2, Vector2 normal, float depth)
         {
-            if (ReferenceEquals(obj1.DynamicBody, null) || ReferenceEquals(obj2.DynamicBody, null))
+            if (ReferenceEquals(obj1.DynamicBody, null) || ReferenceEquals(obj2.DynamicBody, null)
+                || !obj1.IsCollide || !obj2.IsCollide)
             {
                 return;
             }

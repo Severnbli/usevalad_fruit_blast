@@ -8,7 +8,7 @@ namespace _Project.Scripts.Features.Physics.Colliders
 {
     public abstract class BaseCollider: MonoBehaviour
     {
-        [SerializeField] private bool _isCollide;
+        [SerializeField] private bool _isCollide = true;
         
         public bool IsCollide { get => _isCollide; }
         public DynamicBody DynamicBody { get; set; }
