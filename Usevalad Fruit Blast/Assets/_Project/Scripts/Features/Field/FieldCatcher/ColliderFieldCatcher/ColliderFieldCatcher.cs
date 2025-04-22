@@ -62,8 +62,8 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             _rightCollider.PointA = new Vector2(halfCatcherSize.x, -halfFieldSize.y);
             _rightCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y - _config.Margin.Top);
             
-            _bottomCollider.PointA = new Vector2(-halfCatcherSize.x, -halfFieldSize.y);
-            _bottomCollider.PointB = new Vector2(halfCatcherSize.x, halfFieldSize.y - _config.Margin.Top - catcherSize.y);
+            _bottomCollider.PointA = new Vector2(-halfCatcherSize.x + 0.1f, -halfFieldSize.y);
+            _bottomCollider.PointB = new Vector2(halfCatcherSize.x - 0.1f, halfFieldSize.y - _config.Margin.Top - catcherSize.y);
         }
 
         public override Vector2 GetCatcherSize()

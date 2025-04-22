@@ -31,6 +31,7 @@ namespace _Project.Scripts.Features.Physics.Colliders
         
         public abstract float GetArea();
         public abstract Vector2 GetCenter();
+        public abstract void GetBoundingRectangle(out Vector2 min, out Vector2 max);
 
         public void ResolveCollision(BaseCollider other, CollisionResolver collisionResolver)
         {
