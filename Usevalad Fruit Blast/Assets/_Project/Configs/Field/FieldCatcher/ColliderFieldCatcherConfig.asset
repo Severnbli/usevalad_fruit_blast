@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14a3395184a244debb40de05473936fe, type: 3}
-  m_Name: FieldCatcherConfig
+  m_Name: ColliderFieldCatcherConfig
   m_EditorClassIdentifier: 
   _size: {x: 3, y: 4}
   _margin:

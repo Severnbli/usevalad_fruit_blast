@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
 {
-    [CreateAssetMenu(fileName = "FieldCatcherConfig", menuName = "Configs/Field Catcher Config")]
+    [CreateAssetMenu(fileName = "ColliderFieldCatcherConfig", menuName = "Configs/Collider Field Catcher Config")]
     public class ColliderFieldCatcherConfig : ScriptableObject, IFeatureConfig
     {
-        [SerializeField] private Vector2Int _size;
+        [SerializeField] private Vector2 _size;
         [SerializeField] private Margin _margin;
         
-        public Vector2Int Size => _size;
+        public Vector2 Size => _size;
         public Margin Margin => _margin;
     }
 }

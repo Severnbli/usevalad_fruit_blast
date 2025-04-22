@@ -1,6 +1,8 @@
 ﻿using _Project.Scripts.Common.Configs;
 using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
+using _Project.Scripts.Features.Field.FieldProvider;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Gizmo.GizmoDrawer.PhysicsGizmoDrawer;
 using _Project.Scripts.Features.Gizmo.GizmoProvider.BaseGizmoProvider;
@@ -13,6 +15,8 @@ namespace _Project.Scripts.System
     public class SystemConfigurator : MonoBehaviour
     {
         [SerializeField] private CommonConfig _commonConfig;
+        [SerializeField] private FieldCatcher _fieldCatcher;
+        [SerializeField] private FieldProvider _fieldProvider;
 
         private void OnEnable()
         {
@@ -39,8 +43,6 @@ namespace _Project.Scripts.System
             }
             
             Context.Container.AddFeature<PhysicsEngine>(null);
-            Context.Container.AddFeature<CameraFieldProvider>(_commonConfig.CameraFieldProviderConfig);
-            Context.Container.AddFeature<ColliderFieldCatcher>(_commonConfig.ColliderFieldCatcherConfig);
             Context.Container.AddFeature<BaseGizmoProvider>(_commonConfig.BaseGizmoProviderConfig);
             Context.Container.AddFeature<PhysicsGizmoDrawer>(null);
             Context.Container.AddFeature<GravityForceProvider>(_commonConfig.GravityForceProviderConfig);
