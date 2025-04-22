@@ -20,7 +20,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
 
             if (dx * dx + dy * dy > d * d)
             {
-                return; // Objects don't collide
+                return;
             }
             
             var normal = c2Point - c1Point;
@@ -37,7 +37,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
             if (r1PointA.y > r2PointB.y || r2PointA.y > r1PointB.y
                                         || r1PointA.x > r2PointB.x || r2PointA.x > r1PointB.x)
             {
-                return; // Objects don't collide
+                return;
             }
             
             var dx = Mathf.Min(r1PointB.x, r2PointB.x) - Mathf.Max(r1PointA.x, r2PointA.x);
@@ -75,7 +75,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
             if (cPoint.x + cRadius < rPointA.x || rPointB.x < cPoint.x - cRadius
                                                || cPoint.y + cRadius < rPointA.y || rPointB.y < cPoint.y - cRadius)
             {
-                return; // Objects don't collide
+                return;
             }
 
             var p = new Vector2(
@@ -159,9 +159,9 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
             
             var impulse = j * normal;
             
-            Debug.Log($"normal: {normal}");
-            Debug.Log($"relativeVelocity: {relativeVelocity}, velocityAlongNormal: {velocityAlongNormal}, j: {j}");
-            Debug.Log($"Impulse: {impulse}, obj1.Velocity: {obj1.Velocity}, obj2.Velocity: {obj2.Velocity}");
+            // Debug.Log($"normal: {normal}");
+            // Debug.Log($"relativeVelocity: {relativeVelocity}, velocityAlongNormal: {velocityAlongNormal}, j: {j}");
+            // Debug.Log($"Impulse: {impulse}, obj1.Velocity: {obj1.Velocity}, obj2.Velocity: {obj2.Velocity}");
 
             if (!obj1.IsStatic)
             {
@@ -173,7 +173,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions
                 obj2.Velocity -= impulse / obj2.Mass;
             }
             
-            Debug.Log($"obj1.Velocity: {obj1.Velocity}, obj2.Velocity: {obj2.Velocity}");
+            // Debug.Log($"obj1.Velocity: {obj1.Velocity}, obj2.Velocity: {obj2.Velocity}");
 
             return true;
         }
