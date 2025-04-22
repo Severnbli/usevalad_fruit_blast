@@ -11,20 +11,14 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
         
         public FieldProvider.FieldProvider FieldProvider { get => _fieldProvider; set => _fieldProvider = value; }
 
-        public override void Init(IFeatureConfig config)
-        {
-            _fieldProvider = Context.Container.GetComponent<FieldProvider.FieldProvider>();
-
-            if (_fieldProvider == null)
-            {
-                Debug.LogError("Check system priority setup: field provider must be earlier than field catcher!");
-            }
-        }
+        public override void Init(IFeatureConfig config) {}
 
         public abstract FieldProvider.FieldProvider GetFieldProvider();
         public abstract Vector2 GetPosition();
         public abstract Margin GetMargin();
         public abstract Vector2 GetSize();
+        public abstract Vector2 GetCatcherSize();
+        public abstract Vector2 GetFieldSize();
         public abstract void OpenCatcher();
         public abstract void CloseCatcher();
     }
