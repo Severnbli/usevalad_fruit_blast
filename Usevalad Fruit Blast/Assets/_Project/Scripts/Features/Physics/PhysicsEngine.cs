@@ -18,9 +18,9 @@ namespace _Project.Scripts.Features.Physics
         
         public void FixedUpdate()
         {
-            ApplyForces();
-            ResolveCollisions();
             MoveEntities();
+            ResolveCollisions();
+            ApplyForces();
         }
 
         private void ApplyForces()
