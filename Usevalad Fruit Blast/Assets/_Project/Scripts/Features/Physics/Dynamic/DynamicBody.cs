@@ -34,7 +34,7 @@ namespace _Project.Scripts.Features.Physics.Dynamic
             
             if (!Context.Container.TryGetComponent(out PhysicsEngine engine))
             {
-                Debug.LogError($"Physics engine not found");
+                Debug.LogError("Physics engine not found");
                 return;
             }
             

@@ -27,11 +27,13 @@ namespace _Project.Scripts.Features.Spawners.BallSpawner
         
         public override void Spawn()
         {
-            if (TryGetNextBall(out var ball))
+            if (!TryGetNextBall(out var ball))
             {
-                ball.transform.parent = transform;
-                ball.transform.position = GetNextBallPosition(ball);
+                return;
             }
+
+            ball.transform.parent = transform;
+            ball.transform.position = GetNextBallPosition(ball);
         }
 
         public bool TryGetNextBall(out GameObject ball)
@@ -65,9 +67,9 @@ namespace _Project.Scripts.Features.Spawners.BallSpawner
             var catcherSize = _fieldCatcher.GetCatcherSize();
             var widthWithSpriteSize = catcherSize.x;
 
-            if (TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+            if (ball.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
             {
-                widthWithSpriteSize -= spriteRenderer.sprite.rect.width;
+                widthWithSpriteSize -= spriteRenderer.bounds.size.x;
             }
 
             position.y += catcherSize.y;
