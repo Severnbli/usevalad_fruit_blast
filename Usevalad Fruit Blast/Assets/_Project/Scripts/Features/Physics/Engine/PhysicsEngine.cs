@@ -17,35 +17,33 @@ namespace _Project.Scripts.Features.Physics.Engine
         
         private CollisionResolver _collisionResolver;
         
-        private readonly HashSet<BaseCollider> _colliders = new();
-        private readonly HashSet<DynamicBody> _dynamicBodies = new();
-        private readonly HashSet<ForceProvider> _forceProviders = new();
+        public HashSet<BaseCollider> Colliders = new();
+        public HashSet<DynamicBody> DynamicBodies = new();
+        public HashSet<ForceProvider> ForceProviders = new();
         
         public void FixedUpdate()
         {
-            var dynamicBodies = GetDynamicBodies();
-            var forceProviders = GetForceProviders();
-            var colliders = GetColliders();
-            
-            MoveEntities(dynamicBodies);
-            ResolveCollisions(colliders);
-            ApplyForces(dynamicBodies, forceProviders);
+            MoveEntities();
+            ResolveCollisions();
+            ApplyForces();
         }
 
-        private void ApplyForces(List<DynamicBody> dynamicBodies, List<ForceProvider> forceProviders)
+        private void ApplyForces()
         {
-            foreach (var dynamicBody in dynamicBodies)
+            foreach (var dynamicBody in DynamicBodies)
             {
                 
-                foreach (var forceProvider in forceProviders)
+                foreach (var forceProvider in ForceProviders)
                 {
                     dynamicBody.ApplyForce(forceProvider.GetForce() * Time.fixedDeltaTime);
                 }
             }
         }
 
-        private void ResolveCollisions(List<BaseCollider> colliders)
+        private void ResolveCollisions()
         {
+            var colliders = Colliders.ToList();
+            
             for (var i = 0; i < colliders.Count - 1; i++)
             {
                 
@@ -56,9 +54,9 @@ namespace _Project.Scripts.Features.Physics.Engine
             }
         }
 
-        private void MoveEntities(List<DynamicBody> dynamicBodies)
+        private void MoveEntities()
         {
-            foreach (var dynamicBody in dynamicBodies)
+            foreach (var dynamicBody in DynamicBodies)
             {
                 if (dynamicBody.IsStatic || dynamicBody.Velocity.magnitude < _minimalBodySpeed)
                 {
@@ -80,81 +78,6 @@ namespace _Project.Scripts.Features.Physics.Engine
             _collisionResolver = new(physicsEngineConfig.CollisionResolverConfig);
             
             _minimalBodySpeed = physicsEngineConfig.MinimalBodySpeed;
-        }
-        
-        public List<BaseCollider> GetColliders()
-        {
-            var colliders = _colliders.ToList();
-
-            for (var i = colliders.Count - 1; i >= 0; i--)
-            {
-                if (colliders[i] == null)
-                {
-                    colliders.RemoveAt(i);
-                }
-            }
-            
-            return colliders;
-        }
-        
-        public List<DynamicBody> GetDynamicBodies()
-        {
-            var dynamicBodies = _dynamicBodies.ToList();
-
-            for (var i = dynamicBodies.Count - 1; i >= 0; i--)
-            {
-                if (dynamicBodies[i] == null)
-                {
-                    dynamicBodies.RemoveAt(i);
-                }
-            }
-            
-            return dynamicBodies;
-        }
-        
-        public List<ForceProvider> GetForceProviders()
-        {
-            var forceProviders = _forceProviders.ToList();
-
-            for (var i = forceProviders.Count - 1; i >= 0; i--)
-            {
-                if (forceProviders[i] == null)
-                {
-                    forceProviders.RemoveAt(i);
-                }
-            }
-            
-            return forceProviders;
-        }
-
-        public void AddCollider(BaseCollider collider)
-        {
-            _colliders.Add(collider);
-        }
-
-        public void RemoveCollider(BaseCollider collider)
-        {
-            _colliders.Remove(collider);
-        }
-
-        public void AddDynamicBody(DynamicBody dynamicBody)
-        {
-            _dynamicBodies.Add(dynamicBody);
-        }
-
-        public void RemoveDynamicBody(DynamicBody dynamicBody)
-        {
-            _dynamicBodies.Remove(dynamicBody);
-        }
-
-        public void AddForceProvider(ForceProvider forceProvider)
-        {
-            _forceProviders.Add(forceProvider);
-        }
-
-        public void RemoveForceProvider(ForceProvider forceProvider)
-        {
-            _forceProviders.Remove(forceProvider);
         }
     }
 }

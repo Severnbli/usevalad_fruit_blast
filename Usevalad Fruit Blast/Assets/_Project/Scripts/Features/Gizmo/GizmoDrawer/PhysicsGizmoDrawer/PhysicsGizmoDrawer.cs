@@ -30,9 +30,7 @@ namespace _Project.Scripts.Features.Gizmo.GizmoDrawer.PhysicsGizmoDrawer
 
         private void OnDrawGizmos()
         {
-            var colliders = _physicsEngine.GetColliders();
-            
-            foreach (var collider in colliders)
+            foreach (var collider in _physicsEngine.Colliders)
             {
                 collider.Accept(_colliderGizmoDrawer);
             }

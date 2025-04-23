@@ -35,14 +35,14 @@ namespace _Project.Scripts.Features.Physics.Forces
                 Debug.LogError("Check system priority setup: physics engine must be earlier than force provider!");
             }
             
-            physicsEngine.AddForceProvider(this);
+            physicsEngine.ForceProviders.Add(this);
         }
         
         protected void OnDestroy()
         {
             if (Context.Container != null && Context.Container.TryGetComponent(out PhysicsEngine engine))
             {
-                engine.RemoveForceProvider(this);
+                engine.ForceProviders.Remove(this);
             }
         }
     }

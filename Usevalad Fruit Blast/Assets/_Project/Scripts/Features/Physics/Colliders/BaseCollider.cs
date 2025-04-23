@@ -22,14 +22,14 @@ namespace _Project.Scripts.Features.Physics.Colliders
                 return;
             }
             
-            engine.AddCollider(this);
+            engine.Colliders.Add(this);
         }
         
         protected void OnDestroy()
         {
             if (Context.Container != null && Context.Container.TryGetComponent(out PhysicsEngine engine))
             {
-                engine.RemoveCollider(this);
+                engine.Colliders.Remove(this);
             }
         }
         
