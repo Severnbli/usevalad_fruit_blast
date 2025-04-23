@@ -38,14 +38,14 @@ namespace _Project.Scripts.Features.Physics.Dynamic
                 return;
             }
             
-            engine.AddDynamicBody(this);
+            engine.DynamicBodies.Add(this);
         }
         
         protected void OnDestroy()
         {
             if (Context.Container != null && Context.Container.TryGetComponent(out PhysicsEngine engine))
             {
-                engine.RemoveDynamicBody(this);
+                engine.DynamicBodies.Remove(this);
             }
         }
         
