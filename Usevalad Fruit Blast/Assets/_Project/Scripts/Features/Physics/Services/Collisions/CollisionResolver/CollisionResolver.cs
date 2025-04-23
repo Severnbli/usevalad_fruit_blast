@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver.Config;
+using _Project.Scripts.Features.Physics.Services.Collisions.Triggers;
 using _Project.Scripts.Features.Physics.Services.Visitors;
 using UnityEngine;
 
@@ -70,9 +71,16 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
         private void ResolveCollision(BaseCollider obj1, BaseCollider obj2, Vector2 normal, float depth)
         {
-            if (ReferenceEquals(obj1.DynamicBody, null) || ReferenceEquals(obj2.DynamicBody, null)
-                || !obj1.IsCollide || !obj2.IsCollide)
+            if (ReferenceEquals(obj1.DynamicBody, null) || ReferenceEquals(obj2.DynamicBody, null))
             {
+                return;
+            }
+
+            if (obj1.IsTrigger || obj2.IsTrigger)
+            {
+                obj1.GetComponent<ColliderTrigger>()?.OnColliderTriggerEnter(obj2);
+                obj2.GetComponent<ColliderTrigger>()?.OnColliderTriggerEnter(obj1);
+                
                 return;
             }
             

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
@@ -13,44 +14,51 @@ namespace _Project.Scripts.Features.Physics.Engine
     public class PhysicsEngine : BaseFeature
     {
         [SerializeField] private float _minimalBodySpeed = 0.1f;
+        
         private CollisionResolver _collisionResolver;
         
-        public List<BaseCollider> Colliders { get; } = new();
-        public List<DynamicBody> DynamicBodies { get; } = new();
-        public List<ForceProvider> ForceProviders { get; } = new();
+        private readonly HashSet<BaseCollider> _colliders = new();
+        private readonly HashSet<DynamicBody> _dynamicBodies = new();
+        private readonly HashSet<ForceProvider> _forceProviders = new();
         
         public void FixedUpdate()
         {
-            MoveEntities();
-            ResolveCollisions();
-            ApplyForces();
+            var dynamicBodies = GetDynamicBodies();
+            var forceProviders = GetForceProviders();
+            var colliders = GetColliders();
+            
+            MoveEntities(dynamicBodies);
+            ResolveCollisions(colliders);
+            ApplyForces(dynamicBodies, forceProviders);
         }
 
-        private void ApplyForces()
+        private void ApplyForces(List<DynamicBody> dynamicBodies, List<ForceProvider> forceProviders)
         {
-            foreach (var dynamicBody in DynamicBodies)
+            foreach (var dynamicBody in dynamicBodies)
             {
-                foreach (var forceProvider in ForceProviders)
+                
+                foreach (var forceProvider in forceProviders)
                 {
                     dynamicBody.ApplyForce(forceProvider.GetForce() * Time.fixedDeltaTime);
                 }
             }
         }
 
-        private void ResolveCollisions()
+        private void ResolveCollisions(List<BaseCollider> colliders)
         {
-            for (int i = 0; i < Colliders.Count - 1; i++)
+            for (var i = 0; i < colliders.Count - 1; i++)
             {
-                for (int j = i + 1; j < Colliders.Count; j++)
+                
+                for (var j = i + 1; j < colliders.Count; j++)
                 {
-                    Colliders[i].ResolveCollision(Colliders[j], _collisionResolver);
+                    colliders[i].ResolveCollision(colliders[j], _collisionResolver);
                 }
             }
         }
 
-        private void MoveEntities()
+        private void MoveEntities(List<DynamicBody> dynamicBodies)
         {
-            foreach (var dynamicBody in DynamicBodies)
+            foreach (var dynamicBody in dynamicBodies)
             {
                 if (dynamicBody.IsStatic || dynamicBody.Velocity.magnitude < _minimalBodySpeed)
                 {
@@ -72,6 +80,81 @@ namespace _Project.Scripts.Features.Physics.Engine
             _collisionResolver = new(physicsEngineConfig.CollisionResolverConfig);
             
             _minimalBodySpeed = physicsEngineConfig.MinimalBodySpeed;
+        }
+        
+        public List<BaseCollider> GetColliders()
+        {
+            var colliders = _colliders.ToList();
+
+            for (var i = colliders.Count - 1; i >= 0; i--)
+            {
+                if (colliders[i] == null)
+                {
+                    colliders.RemoveAt(i);
+                }
+            }
+            
+            return colliders;
+        }
+        
+        public List<DynamicBody> GetDynamicBodies()
+        {
+            var dynamicBodies = _dynamicBodies.ToList();
+
+            for (var i = dynamicBodies.Count - 1; i >= 0; i--)
+            {
+                if (dynamicBodies[i] == null)
+                {
+                    dynamicBodies.RemoveAt(i);
+                }
+            }
+            
+            return dynamicBodies;
+        }
+        
+        public List<ForceProvider> GetForceProviders()
+        {
+            var forceProviders = _forceProviders.ToList();
+
+            for (var i = forceProviders.Count - 1; i >= 0; i--)
+            {
+                if (forceProviders[i] == null)
+                {
+                    forceProviders.RemoveAt(i);
+                }
+            }
+            
+            return forceProviders;
+        }
+
+        public void AddCollider(BaseCollider collider)
+        {
+            _colliders.Add(collider);
+        }
+
+        public void RemoveCollider(BaseCollider collider)
+        {
+            _colliders.Remove(collider);
+        }
+
+        public void AddDynamicBody(DynamicBody dynamicBody)
+        {
+            _dynamicBodies.Add(dynamicBody);
+        }
+
+        public void RemoveDynamicBody(DynamicBody dynamicBody)
+        {
+            _dynamicBodies.Remove(dynamicBody);
+        }
+
+        public void AddForceProvider(ForceProvider forceProvider)
+        {
+            _forceProviders.Add(forceProvider);
+        }
+
+        public void RemoveForceProvider(ForceProvider forceProvider)
+        {
+            _forceProviders.Remove(forceProvider);
         }
     }
 }

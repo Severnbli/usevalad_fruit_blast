@@ -9,12 +9,12 @@ namespace _Project.Scripts.Features.Physics.Colliders
 {
     public abstract class BaseCollider: MonoBehaviour
     {
-        [SerializeField] private bool _isCollide = true;
+        [SerializeField] private bool _isTrigger = false;
         
-        public bool IsCollide { get => _isCollide; }
+        public bool IsTrigger { get => _isTrigger; }
         public DynamicBody DynamicBody { get; set; }
         
-        public virtual void Start()
+        protected void Start()
         {
             if (!Context.Container.TryGetComponent(out PhysicsEngine engine))
             {
@@ -22,7 +22,15 @@ namespace _Project.Scripts.Features.Physics.Colliders
                 return;
             }
             
-            engine.Colliders.Add(this);
+            engine.AddCollider(this);
+        }
+        
+        protected void OnDestroy()
+        {
+            if (Context.Container != null && Context.Container.TryGetComponent(out PhysicsEngine engine))
+            {
+                engine.RemoveCollider(this);
+            }
         }
         
         public abstract void Accept(IColliderVisitor visitor);
@@ -39,27 +47,9 @@ namespace _Project.Scripts.Features.Physics.Colliders
             Accept(collisionResolver, other);
         }
 
-        public void SetIsCollide(bool isCollide)
+        public void SetIsTrigger(bool isTrigger)
         {
-            _isCollide = isCollide;
-        }
-
-        protected void OnDestroy()
-        {
-            if (Context.Container != null && Context.Container.TryGetComponent(out PhysicsEngine engine))
-            {
-                engine.Colliders.Remove(this);
-            }
-        }
-
-        public override bool Equals(object other)
-        {
-            return other is BaseCollider;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
+            _isTrigger = isTrigger;
         }
     }
 }

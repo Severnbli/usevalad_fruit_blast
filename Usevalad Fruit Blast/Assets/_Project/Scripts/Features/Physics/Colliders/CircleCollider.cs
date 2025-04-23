@@ -59,20 +59,5 @@ namespace _Project.Scripts.Features.Physics.Colliders
             min = new Vector2(point.x - radius, point.y - radius);
             max = new Vector2(point.x + radius, point.y + radius);
         }
-
-        public override bool Equals(object other)
-        {
-            return other is CircleCollider otherCircle && Equals(otherCircle);
-        }
-
-        public bool Equals(CircleCollider other)
-        {
-            return Point.Equals(other.Point) && Radius.Equals(other.Radius);
-        }
-
-        public override int GetHashCode()
-        {
-            return Point.GetHashCode() ^ Radius.GetHashCode();
-        }
     }
 }

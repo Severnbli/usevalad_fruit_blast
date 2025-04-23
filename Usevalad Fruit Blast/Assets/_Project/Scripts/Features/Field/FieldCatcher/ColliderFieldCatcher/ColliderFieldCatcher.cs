@@ -116,12 +116,12 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
 
         public override void OpenCatcher()
         {
-            _bottomCollider?.SetIsCollide(false);
+            _bottomCollider?.SetIsTrigger(true);
         }
 
         public override void CloseCatcher()
         {
-            _bottomCollider?.SetIsCollide(true);
+            _bottomCollider?.SetIsTrigger(false);
         }
     }
 }
