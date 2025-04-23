@@ -23,7 +23,7 @@ namespace _Project.Scripts.Features.Physics.Dynamic
         public bool IsStatic { get => _isStatic; set => _isStatic = value; }
         public bool UseGravity { get => _useGravity; set => _useGravity = value; }
 
-        public void Start()
+        protected void Start()
         {
             var colliders = gameObject.GetComponents<BaseCollider>();
 
@@ -38,14 +38,14 @@ namespace _Project.Scripts.Features.Physics.Dynamic
                 return;
             }
             
-            engine.DynamicBodies.Add(this);
+            engine.AddDynamicBody(this);
         }
         
         protected void OnDestroy()
         {
             if (Context.Container != null && Context.Container.TryGetComponent(out PhysicsEngine engine))
             {
-                engine.DynamicBodies.Remove(this);
+                engine.RemoveDynamicBody(this);
             }
         }
         
