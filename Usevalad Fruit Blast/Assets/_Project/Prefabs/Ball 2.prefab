@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isTrigger: 0
   _point: {x: 0, y: 0}
-  _radius: 0.5
+  _radius: 0.6
 --- !u!114 &958517651673871564
 MonoBehaviour:
   m_ObjectHideFlags: 0
