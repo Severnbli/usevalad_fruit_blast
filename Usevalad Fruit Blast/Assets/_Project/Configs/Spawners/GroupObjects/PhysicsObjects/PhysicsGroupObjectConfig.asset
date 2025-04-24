@@ -16,8 +16,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f4c57046d6ca89643928daf45b2d3ff0, type: 2}
   _minScale: 0.8
   _maxScale: 1.2
-  _minMass: 0.5
-  _maxMass: 0.9
+  _minMass: 1
+  _maxMass: 1.2
   _startVector: {x: 0.45, y: -0.3}
   _minStartSpeed: 0.2
   _maxStartSpeed: 0.5
