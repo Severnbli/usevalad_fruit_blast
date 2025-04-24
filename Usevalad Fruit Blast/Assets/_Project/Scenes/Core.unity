@@ -1224,6 +1224,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fieldProvider: {fileID: 1110915080}
   _config: {fileID: 11400000, guid: f158b463581e3e64faf0b71ec1857451, type: 2}
+  _deathCollidersOffset: 4
+  _deathCollidersSize: 0.5
 --- !u!114 &1747694247
 MonoBehaviour:
   m_ObjectHideFlags: 0

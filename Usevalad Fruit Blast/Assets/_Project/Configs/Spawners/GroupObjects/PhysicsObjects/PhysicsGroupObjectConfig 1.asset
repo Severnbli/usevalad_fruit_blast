@@ -15,10 +15,11 @@ MonoBehaviour:
   _objectConfig:
   - {fileID: 11400000, guid: 33e31606f76019c468c2a5ba260a6c9b, type: 2}
   - {fileID: 11400000, guid: 0cd32dd00248584448647af8f9d82972, type: 2}
-  _minScale: 0.3
-  _maxScale: 2
-  _minMass: 0.5
+  _minScale: 0.5
+  _maxScale: 1
+  _minMass: 0.2
   _maxMass: 1
-  _startVector: {x: 0, y: 5}
+  _minStartVector: {x: 0, y: 0}
+  _maxStartVector: {x: 0, y: 0}
   _minStartSpeed: 0.5
   _maxStartSpeed: 0.9

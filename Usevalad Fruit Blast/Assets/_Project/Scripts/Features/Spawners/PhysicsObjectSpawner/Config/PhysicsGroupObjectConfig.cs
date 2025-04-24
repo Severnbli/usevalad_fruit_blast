@@ -12,8 +12,8 @@ namespace _Project.Scripts.Features.Spawners.PhysicsObjectSpawner.Config
         [SerializeField] private float _maxScale = 1f;
         [SerializeField] private float _minMass = 1f;
         [SerializeField] private float _maxMass = 1f;
-        [SerializeField] private Vector2 _startVectorMin = Vector2.zero;
-        [SerializeField] private Vector2 _startVectorMax = Vector2.zero;
+        [SerializeField] private Vector2 _minStartVector = Vector2.zero;
+        [SerializeField] private Vector2 _maxStartVector = Vector2.zero;
         [SerializeField] private float _minStartSpeed = 1f;
         [SerializeField] private float _maxStartSpeed = 1f;
         
@@ -22,8 +22,8 @@ namespace _Project.Scripts.Features.Spawners.PhysicsObjectSpawner.Config
         public float MaxScale => _maxScale;
         public float MinMass => _minMass;
         public float MaxMass => _maxMass;
-        public Vector2 StartVectorMin => _startVectorMin;
-        public Vector2 StartVectorMax => _startVectorMax;
+        public Vector2 MinStartVector => _minStartVector;
+        public Vector2 MaxStartVector => _maxStartVector;
         public float MinStartSpeed => _minStartSpeed;
         public float MaxStartSpeed => _maxStartSpeed;
     }
