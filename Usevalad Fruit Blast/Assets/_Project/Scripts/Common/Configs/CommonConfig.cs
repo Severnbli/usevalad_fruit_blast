@@ -4,7 +4,7 @@ using _Project.Scripts.Features.Gizmo.GizmoProvider.BaseGizmoProvider;
 using _Project.Scripts.Features.Physics.Engine.Config;
 using _Project.Scripts.Features.Physics.Forces.GravityForce;
 using _Project.Scripts.Features.Random.Config;
-using _Project.Scripts.Features.Spawners.BallSpawner;
+using _Project.Scripts.Features.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
 using UnityEngine;
 
 namespace _Project.Scripts.Common.Configs
@@ -18,7 +18,7 @@ namespace _Project.Scripts.Common.Configs
         
         [SerializeField] private FieldCatcher _fieldCatcher;
         [SerializeField] private FieldProvider _fieldProvider;
-        [SerializeField] private BallSpawner _ballSpawner;
+        [SerializeField] private FieldCatcherSpawner _fieldCatcherSpawner;
         
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public BaseGizmoProviderConfig BaseGizmoProviderConfig => _baseGizmoProviderConfig;
@@ -26,6 +26,6 @@ namespace _Project.Scripts.Common.Configs
         public RandomProviderConfig RandomProviderConfig => _randomProviderConfig;
         public FieldCatcher FieldCatcher => _fieldCatcher;
         public FieldProvider FieldProvider => _fieldProvider;
-        public BallSpawner BallSpawner => _ballSpawner;
+        public FieldCatcherSpawner FieldCatcherSpawner => _fieldCatcherSpawner;
     }
 }

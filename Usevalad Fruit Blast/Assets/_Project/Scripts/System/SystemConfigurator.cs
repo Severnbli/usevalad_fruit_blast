@@ -43,7 +43,7 @@ namespace _Project.Scripts.System
             Context.Container.AddFeature<GravityForceProvider>(_commonConfig.GravityForceProviderConfig);
             Context.Container.AddFeature<RandomProvider>(_commonConfig.RandomProviderConfig);
             
-            _commonConfig.BallSpawner.Init(null);
+            _commonConfig.FieldCatcherSpawner.Init(null);
         }
 
         private void OnDisable()

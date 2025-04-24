@@ -851,10 +851,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 861251fd6b1c42169507c05b835f36ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 5413519283949544479, guid: cfbb42da505a14f419c3349cb7015911, type: 3}
-  _button: {fileID: 1628740120}
+  _physicsGroupsObjectConfigs:
+  - {fileID: 11400000, guid: fea98dc32ba2dff42bbb90b6bacd25f1, type: 2}
+  - {fileID: 11400000, guid: fdde52b94a9fa2540997b4f43d4169c7, type: 2}
   _fieldCatcher: {fileID: 1747694246}
-  _config: {fileID: 11400000, guid: d016f49d015ab2245ae87fefe3a88644, type: 2}
 --- !u!1 &1535904484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,7 +1110,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1628740121}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1383715386}
+        m_TargetAssemblyTypeName: _Project.Scripts.Features.Spawners.BallSpawner.BallSpawner,
+          Assembly-CSharp
+        m_MethodName: Spawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1628740121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,7 +1579,7 @@ MonoBehaviour:
     _seed: 24
   _fieldCatcher: {fileID: 1747694246}
   _fieldProvider: {fileID: 1110915080}
-  _ballSpawner: {fileID: 1383715386}
+  _fieldCatcherSpawner: {fileID: 1383715386}
 --- !u!4 &2082551228
 Transform:
   m_ObjectHideFlags: 0
