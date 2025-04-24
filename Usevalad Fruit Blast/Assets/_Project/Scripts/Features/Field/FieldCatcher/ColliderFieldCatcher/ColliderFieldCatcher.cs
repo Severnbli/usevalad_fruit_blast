@@ -57,13 +57,18 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             var halfCatcherSize = catcherSize / 2f;
             
             _leftCollider.PointA = new Vector2(-halfFieldSize.x, -halfFieldSize.y);
-            _leftCollider.PointB = new Vector2(-halfCatcherSize.x, halfFieldSize.y - _config.Margin.Top);
-            
+            _leftCollider.PointB = new Vector2(-halfCatcherSize.x, halfFieldSize.y * 2f);
+            // _leftCollider.PointB = new Vector2(-halfCatcherSize.x, halfFieldSize.y - _config.Margin.Top);
+
             _rightCollider.PointA = new Vector2(halfCatcherSize.x, -halfFieldSize.y);
-            _rightCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y - _config.Margin.Top);
-            
-            _bottomCollider.PointA = new Vector2(-halfCatcherSize.x + 0.1f, -halfFieldSize.y);
-            _bottomCollider.PointB = new Vector2(halfCatcherSize.x - 0.1f, halfFieldSize.y - _config.Margin.Top - catcherSize.y);
+            _rightCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y * 2f);
+            // _rightCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y - _config.Margin.Top);
+
+            _bottomCollider.PointA = new Vector2(-halfFieldSize.x, -halfFieldSize.y);
+            _bottomCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y - _config.Margin.Top - catcherSize.y);
+
+            // _bottomCollider.PointA = new Vector2(-halfCatcherSize.x + 0.1f, -halfFieldSize.y);
+            // _bottomCollider.PointB = new Vector2(halfCatcherSize.x - 0.1f, halfFieldSize.y - _config.Margin.Top - catcherSize.y);
         }
 
         public override Vector2 GetCatcherSize()
