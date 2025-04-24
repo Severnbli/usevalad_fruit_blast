@@ -45,7 +45,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
         public void Visit(CircleCollider c, RectangleCollider r)
         {
-            if (!IsCircleRectangleCollider(c, r))
+            if (!IsCircleRectangleCollide(c, r))
             {
                 return;
             }
@@ -57,7 +57,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
         
         public void Visit(RectangleCollider r, CircleCollider c)
         {
-            if (!IsCircleRectangleCollider(c, r))
+            if (!IsCircleRectangleCollide(c, r))
             {
                 return;
             }
@@ -151,7 +151,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
                 case (false, false):
                 {
-                    correction *= (obj1.Mass + obj2.Mass);
+                    correction /= (obj1.Mass + obj2.Mass);
                 
                     correctionObj1 = new Vector3(correction.x, correction.y) * obj2.Mass;
                     correctionObj2 = new Vector3(correction.x, correction.y) * obj1.Mass;
@@ -233,7 +233,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
                    || r2PointA.x > r1PointB.x);
         }
 
-        public static bool IsCircleRectangleCollider(CircleCollider c, RectangleCollider r)
+        public static bool IsCircleRectangleCollide(CircleCollider c, RectangleCollider r)
         {
             var rPointA = r.PointA;
             var rPointB = r.PointB;

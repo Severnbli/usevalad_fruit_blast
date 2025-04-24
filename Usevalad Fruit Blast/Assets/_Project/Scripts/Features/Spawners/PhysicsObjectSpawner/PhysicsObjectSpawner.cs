@@ -43,11 +43,17 @@ namespace _Project.Scripts.Features.Spawners.PhysicsObjectSpawner
             
             var randMass = (float) _randomProvider.Random.NextDouble() 
                 * (randGroup.MaxMass - randGroup.MinMass) + randGroup.MinMass;
-            var randSpeed = (float) _randomProvider.Random.NextDouble()
+            var randStartSpeed = (float) _randomProvider.Random.NextDouble()
                 * (randGroup.MaxStartSpeed - randGroup.MinStartSpeed) + randGroup.MinStartSpeed;
+            var randStartVector = new Vector2(
+                (float) _randomProvider.Random.NextDouble() 
+                * (randGroup.StartVectorMax.x - randGroup.StartVectorMin.x) + randGroup.StartVectorMin.x,
+                (float) _randomProvider.Random.NextDouble()
+                * (randGroup.StartVectorMax.y - randGroup.StartVectorMin.y) + randGroup.StartVectorMin.y
+            );
             
             dynamicBody.Mass = randMass;
-            dynamicBody.Velocity = randSpeed * randGroup.StartVector;
+            dynamicBody.Velocity = randStartSpeed * randStartVector;
             
             return true;
         }
