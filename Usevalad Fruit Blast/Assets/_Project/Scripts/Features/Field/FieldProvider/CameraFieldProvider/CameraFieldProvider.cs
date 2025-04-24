@@ -22,6 +22,18 @@ namespace _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider
             return new Vector2(TargetCamera.transform.position.x, TargetCamera.transform.position.y);
         }
 
+        public override Vector2 GetConvertedScreenSpacePosition(Vector2 screenSpacePosition)
+        {
+            var fieldSize = GetFieldSize();
+            var fieldPosition = GetFieldPosition();
+            
+            var position = new Vector2(fieldPosition.x - fieldSize.x / 2f, fieldPosition.y - fieldSize.y / 2f);
+            position.x += screenSpacePosition.x / Screen.width * fieldSize.x;
+            position.y += screenSpacePosition.y / Screen.height * fieldSize.y;
+            
+            return position;
+        }
+
         public override void Init(IFeatureConfig config)
         {
             if (config is not CameraFieldProviderConfig fieldProviderConfig)
