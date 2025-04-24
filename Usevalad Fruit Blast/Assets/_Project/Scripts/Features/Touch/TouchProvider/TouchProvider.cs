@@ -2,9 +2,9 @@
 using _Project.Scripts.Features.Field.FieldProvider;
 using UnityEngine;
 
-namespace _Project.Scripts.Features.Touch.TouchHandler
+namespace _Project.Scripts.Features.Touch.TouchProvider
 {
-    public abstract class TouchHandler : BaseFeature
+    public abstract class TouchProvider : BaseFeature
     {
         [SerializeField] protected FieldProvider _fieldProvider;
         
