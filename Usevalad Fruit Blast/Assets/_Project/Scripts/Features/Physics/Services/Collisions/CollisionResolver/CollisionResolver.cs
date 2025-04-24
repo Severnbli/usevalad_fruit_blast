@@ -9,15 +9,13 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 {
     public class CollisionResolver : IColliderVisitorWithOther
     {
-        private float _positionCorrectionPercent = 0.25f;
-        private float _positionCorrectionSlop = 0.1f;
+        private CollisionResolverConfig _config;
         
         public CollisionResolver() {}
 
         public CollisionResolver(CollisionResolverConfig config)
         {
-            _positionCorrectionPercent = config.PositionCorrectionPercent;
-            _positionCorrectionSlop = config.PositionCorrectionSlop;
+            _config = config;
         }
         
         public void Visit(CircleCollider c1, CircleCollider c2)
@@ -123,8 +121,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
         private void PositionalCorrection(DynamicBody obj1, DynamicBody obj2, Vector2 normal, float depth)
         {
-            var correctionDepth = Mathf.Max(depth - _positionCorrectionSlop, 0f);
-            var correction = correctionDepth * _positionCorrectionPercent * normal;
+            var correctionDepth = Mathf.Max(depth - _config.PositionCorrectionSlop, 0f);
+            var correction = correctionDepth * _config.PositionCorrectionPercent * normal;
 
             Vector3 correctionObj1;
             Vector3 correctionObj2;
