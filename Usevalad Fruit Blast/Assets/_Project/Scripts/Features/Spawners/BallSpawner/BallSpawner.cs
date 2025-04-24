@@ -10,20 +10,13 @@ namespace _Project.Scripts.Features.Spawners.BallSpawner
 {
     public class BallSpawner : ObjectSpawner
     {
-        [SerializeField] private Button _button;
         [SerializeField] private FieldCatcher _fieldCatcher;
         [SerializeField] private BallSpawnerConfig _config;
         
         private RandomProvider _randomProvider;
         
-        public Button Button => _button;
         public FieldCatcher FieldCatcher => _fieldCatcher;
         public BallSpawnerConfig Config => _config;
-        
-        public void Start()
-        {
-            _button.onClick.AddListener(Spawn);
-        }
         
         public override void Spawn()
         {
