@@ -14,12 +14,12 @@ namespace _Project.Scripts.Features.Physics.Forces
         public float Factor { get => _factor; set => _factor = value; }
         public Vector2 Direction { get => _direction; set => _direction = value; }
 
-        public Vector2 GetForce(float deltaTime)
+        public Vector2 GetForce()
         {
             return _factor * _direction;
         }
         
-        public abstract void ApplyForceToDynamicBody(DynamicBody dynamicBody, float deltaTime);
+        public abstract Vector2 GetForceByDynamicBody(DynamicBody dynamicBody);
 
         public override void Init(IFeatureConfig config)
         {

@@ -1,17 +1,18 @@
 ﻿using _Project.Scripts.Features.Physics.Dynamic;
+using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Forces.GravityForce
 {
     public class GravityForceProvider : ForceProvider
     {
-        public override void ApplyForceToDynamicBody(DynamicBody dynamicBody, float deltaTime)
+        public override Vector2 GetForceByDynamicBody(DynamicBody dynamicBody)
         {
             if (!dynamicBody.UseGravity)
             {
-                return;
+                return Vector2.zero;
             }
             
-            dynamicBody.Velocity += dynamicBody.GravityFactor * GetForce(deltaTime);
+            return dynamicBody.GravityFactor * GetForce();
         }
     }
 }
