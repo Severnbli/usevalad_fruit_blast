@@ -32,10 +32,9 @@ namespace _Project.Scripts.Features.Physics.Engine
         {
             foreach (var dynamicBody in DynamicBodies)
             {
-                
                 foreach (var forceProvider in ForceProviders)
                 {
-                    forceProvider.ApplyForceToDynamicBody(dynamicBody, Time.fixedDeltaTime);
+                    dynamicBody.ApplyForce(forceProvider.GetForceByDynamicBody(dynamicBody) * Time.fixedDeltaTime);
                 }
             }
         }
