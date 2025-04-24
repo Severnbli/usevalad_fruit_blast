@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mass: 0.7
-  _gravityFactor: 1
+  _gravityFactor: 0.8
   _bouncinessFactor: 0.8
   _isStatic: 0
   _useGravity: 1
