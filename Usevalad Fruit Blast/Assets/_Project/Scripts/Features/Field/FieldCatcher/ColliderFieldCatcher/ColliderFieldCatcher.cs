@@ -8,10 +8,16 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
     public class ColliderFieldCatcher : FieldCatcher
     {
         [SerializeField] private ColliderFieldCatcherConfig _config;
+        [SerializeField] private float _deathCollidersOffset = 0.5f;
+        [SerializeField] private float _deathCollidersSize = 0.5f;
         
         private RectangleCollider _leftCollider;
         private RectangleCollider _rightCollider;
         private RectangleCollider _bottomCollider;
+        private RectangleCollider _topDeathCollider;
+        private RectangleCollider _bottomDeathCollider;
+        private RectangleCollider _leftDeathCollider;
+        private RectangleCollider _rightDeathCollider;
         private DynamicBody _dynamicBody;
         private Vector2 _lastCatcherSize = Vector2.zero;
         
@@ -22,10 +28,19 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             _leftCollider = gameObject.AddComponent<RectangleCollider>();
             _rightCollider = gameObject.AddComponent<RectangleCollider>();
             _bottomCollider = gameObject.AddComponent<RectangleCollider>();
+            _topDeathCollider = gameObject.AddComponent<RectangleCollider>();
+            _bottomDeathCollider = gameObject.AddComponent<RectangleCollider>();
+            _leftDeathCollider = gameObject.AddComponent<RectangleCollider>();
+            _rightDeathCollider = gameObject.AddComponent<RectangleCollider>();
             
             _dynamicBody = gameObject.AddComponent<DynamicBody>();
             _dynamicBody.IsStatic = true;
             _dynamicBody.UseGravity = false;
+            
+            _topDeathCollider.IsTrigger = true;
+            _bottomDeathCollider.IsTrigger = true;
+            _leftDeathCollider.IsTrigger = true;
+            _rightDeathCollider.IsTrigger = true;
         }
 
         public void FixedUpdate()
@@ -53,17 +68,39 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
                 return;
             }
             
+            _lastCatcherSize = catcherSize;
+            
             var halfFieldSize = _fieldProvider.GetFieldSize() / 2f;
             var halfCatcherSize = catcherSize / 2f;
             
             _leftCollider.PointA = new Vector2(-halfFieldSize.x, -halfFieldSize.y);
-            _leftCollider.PointB = new Vector2(-halfCatcherSize.x, halfFieldSize.y * 2f);
+            _leftCollider.PointB = new Vector2(-halfCatcherSize.x, halfFieldSize.y);
 
             _rightCollider.PointA = new Vector2(halfCatcherSize.x, -halfFieldSize.y);
-            _rightCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y * 2f);
+            _rightCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y);
 
             _bottomCollider.PointA = new Vector2(-halfFieldSize.x, -halfFieldSize.y);
             _bottomCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y - _config.Margin.Top - catcherSize.y);
+            
+            var pointAA = new Vector2(_leftCollider.PointA.x - _deathCollidersOffset - _deathCollidersSize,
+                _leftCollider.PointA.y - _deathCollidersOffset - _deathCollidersSize);
+            var pointAB = new Vector2(pointAA.x, _leftCollider.PointB.y + _deathCollidersOffset + _deathCollidersSize);
+            var pointBB = new Vector2(_rightCollider.PointB.x + _deathCollidersOffset + _deathCollidersSize, 
+                _rightCollider.PointB.y + _deathCollidersOffset + _deathCollidersSize);
+            var pointBA = new Vector2(_rightCollider.PointB.x + _deathCollidersOffset + _deathCollidersSize,
+                _rightCollider.PointA.y - _deathCollidersOffset - _deathCollidersSize);
+            
+            _topDeathCollider.PointA = new Vector2(pointAB.x, pointAB.y - _deathCollidersSize);
+            _topDeathCollider.PointB = pointBB;
+            
+            _bottomDeathCollider.PointA = pointAA;
+            _bottomDeathCollider.PointB = new Vector2(pointBA.x, pointBA.y + _deathCollidersSize);
+
+            _leftDeathCollider.PointA = pointAA;
+            _leftDeathCollider.PointB = new Vector2(pointAB.x + _deathCollidersSize, pointBB.y);
+            
+            _rightDeathCollider.PointA = new Vector2(pointBA.x - _deathCollidersSize, pointBA.y);
+            _rightDeathCollider.PointB = pointBB;
         }
 
         public override Vector2 GetCatcherSize()
