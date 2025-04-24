@@ -11,7 +11,7 @@ namespace _Project.Scripts.Features.Physics.Colliders
     {
         [SerializeField] private bool _isTrigger = false;
         
-        public bool IsTrigger { get => _isTrigger; }
+        public bool IsTrigger { get => _isTrigger; set => _isTrigger = value; }
         public DynamicBody DynamicBody { get; set; }
         
         protected void Start()
