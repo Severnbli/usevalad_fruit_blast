@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6f9a69c7f647eabdcf605292fb2f23, type: 3}
   m_Name: CollisionResolverConfig
   m_EditorClassIdentifier: 
-  _positionCorrectionPercent: 0.5
-  _positionCorrectionSlop: 0.1
+  _positionCorrectionPercent: 0.9
+  _positionCorrectionSlop: 0.07

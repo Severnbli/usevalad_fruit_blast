@@ -47,9 +47,9 @@ namespace _Project.Scripts.Features.Spawners.PhysicsObjectSpawner
                 * (randGroup.MaxStartSpeed - randGroup.MinStartSpeed) + randGroup.MinStartSpeed;
             var randStartVector = new Vector2(
                 (float) _randomProvider.Random.NextDouble() 
-                * (randGroup.StartVectorMax.x - randGroup.StartVectorMin.x) + randGroup.StartVectorMin.x,
+                * (randGroup.MaxStartVector.x - randGroup.MinStartVector.x) + randGroup.MinStartVector.x,
                 (float) _randomProvider.Random.NextDouble()
-                * (randGroup.StartVectorMax.y - randGroup.StartVectorMin.y) + randGroup.StartVectorMin.y
+                * (randGroup.MaxStartVector.y - randGroup.MinStartVector.y) + randGroup.MinStartVector.y
             );
             
             dynamicBody.Mass = randMass;
