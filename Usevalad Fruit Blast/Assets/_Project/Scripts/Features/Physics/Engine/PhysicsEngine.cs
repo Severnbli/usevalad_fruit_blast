@@ -35,7 +35,7 @@ namespace _Project.Scripts.Features.Physics.Engine
                 
                 foreach (var forceProvider in ForceProviders)
                 {
-                    dynamicBody.ApplyForce(forceProvider.GetForce() * Time.fixedDeltaTime);
+                    forceProvider.ApplyForceToDynamicBody(dynamicBody, Time.fixedDeltaTime);
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.System;
 using UnityEngine;
@@ -13,10 +14,12 @@ namespace _Project.Scripts.Features.Physics.Forces
         public float Factor { get => _factor; set => _factor = value; }
         public Vector2 Direction { get => _direction; set => _direction = value; }
 
-        public Vector2 GetForce()
+        public Vector2 GetForce(float deltaTime)
         {
             return _factor * _direction;
         }
+        
+        public abstract void ApplyForceToDynamicBody(DynamicBody dynamicBody, float deltaTime);
 
         public override void Init(IFeatureConfig config)
         {
