@@ -728,6 +728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130e47aa9ad14de686f5937e95edf51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DestroyableObjects: []
   _touchProvider: {fileID: 1971741381}
   _mouseProvider: {fileID: 0}
   _destroyDistance: 0
@@ -1705,6 +1706,8 @@ MonoBehaviour:
   _baseGizmoProviderConfig: {fileID: 11400000, guid: 699be5686a82f454299f33979de6d938, type: 2}
   _randomProviderConfig:
     _seed: 24
+  _clickObjectDestroyerConfig:
+    _destroyDistance: 0.5
   _fieldCatcher: {fileID: 1747694246}
   _fieldProvider: {fileID: 1110915080}
   _fieldCatcherSpawner: {fileID: 1383715386}
