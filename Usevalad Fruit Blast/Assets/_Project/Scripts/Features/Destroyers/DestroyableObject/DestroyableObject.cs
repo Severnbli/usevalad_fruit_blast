@@ -30,5 +30,10 @@ namespace _Project.Scripts.Features.Destroyers.DestroyableObject
                 destroyer.DestroyableObjects.Remove(this);
             }
         }
+
+        public virtual void DestroyDestroyableObject(ObjectDestroyer destroyer)
+        {
+            Destroy(gameObject);
+        }
     }
 }

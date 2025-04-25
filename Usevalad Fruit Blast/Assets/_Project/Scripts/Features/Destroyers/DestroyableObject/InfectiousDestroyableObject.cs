@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.System;
+﻿using System.Collections.Generic;
+using _Project.Scripts.System;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Destroyers.DestroyableObject
@@ -11,38 +12,30 @@ namespace _Project.Scripts.Features.Destroyers.DestroyableObject
         public int InfectiousGroupId => _infectiousGroupId;
         public float InfectiousRadius => _infectiousRadius;
 
-        protected override void OnDestroy()
+        public void DestroyInfectious(ObjectDestroyer destroyer)
         {
-            base.OnDestroy();
-            
-            DestroySameInfectiousGroupByInfectiousRadius();
-        }
-
-        private void DestroySameInfectiousGroupByInfectiousRadius()
-        {
-            if (!Context.TryGetComponentsFromContainer<ObjectDestroyer>(out var destroyers))
+            foreach (var destroyableObject in destroyer.DestroyableObjects)
             {
-                return;
-            }
-
-            foreach (var destroyer in destroyers)
-            {
-                foreach (var destroyableObject in destroyer.DestroyableObjects)
+                if (destroyableObject is not InfectiousDestroyableObject infectiousDestroyableObject
+                    || infectiousDestroyableObject._infectiousGroupId != _infectiousGroupId)
                 {
-                    if (destroyableObject is not InfectiousDestroyableObject infectiousDestroyableObject
-                        || infectiousDestroyableObject.InfectiousGroupId != _infectiousGroupId)
-                    {
-                        continue;
-                    }
-                    
-                    var distance = Vector2.Distance(destroyableObject.transform.position, transform.position);
+                    continue;
+                }
+                
+                var distance = Vector2.Distance(destroyableObject.transform.position, transform.position);
 
-                    if (distance <= _infectiousRadius)
-                    {
-                        Destroy(destroyableObject.gameObject);
-                    }
+                if (distance <= _infectiousRadius)
+                {
+                    destroyableObject.DestroyDestroyableObject(destroyer);
                 }
             }
+        }
+
+        public override void DestroyDestroyableObject(ObjectDestroyer destroyer)
+        {
+            base.DestroyDestroyableObject(destroyer);
+            
+            DestroyInfectious(destroyer);
         }
     }
 }
