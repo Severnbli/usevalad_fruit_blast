@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using _Project.Scripts.System;
+﻿using _Project.Scripts.System;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Destroyers.DestroyableObject
@@ -12,30 +11,38 @@ namespace _Project.Scripts.Features.Destroyers.DestroyableObject
         public int InfectiousGroupId => _infectiousGroupId;
         public float InfectiousRadius => _infectiousRadius;
 
-        public void DestroyInfectious(ObjectDestroyer destroyer)
+        protected override void OnDestroy()
         {
-            foreach (var destroyableObject in destroyer.DestroyableObjects)
-            {
-                if (destroyableObject is not InfectiousDestroyableObject infectiousDestroyableObject
-                    || infectiousDestroyableObject._infectiousGroupId != _infectiousGroupId)
-                {
-                    continue;
-                }
-                
-                var distance = Vector2.Distance(destroyableObject.transform.position, transform.position);
-
-                if (distance <= _infectiousRadius)
-                {
-                    destroyableObject.DestroyDestroyableObject(destroyer);
-                }
-            }
+            base.OnDestroy();
+            
+            DestroySameInfectiousGroupByInfectiousRadius();
         }
 
-        public override void DestroyDestroyableObject(ObjectDestroyer destroyer)
+        private void DestroySameInfectiousGroupByInfectiousRadius()
         {
-            base.DestroyDestroyableObject(destroyer);
-            
-            DestroyInfectious(destroyer);
+            if (!Context.TryGetComponentsFromContainer<ObjectDestroyer>(out var destroyers))
+            {
+                return;
+            }
+
+            foreach (var destroyer in destroyers)
+            {
+                foreach (var destroyableObject in destroyer.DestroyableObjects)
+                {
+                    if (destroyableObject is not InfectiousDestroyableObject infectiousDestroyableObject
+                        || infectiousDestroyableObject.InfectiousGroupId != _infectiousGroupId)
+                    {
+                        continue;
+                    }
+                    
+                    var distance = Vector2.Distance(destroyableObject.transform.position, transform.position);
+
+                    if (distance <= _infectiousRadius)
+                    {
+                        Destroy(destroyableObject.gameObject);
+                    }
+                }
+            }
         }
     }
 }
