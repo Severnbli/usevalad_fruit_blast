@@ -1,30 +1,40 @@
-﻿using _Project.Scripts.Features.Common;
+﻿using System;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Controls.Pointer.Touch.TouchProvider
 {
     public class TouchProvider : PointerProvider
     {
-        public bool TryGetTouchPosition(out Vector2 touchPosition)
+        public event Action<Vector2> OnBeginTouch;
+
+        private void Update()
+        {
+            CheckBeginTouch();
+        }
+
+        private void CheckBeginTouch()
+        {
+            if (!TryGetTouchPhase(out TouchPhase touchPhase, out var touch) || touchPhase != TouchPhase.Began)
+            {
+                return;
+            }
+            
+            OnBeginTouch?.Invoke(_fieldProvider.GetConvertedScreenSpacePosition(touch.position));
+        }
+        
+        private bool TryGetTouchPhase(out TouchPhase touchPhase, out UnityEngine.Touch touch)
         {
             if (Input.touchCount <= 0)
             {
-                touchPosition = default;
+                touchPhase = default;
+                touch = default;
                 return false;
             }
 
-            var touch = Input.GetTouch(0);
-
-            if (touch.phase != TouchPhase.Began)
-            {
-                touchPosition = default;
-                return false;
-            }
-
-            touchPosition = _fieldProvider.GetConvertedScreenSpacePosition(touch.position);
+            touch = Input.GetTouch(0);
+            
+            touchPhase = touch.phase;
             return true;
         }
-        
-        public override void Init(IFeatureConfig config) {}
     }
 }
