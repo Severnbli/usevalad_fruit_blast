@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Field.FieldProvider;
+using _Project.Scripts.System;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Controls.Pointer
@@ -9,7 +10,13 @@ namespace _Project.Scripts.Features.Controls.Pointer
         [SerializeField] protected FieldProvider _fieldProvider;
         
         public FieldProvider FieldProvider => _fieldProvider;
-        
-        public override void Init(IFeatureConfig config) {}
+
+        public override void Init(IFeatureConfig config)
+        {
+            if (Context.TryGetFromComponents<FieldProvider>(out var fieldProvider))
+            {
+                _fieldProvider = fieldProvider;
+            }
+        }
     }
 }
