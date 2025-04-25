@@ -23,7 +23,7 @@ namespace _Project.Scripts.Features.Destroyers.ClickObjectDestroyer
                 return;
             }
             
-            Destroy(destroyableObject.gameObject);
+            destroyableObject.DestroyDestroyableObject(this);
         }
 
         public bool TryGetNearestDestroyableObject(Vector2 position, out DestroyableObject.DestroyableObject nearestDestroyableObject)
