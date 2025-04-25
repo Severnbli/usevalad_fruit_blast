@@ -5,7 +5,7 @@ namespace _Project.Scripts.Features.Destroyers.DestroyableObject
 {
     public class DestroyableObject : MonoBehaviour
     {
-        private void Start()
+        protected virtual void Start()
         {
             if (!Context.TryGetComponentsFromContainer<ObjectDestroyer>(out var destroyers))
             {
@@ -18,7 +18,7 @@ namespace _Project.Scripts.Features.Destroyers.DestroyableObject
             }
         }
         
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             if (!Context.TryGetComponentsFromContainer<ObjectDestroyer>(out var destroyers))
             {
