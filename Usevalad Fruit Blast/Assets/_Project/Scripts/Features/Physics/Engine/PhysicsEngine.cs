@@ -28,6 +28,19 @@ namespace _Project.Scripts.Features.Physics.Engine
             ApplyForces();
         }
 
+        private void ResolveCollisions()
+        {
+            var colliders = Colliders.ToList();
+            
+            for (var i = 0; i < colliders.Count - 1; i++)
+            {
+                for (var j = i + 1; j < colliders.Count; j++)
+                {
+                    colliders[i].ResolveCollision(colliders[j], _collisionResolver);
+                }
+            }
+        }
+
         private void ApplyForces()
         {
             foreach (var dynamicBody in DynamicBodies)
@@ -35,20 +48,6 @@ namespace _Project.Scripts.Features.Physics.Engine
                 foreach (var forceProvider in ForceProviders)
                 {
                     dynamicBody.ApplyForce(forceProvider.GetForceByDynamicBody(dynamicBody) * Time.fixedDeltaTime);
-                }
-            }
-        }
-
-        private void ResolveCollisions()
-        {
-            var colliders = Colliders.ToList();
-            
-            for (var i = 0; i < colliders.Count - 1; i++)
-            {
-                
-                for (var j = i + 1; j < colliders.Count; j++)
-                {
-                    colliders[i].ResolveCollision(colliders[j], _collisionResolver);
                 }
             }
         }
@@ -62,7 +61,7 @@ namespace _Project.Scripts.Features.Physics.Engine
                     dynamicBody.Velocity = Vector3.zero;
                     continue;
                 }
-                
+
                 dynamicBody.transform.Translate(dynamicBody.Velocity * Time.fixedDeltaTime);
             }
         }
