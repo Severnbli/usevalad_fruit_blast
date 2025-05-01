@@ -101,7 +101,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
             var massObj1 = obj1.IsStatic ? Mathf.Infinity : obj1.Mass;
             var massObj2 = obj2.IsStatic ? Mathf.Infinity : obj2.Mass;
             
-            var e = Mathf.Max(obj1.BouncinessFactor, obj2.BouncinessFactor);
+            var e = Mathf.Min(obj1.BouncinessFactor, obj2.BouncinessFactor);
             var j = -(1f + e) * velocityAlongNormal / (1f / massObj1 + 1f / massObj2);
             
             var impulse = j * normal;

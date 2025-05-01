@@ -13,13 +13,15 @@ namespace _Project.Scripts.Features.Physics.Engine
 {
     public class PhysicsEngine : BaseFeature
     {
-        [SerializeField] private float _minimalBodySpeed = 0.1f;
+        [SerializeField] private float _minBodySpeed = 0.1f;
+        [SerializeField] private float _maxBodySpeed = 1000f;
+        [SerializeField] private int _collisionResolvingIterations = 6;
         
         private CollisionResolver _collisionResolver;
         
-        public HashSet<BaseCollider> Colliders = new();
-        public HashSet<DynamicBody> DynamicBodies = new();
-        public HashSet<ForceProvider> ForceProviders = new();
+        public readonly List<BaseCollider> Colliders = new();
+        public readonly List<DynamicBody> DynamicBodies = new();
+        public readonly List<ForceProvider> ForceProviders = new();
         
         public void FixedUpdate()
         {
@@ -30,13 +32,14 @@ namespace _Project.Scripts.Features.Physics.Engine
 
         private void ResolveCollisions()
         {
-            var colliders = Colliders.ToList();
-            
-            for (var i = 0; i < colliders.Count - 1; i++)
+            for (var k = 0; k < _collisionResolvingIterations; k++)
             {
-                for (var j = i + 1; j < colliders.Count; j++)
+                for (var i = 0; i < Colliders.Count - 1; i++)
                 {
-                    colliders[i].ResolveCollision(colliders[j], _collisionResolver);
+                    for (var j = i + 1; j < Colliders.Count; j++)
+                    {
+                        Colliders[i].ResolveCollision(Colliders[j], _collisionResolver);
+                    }
                 }
             }
         }
@@ -56,10 +59,15 @@ namespace _Project.Scripts.Features.Physics.Engine
         {
             foreach (var dynamicBody in DynamicBodies)
             {
-                if (dynamicBody.IsStatic || dynamicBody.Velocity.magnitude < _minimalBodySpeed)
+                if (dynamicBody.IsStatic || dynamicBody.Velocity.magnitude < _minBodySpeed)
                 {
                     dynamicBody.Velocity = Vector3.zero;
                     continue;
+                }
+
+                if (dynamicBody.Velocity.magnitude > _maxBodySpeed)
+                {
+                    Destroy(dynamicBody.gameObject);
                 }
 
                 dynamicBody.transform.Translate(dynamicBody.Velocity * Time.fixedDeltaTime);
@@ -75,7 +83,9 @@ namespace _Project.Scripts.Features.Physics.Engine
             
             _collisionResolver = new(physicsEngineConfig.CollisionResolverConfig);
             
-            _minimalBodySpeed = physicsEngineConfig.MinimalBodySpeed;
+            _minBodySpeed = physicsEngineConfig.MinBodySpeed;
+            _maxBodySpeed = physicsEngineConfig.MaxBodySpeed;
+            _collisionResolvingIterations = physicsEngineConfig.CollisionResolvingIterations;
         }
     }
 }
