@@ -12,15 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9fc71ee9d740f7a3c7af3d8d04020d, type: 3}
   m_Name: PhysicsSpawnerConfig
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 0}
-  _spawnGroups: []
-  _minScale: 1
-  _maxScale: 1
   _minMass: 1
-  _maxMass: 1
-  _minBounciness: 0.8
+  _maxMass: 2
+  _minBounciness: 0.7
   _maxBounciness: 0.8
-  _minGravityFactor: 1
+  _minGravityFactor: 0.9
   _maxGravityFactor: 1
-  _minStartVelocity: {x: 0, y: 0}
-  _maxStartVelocity: {x: 0, y: 0}
+  _minStartVelocity: {x: 0, y: -1}
+  _maxStartVelocity: {x: 0, y: -3}
