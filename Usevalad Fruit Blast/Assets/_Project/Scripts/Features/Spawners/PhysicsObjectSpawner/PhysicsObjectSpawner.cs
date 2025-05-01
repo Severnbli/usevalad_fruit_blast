@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Features.Physics.Dynamic;
+﻿using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Spawners.PhysicsObjectSpawner.Config;
 using UnityEngine;
 
@@ -6,56 +7,55 @@ namespace _Project.Scripts.Features.Spawners.PhysicsObjectSpawner
 {
     public abstract class PhysicsObjectSpawner : ObjectSpawner
     {
-        [SerializeField] protected PhysicsGroupObjectConfig[] _physicsGroupsObjectConfigs;
+        [SerializeField] protected PhysicsSpawnerConfig _physicsSpawnerConfig;
         
-        public PhysicsGroupObjectConfig[] PhysicsGroupsObjectConfigs => _physicsGroupsObjectConfigs;
-        
-        public virtual bool TryGetConfiguredObject(out GameObject resultObject)
+        public PhysicsSpawnerConfig PhysicsSpawnerConfig => _physicsSpawnerConfig;
+
+        public override bool TryGetConfiguredObject(out GameObject configuredObject)
         {
-            var randGroup = _physicsGroupsObjectConfigs[_randomProvider.Random.Next(_physicsGroupsObjectConfigs.Length)];
-
-            if (randGroup == null)
+            if (!base.TryGetConfiguredObject(out configuredObject))
             {
-                resultObject = null;
                 return false;
             }
             
-            var randObjectConfig = randGroup.ObjectConfig[_randomProvider.Random.Next(randGroup.ObjectConfig.Length)];
-
-            if (randObjectConfig == null)
-            {
-                resultObject = null;
-                return false;
-            }
+            ConfigureWithPhysicsSettings(configuredObject);
             
-            var randScale = (float) _randomProvider.Random.NextDouble() 
-                * (randGroup.MaxScale - randGroup.MinScale) + randGroup.MinScale;
-            
-            resultObject = Instantiate(randObjectConfig.Prefab, Vector3.zero, Quaternion.identity);
-            resultObject.transform.SetParent(transform);
-            resultObject.transform.localScale = new Vector3(randScale, randScale);
+            return true;
+        }
 
-            if (!resultObject.TryGetComponent(out DynamicBody dynamicBody))
+        private void ConfigureWithPhysicsSettings(GameObject configuredObject)
+        {
+            if (!configuredObject.TryGetComponent(out DynamicBody dynamicBody))
             {
-                Debug.LogWarning($"Physics Object spawner: {resultObject.name} is missing a DynamicBody");
-                return true;
+                Debug.LogWarning($"Physics Object Spawner: {configuredObject.name} is missing a DynamicBody");
+                return;
             }
             
             var randMass = (float) _randomProvider.Random.NextDouble() 
-                * (randGroup.MaxMass - randGroup.MinMass) + randGroup.MinMass;
-            var randStartSpeed = (float) _randomProvider.Random.NextDouble()
-                * (randGroup.MaxStartSpeed - randGroup.MinStartSpeed) + randGroup.MinStartSpeed;
-            var randStartVector = new Vector2(
+                           * (_physicsSpawnerConfig.MaxMass - _physicsSpawnerConfig.MinMass) 
+                           + _physicsSpawnerConfig.MinMass;
+            
+            var randBounciness = (float) _randomProvider.Random.NextDouble() 
+                                 * (_physicsSpawnerConfig.MaxBounciness - _physicsSpawnerConfig.MinBounciness)
+                                 + _physicsSpawnerConfig.MinBounciness;
+            
+            var randGravityFactor = (float) _randomProvider.Random.NextDouble() 
+                                    * (_physicsSpawnerConfig.MaxGravityFactor - _physicsSpawnerConfig.MinGravityFactor)
+                                    + _physicsSpawnerConfig.MinGravityFactor;
+            
+            var randStartVelocity = new Vector2(
                 (float) _randomProvider.Random.NextDouble() 
-                * (randGroup.MaxStartVector.x - randGroup.MinStartVector.x) + randGroup.MinStartVector.x,
+                * (_physicsSpawnerConfig.MaxStartVelocity.x - _physicsSpawnerConfig.MinStartVelocity.x) 
+                + _physicsSpawnerConfig.MinStartVelocity.x,
                 (float) _randomProvider.Random.NextDouble()
-                * (randGroup.MaxStartVector.y - randGroup.MinStartVector.y) + randGroup.MinStartVector.y
+                * (_physicsSpawnerConfig.MaxStartVelocity.y - _physicsSpawnerConfig.MinStartVelocity.y) 
+                + _physicsSpawnerConfig.MinStartVelocity.y
             );
             
             dynamicBody.Mass = randMass;
-            dynamicBody.Velocity = randStartSpeed * randStartVector;
-            
-            return true;
+            dynamicBody.BouncinessFactor = randBounciness;
+            dynamicBody.GravityFactor = randGravityFactor;
+            dynamicBody.Velocity = randStartVelocity;
         }
     }
 }

@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c9fc71ee9d740f7a3c7af3d8d04020d, type: 3}
-  m_Name: PhysicsGroupObjectConfig
+  m_Name: PhysicsSpawnerConfig
   m_EditorClassIdentifier: 
-  _objectConfig:
-  - {fileID: 11400000, guid: f4c57046d6ca89643928daf45b2d3ff0, type: 2}
-  _minScale: 0.8
-  _maxScale: 1.2
-  _minMass: 0.4
-  _maxMass: 1.2
-  _minStartVector: {x: 0, y: 0}
-  _maxStartVector: {x: 0, y: 0}
-  _minStartSpeed: 0.2
-  _maxStartSpeed: 0.5
+  _prefab: {fileID: 0}
+  _spawnGroups: []
+  _minScale: 1
+  _maxScale: 1
+  _minMass: 1
+  _maxMass: 1
+  _minBounciness: 0.8
+  _maxBounciness: 0.8
+  _minGravityFactor: 1
+  _maxGravityFactor: 1
+  _minStartVelocity: {x: 0, y: 0}
+  _maxStartVelocity: {x: 0, y: 0}
