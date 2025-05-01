@@ -32,31 +32,14 @@ namespace _Project.Scripts.Features.Physics.Engine
 
         private void ResolveCollisions()
         {
-            var collisionPairs = new List<CollisionPair>();
-            
-            for (var i = 0; i < Colliders.Count - 1; i++)
+            for (var k = 0; k < _collisionResolvingIterations; k++)
             {
-                for (var j = i + 1; j < Colliders.Count; j++)
+                for (var i = 0; i < Colliders.Count - 1; i++)
                 {
-                    var pair = (Colliders[i], Colliders[j]);
-                    
-                    if (CollisionResolver.TryGetCollisionPair(pair, out var collisionPair))
+                    for (var j = i + 1; j < Colliders.Count; j++)
                     {
-                        collisionPairs.Add(collisionPair);
+                        Colliders[i].ResolveCollision(Colliders[j], _collisionResolver);
                     }
-                }
-            }
-
-            foreach (var collisionPair in collisionPairs)
-            {
-                _collisionResolver.ResolveCollisionWithPositionalCorrection(collisionPair);
-            }
-
-            for (var k = 0; k < _collisionResolvingIterations - 1; k++)
-            {
-                foreach (var collisionPair in collisionPairs)
-                {
-                    _collisionResolver.ResolveCollision(collisionPair);
                 }
             }
         }

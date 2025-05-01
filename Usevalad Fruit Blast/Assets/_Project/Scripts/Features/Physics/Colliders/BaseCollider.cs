@@ -33,9 +33,19 @@ namespace _Project.Scripts.Features.Physics.Colliders
             }
         }
         
+        public abstract void Accept(IColliderVisitor visitor);
+        public abstract void Accept(IColliderVisitorWithOther visitorWithOther, BaseCollider other);
+        public abstract void AcceptCircle(IColliderVisitorWithOther visitorWithOther, CircleCollider c);
+        public abstract void AcceptRectangle(IColliderVisitorWithOther visitorWithOther, RectangleCollider r);
+        
         public abstract float GetArea();
         public abstract Vector2 GetCenter();
         public abstract void GetBoundingRectangle(out Vector2 min, out Vector2 max);
+
+        public void ResolveCollision(BaseCollider other, CollisionResolver collisionResolver)
+        {
+            Accept(collisionResolver, other);
+        }
 
         public void SetIsTrigger(bool isTrigger)
         {

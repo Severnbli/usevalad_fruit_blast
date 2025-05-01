@@ -32,6 +32,26 @@ namespace _Project.Scripts.Features.Physics.Colliders
         {
             return Mathf.Abs((_pointA.x - _pointB.x) * (_pointA.y - _pointB.y));
         }
+        
+        public override void Accept(IColliderVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
+        
+        public override void Accept(IColliderVisitorWithOther visitorWithOther, BaseCollider other)
+        {
+            other.AcceptRectangle(visitorWithOther, this);
+        }
+
+        public override void AcceptCircle(IColliderVisitorWithOther visitorWithOther, CircleCollider c)
+        {
+            visitorWithOther.Visit(c, this);
+        }
+
+        public override void AcceptRectangle(IColliderVisitorWithOther visitorWithOther, RectangleCollider r)
+        {
+            visitorWithOther.Visit(r, this);
+        }
 
         public override Vector2 GetCenter()
         {
