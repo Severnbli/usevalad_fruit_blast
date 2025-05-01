@@ -8,8 +8,6 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
     public class ColliderFieldCatcher : FieldCatcher
     {
         [SerializeField] private ColliderFieldCatcherConfig _config;
-        [SerializeField] private float _deathCollidersOffset = 0.5f;
-        [SerializeField] private float _deathCollidersSize = 0.5f;
         
         private RectangleCollider _leftCollider;
         private RectangleCollider _rightCollider;

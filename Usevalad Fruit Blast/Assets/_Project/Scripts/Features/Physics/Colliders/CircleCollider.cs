@@ -26,26 +26,6 @@ namespace _Project.Scripts.Features.Physics.Colliders
             return Mathf.PI * _radius * _radius;
         }
 
-        public override void Accept(IColliderVisitor visitor)
-        {
-            visitor.Visit(this);
-        }
-
-        public override void Accept(IColliderVisitorWithOther visitorWithOther, BaseCollider other)
-        {
-            other.AcceptCircle(visitorWithOther, this);
-        }
-
-        public override void AcceptCircle(IColliderVisitorWithOther visitorWithOther, CircleCollider c)
-        {
-            visitorWithOther.Visit(c, this);
-        }
-
-        public override void AcceptRectangle(IColliderVisitorWithOther visitorWithOther, RectangleCollider r)
-        {
-            visitorWithOther.Visit(r, this);
-        }
-
         public override Vector2 GetCenter()
         {
             return Point;
