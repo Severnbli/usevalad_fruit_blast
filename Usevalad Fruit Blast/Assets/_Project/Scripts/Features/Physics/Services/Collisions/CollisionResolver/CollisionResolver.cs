@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver
 {
-    public class CollisionResolver : IColliderVisitorWithOther
+    public class CollisionResolver
     {
         private CollisionResolverConfig _config;
         
@@ -17,61 +17,145 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
         {
             _config = config;
         }
+
+        public static bool TryGetCollisionPair((BaseCollider obj1, BaseCollider obj2) pair, out CollisionPair collisionPair)
+        {
+            collisionPair = null;
+
+            var normal = Vector2.zero;
+            var depth = 0f;
+            
+            switch (pair)
+            {
+                case (CircleCollider c1, CircleCollider c2):
+                {
+                    if (!TryGetCirclesCollisionData(c1, c2, ref normal, ref depth))
+                    {
+                        return false;
+                    }
+
+                    break;
+                }
+                case (CircleCollider c, RectangleCollider r):
+                {
+                    if (!TryGetCircleRectangleCollisionData(c, r, ref normal, ref depth))
+                    {
+                        return false;
+                    }
+
+                    break;
+                }
+                case (RectangleCollider r, CircleCollider c):
+                {
+                    if (!TryGetRectangleCircleCollisionData(r, c, ref normal, ref depth))
+                    {
+                        return false;
+                    }
+
+                    break;
+                }
+                case (RectangleCollider r1, RectangleCollider r2):
+                {
+                    if (!TryGetRectanglesCollisionData(r1, r2, ref normal, ref depth))
+                    {
+                        return false;
+                    }
+
+                    break;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
+            
+            collisionPair = new CollisionPair(pair.obj1, pair.obj2, normal, depth);
+            return true;
+        }
         
-        public void Visit(CircleCollider c1, CircleCollider c2)
+        private static bool TryGetCirclesCollisionData(CircleCollider c1, CircleCollider c2, 
+            ref Vector2 normal, ref float depth)
         {
             if (!IsCirclesCollide(c1, c2))
             {
-                return;
+                return false;
             }
             
-            var normal = c1.Point - c2.Point;
-            var displacement = c1.Radius + c2.Radius - normal.magnitude;
+            normal = c1.Point - c2.Point;
+            depth = c1.Radius + c2.Radius - normal.magnitude;
             
-            ResolveCollision(c1, c2, normal.normalized, displacement);
+            return true;
         }
 
-        public void Visit(RectangleCollider r1, RectangleCollider r2)
+        private static bool TryGetRectanglesCollisionData(RectangleCollider r1, RectangleCollider r2, 
+            ref Vector2 normal, ref float depth)
         {
             if (!IsRectanglesCollide(r1, r2))
             {
-                return;
+                return false;
             }
 
-            CalculateMinSeparationNormalAndDepth(r1, r2, out var normal, out var depth);
-
-            ResolveCollision(r1, r2, normal, depth);
+            CalculateMinSeparationNormalAndDepth(r1, r2, out normal, out depth);
+            
+            return true;
         }
 
-        public void Visit(CircleCollider c, RectangleCollider r)
+        private static bool TryGetCircleRectangleCollisionData(CircleCollider c, RectangleCollider r, 
+            ref Vector2 normal, ref float depth)
         {
             if (!IsCircleRectangleCollide(c, r))
             {
-                return;
+                return false;
             }
             
-            CalculateMinSeparationNormalAndDepth(c, r, out var normal, out var depth);
-
-            ResolveCollision(c, r, normal, depth);
+            CalculateMinSeparationNormalAndDepth(c, r, out normal, out depth);
+            
+            return true;
         }
         
-        public void Visit(RectangleCollider r, CircleCollider c)
+        private static bool TryGetRectangleCircleCollisionData(RectangleCollider r, CircleCollider c, 
+            ref Vector2 normal, ref float depth)
         {
             if (!IsCircleRectangleCollide(c, r))
+            {
+                return false;
+            }
+            
+            CalculateMinSeparationNormalAndDepth(r, c, out normal, out depth);
+
+            return true;
+        }
+
+        public void ResolveCollisionWithPositionalCorrection(CollisionPair collisionPair)
+        {
+            if (!IsApplyingImpulseNeeded(collisionPair.Collider1, collisionPair.Collider2))
             {
                 return;
             }
             
-            CalculateMinSeparationNormalAndDepth(r, c, out var normal, out var depth);
+            if (ApplyImpulse(collisionPair.Collider1.DynamicBody, collisionPair.Collider2.DynamicBody, 
+                    collisionPair.Normal))
+            {
+                PositionalCorrection(collisionPair.Collider1.DynamicBody, collisionPair.Collider2.DynamicBody, 
+                    collisionPair.Normal, collisionPair.Depth);
+            }
+        }
+        
+        public void ResolveCollision(CollisionPair collisionPair)
+        {
+            if (!IsApplyingImpulseNeeded(collisionPair.Collider1, collisionPair.Collider2))
+            {
+                return;
+            }
 
-            ResolveCollision(r, c, -normal, depth);
+            ApplyImpulse(collisionPair.Collider1.DynamicBody, collisionPair.Collider2.DynamicBody, collisionPair.Normal);
         }
 
-        private void ResolveCollision(BaseCollider obj1, BaseCollider obj2, Vector2 normal, float depth)
+        public static bool IsApplyingImpulseNeeded(BaseCollider obj1, BaseCollider obj2)
         {
             if (ReferenceEquals(obj1.DynamicBody, null) || ReferenceEquals(obj2.DynamicBody, null))
             {
-                return;
+                return false;
             }
 
             if (obj1.IsTrigger || obj2.IsTrigger)
@@ -79,16 +163,13 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
                 obj1.GetComponent<ColliderTrigger>()?.OnColliderTriggerEnter(obj2);
                 obj2.GetComponent<ColliderTrigger>()?.OnColliderTriggerEnter(obj1);
                 
-                return;
+                return false;
             }
             
-            if (ApplyImpulse(obj1.DynamicBody, obj2.DynamicBody, normal))
-            {
-                PositionalCorrection(obj1.DynamicBody, obj2.DynamicBody, normal, depth);
-            }
+            return true;
         }
 
-        private bool ApplyImpulse(DynamicBody obj1, DynamicBody obj2, Vector2 normal)
+        private static bool ApplyImpulse(DynamicBody obj1, DynamicBody obj2, Vector2 normal)
         {
             if (obj1.IsStatic && obj2.IsStatic)
             {
@@ -172,7 +253,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
             obj2.transform.position -= correctionObj2;
         }
         
-        private void CalculateMinSeparationNormalAndDepth(BaseCollider obj1, BaseCollider obj2, 
+        private static void CalculateMinSeparationNormalAndDepth(BaseCollider obj1, BaseCollider obj2, 
             out Vector2 normal, out float depth)
         {
             obj1.GetBoundingRectangle(out var minPos1, out var maxPos1);

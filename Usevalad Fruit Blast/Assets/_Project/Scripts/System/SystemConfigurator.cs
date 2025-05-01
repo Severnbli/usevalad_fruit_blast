@@ -3,8 +3,6 @@ using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Controls.Pointer.Mouse.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch.TouchProvider;
 using _Project.Scripts.Features.Destroyers.ClickObjectDestroyer;
-using _Project.Scripts.Features.Destroyers.ClickObjectDestroyer.Config;
-using _Project.Scripts.Features.Gizmo.GizmoDrawer.PhysicsGizmoDrawer;
 using _Project.Scripts.Features.Gizmo.GizmoProvider.BaseGizmoProvider;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Forces.GravityForce;
@@ -49,7 +47,6 @@ namespace _Project.Scripts.System
             
             Context.Container.AddFeature<PhysicsEngine>(_commonConfig.PhysicsEngineConfig);
             Context.Container.AddFeature<BaseGizmoProvider>(_commonConfig.BaseGizmoProviderConfig);
-            Context.Container.AddFeature<PhysicsGizmoDrawer>(null);
             Context.Container.AddFeature<GravityForceProvider>(_commonConfig.GravityForceProviderConfig);
             Context.Container.AddFeature<RandomProvider>(_commonConfig.RandomProviderConfig);
             Context.Container.AddFeature<MouseProvider>(null);
