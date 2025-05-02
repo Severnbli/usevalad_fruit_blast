@@ -15,6 +15,7 @@ namespace _Project.Scripts.Features.Destroyers.ClickObjectDestroyer
         
         public TouchProvider TouchProvider => _touchProvider;
         public MouseProvider MouseProvider => _mouseProvider;
+        public float DestroyDistance => _destroyDistance;
 
         private void DestroyObjectAt(Vector2 position)
         {
@@ -23,7 +24,7 @@ namespace _Project.Scripts.Features.Destroyers.ClickObjectDestroyer
                 return;
             }
             
-            Destroy(destroyableObject.gameObject);
+            DestroyObject(destroyableObject, _destroyDelay);
         }
 
         public bool TryGetNearestDestroyableObject(Vector2 position, out DestroyableObject.DestroyableObject nearestDestroyableObject)

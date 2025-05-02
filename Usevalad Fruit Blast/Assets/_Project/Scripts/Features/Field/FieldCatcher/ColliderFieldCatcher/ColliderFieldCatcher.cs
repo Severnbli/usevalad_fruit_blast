@@ -8,8 +8,7 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
     public class ColliderFieldCatcher : FieldCatcher
     {
         [SerializeField] private ColliderFieldCatcherConfig _config;
-        [SerializeField] private float _deathCollidersOffset = 0.5f;
-        [SerializeField] private float _deathCollidersSize = 0.5f;
+        [SerializeField] private float _catcherProtectHeight = 2f;
         
         private RectangleCollider _leftCollider;
         private RectangleCollider _rightCollider;
@@ -49,7 +48,7 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
 
         public void UpdateColliders()
         {
-            var catcherSize = GetCatcherSize();
+            var catcherSize = CalculateCatcherSize();
 
             if (catcherSize.Equals(_lastCatcherSize))
             {
@@ -62,16 +61,16 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             var halfCatcherSize = catcherSize / 2f;
             
             _leftCollider.PointA = new Vector2(-halfFieldSize.x, -halfFieldSize.y);
-            _leftCollider.PointB = new Vector2(-halfCatcherSize.x, halfFieldSize.y);
+            _leftCollider.PointB = new Vector2(-halfCatcherSize.x, halfFieldSize.y + Mathf.Abs(_catcherProtectHeight));
 
             _rightCollider.PointA = new Vector2(halfCatcherSize.x, -halfFieldSize.y);
-            _rightCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y);
+            _rightCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y + Mathf.Abs(_catcherProtectHeight));
 
-            _bottomCollider.PointA = new Vector2(-halfFieldSize.x, -halfFieldSize.y);
-            _bottomCollider.PointB = new Vector2(halfFieldSize.x, halfFieldSize.y - _config.Margin.Top - catcherSize.y);
+            _bottomCollider.PointA = new Vector2(-halfCatcherSize.x + 0.1f, -halfFieldSize.y);
+            _bottomCollider.PointB = new Vector2(halfCatcherSize.x - 0.1f, halfFieldSize.y - _config.Margin.Top - catcherSize.y);
         }
 
-        public override Vector2 GetCatcherSize()
+        public Vector2 CalculateCatcherSize()
         {
             var fieldSize = _fieldProvider.GetFieldSize();
             
@@ -92,6 +91,11 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             }
             
             return new Vector2(width, height);
+        }
+
+        public override Vector2 GetCatcherSize()
+        {
+            return _lastCatcherSize;
         }
 
         public override FieldProvider.FieldProvider GetFieldProvider()

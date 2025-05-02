@@ -14,7 +14,7 @@ namespace _Project.Scripts.Features.Physics.Engine
     public class PhysicsEngine : BaseFeature
     {
         [SerializeField] private float _minBodySpeed = 0.1f;
-        [SerializeField] private float _maxBodySpeed = 1000f;
+        [SerializeField] private float _maxBodySpeed = 100f;
         [SerializeField] private int _collisionResolvingIterations = 6;
         
         private CollisionResolver _collisionResolver;

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5f90aa98f54dc799e7eebe4dbae58e, type: 3}
   m_Name: PhysicsEngineConfig
   m_EditorClassIdentifier: 
-  _minimalBodySpeed: 0.1
+  _minBodySpeed: 0.1
+  _maxBodySpeed: 1000
+  _collisionResolvingIterations: 6
   _collisionResolverConfig: {fileID: 11400000, guid: 40d3b7cc1a963354792241983ce8aad5, type: 2}

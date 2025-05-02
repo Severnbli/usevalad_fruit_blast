@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.Destroyers.DestroyableObject;
 using _Project.Scripts.Features.Random;
 using _Project.Scripts.Features.Spawners.Config;
 using _Project.Scripts.System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Features.Spawners
 {
@@ -64,10 +64,16 @@ namespace _Project.Scripts.Features.Spawners
             if (!configuredObject.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
             {
                 Debug.LogWarning($"Object Spawner: {configuredObject.name} is missing a SpriteRenderer");
-                return;
+            }
+            else
+            {
+                spriteRenderer.sprite = randGroup.Sprite;
             }
             
-            spriteRenderer.sprite = randGroup.Sprite;
+            if (configuredObject.TryGetComponent<DestroyableObject>(out var destroyableObject))
+            { 
+                destroyableObject.Id = randGroup.Id;
+            }
         }
     }
 }

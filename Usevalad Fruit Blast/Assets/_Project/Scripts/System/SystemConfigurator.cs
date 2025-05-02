@@ -4,6 +4,7 @@ using _Project.Scripts.Features.Controls.Pointer.Mouse.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch.TouchProvider;
 using _Project.Scripts.Features.Destroyers.ClickObjectDestroyer;
 using _Project.Scripts.Features.Destroyers.ClickObjectDestroyer.Config;
+using _Project.Scripts.Features.Destroyers.Services.InfectiousProvider;
 using _Project.Scripts.Features.Gizmo.GizmoDrawer.PhysicsGizmoDrawer;
 using _Project.Scripts.Features.Gizmo.GizmoProvider.BaseGizmoProvider;
 using _Project.Scripts.Features.Physics.Engine;
@@ -55,6 +56,7 @@ namespace _Project.Scripts.System
             Context.Container.AddFeature<MouseProvider>(null);
             Context.Container.AddFeature<TouchProvider>(null);
             _commonConfig.FieldCatcherSpawner.Init(null);
+            Context.Container.AddFeature<InfectiousProvider>(_commonConfig.InfectiousProviderConfig);
             Context.Container.AddFeature<ClickObjectDestroyer>(_commonConfig.ClickObjectDestroyerConfig);
         }
 

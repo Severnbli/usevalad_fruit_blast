@@ -5,7 +5,7 @@ namespace _Project.Scripts.Features.Physics.Colliders
 {
     public class CircleCollider: BaseCollider
     {
-        [SerializeField] private Vector2 _point;
+        [SerializeField] private Vector2 _point = Vector2.zero;
 
         [SerializeField] private float _radius;
 

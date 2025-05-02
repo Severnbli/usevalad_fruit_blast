@@ -1,11 +1,11 @@
 ﻿using System;
-using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.Destroyers.Config;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Destroyers.ClickObjectDestroyer.Config
 {
     [Serializable]
-    public class ClickObjectDestroyerConfig : IFeatureConfig
+    public class ClickObjectDestroyerConfig : BaseObjectDestroyerConfig
     {
         [SerializeField] private float _destroyDistance;
         
