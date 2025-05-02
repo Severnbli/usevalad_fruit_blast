@@ -1,84 +1,125 @@
 ﻿using System.Collections.Generic;
+using _Project.Scripts.Common;
 using UnityEngine;
 
 namespace _Project.Scripts.System
 {
     public static class Context
     {
-        private static GameObject _container;
-        private static HashSet<MonoBehaviour> _components;
+        public static GameObject Container { get; private set; }
+        public static List<BaseFeature> OtherScopeFeatures { get; private set; }
         
-        public static GameObject Container => _container;
-        public static HashSet<MonoBehaviour> Components => _components;
-        public static readonly string ContainerName = "Container";
+        private static readonly string _containerName = "Container";
 
+        public static void SetupContext(out GameObject container, out List<BaseFeature> otherScopeFeatures)
+        {
+            container = SetupContainer();
+            otherScopeFeatures = SetupOtherScopeFeatures();
+        }
+        
         public static GameObject SetupContainer()
         {
-            _container = new(ContainerName);
-            return _container;
+            Container = new(_containerName);
+            return Container;
         }
 
-        public static HashSet<MonoBehaviour> SetupComponents()
+        public static List<BaseFeature> SetupOtherScopeFeatures()
         {
-            _components = new();
-            return _components;
+            OtherScopeFeatures = new();
+            return OtherScopeFeatures;
         }
 
-        public static bool TryGetFromComponents<T>(out T resultComponent) where T : MonoBehaviour
+        public static void ClearContext()
         {
-            resultComponent = null;
-            
-            if (_components == null)
-            {
-                return false;
-            }
-            
-            foreach (var component in _components)
-            {
-                if (component is T componentAsT)
-                {
-                    resultComponent = componentAsT;
-                    return true;
-                }
-            }
-            
-            return false;
-        }
-
-        public static bool TryGetComponentFromContainer<T>(out T resultComponent) where T : MonoBehaviour
-        {
-            resultComponent = null;
-
-            if (_container == null)
-            {
-                return false;
-            }
-            
-            resultComponent = _container.GetComponent<T>();
-            return resultComponent != null;
-        }
-        
-        public static bool TryGetComponentsFromContainer<T>(out T[] resultComponents) where T : MonoBehaviour
-        {
-            resultComponents = null;
-
-            if (_container == null)
-            {
-                return false;
-            }
-            
-            resultComponents = _container.GetComponents<T>();
-            return true;
+            ClearContainer();
+            ClearOtherScopeFeatures();
         }
 
         public static void ClearContainer()
         {
-            _container = null;
+            Object.Destroy(Container);
+            Container = null;
         }
 
-        public static void ClearComponents()
+        public static void ClearOtherScopeFeatures()
         {
-            _components = null;
+            OtherScopeFeatures.Clear();
+            OtherScopeFeatures = null;
+        }
+
+        public static bool TryGetComponentFromContainer<T>(out T feature) where T : BaseFeature
+        {
+            feature = null;
+
+            if (Container == null)
+            {
+                return false;
+            }
+            
+            feature = Container.GetComponent<T>();
+            
+            return feature != null;
+        }
+
+        public static bool TryGetComponentsFromContainer<T>(out T[] features) where T : BaseFeature
+        {
+            features = null;
+
+            if (Container == null)
+            {
+                return false;
+            }
+            
+            features = Container.GetComponents<T>();
+            
+            return true;
+        }
+
+        public static bool TryGetComponentFromOtherScope<T>(out T feature) where T : BaseFeature
+        {
+            feature = null;
+
+            if (OtherScopeFeatures == null)
+            {
+                return false;
+            }
+
+            foreach (var otherScopeFeature in OtherScopeFeatures)
+            {
+                if (otherScopeFeature is not T otherScopeFeatureAsT)
+                {
+                    continue;
+                }
+                
+                feature = otherScopeFeatureAsT;
+                return true;
+            }
+            
+            return false;
+        }
+        
+        public static bool TryGetComponentsFromOtherScope<T>(out T[] features) where T : BaseFeature
+        {
+            features = null;
+            var foundFeatures = new List<T>();
+
+            if (OtherScopeFeatures == null)
+            {
+                return false;
+            }
+
+            foreach (var otherScopeFeature in OtherScopeFeatures)
+            {
+                if (otherScopeFeature is not T otherScopeFeatureAsT)
+                {
+                    continue;
+                }
+                
+                foundFeatures.Add(otherScopeFeatureAsT);
+            }
+            
+            features = foundFeatures.ToArray();
+            return true;
         }
     }
 }
