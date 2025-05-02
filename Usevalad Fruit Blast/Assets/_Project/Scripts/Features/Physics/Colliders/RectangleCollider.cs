@@ -5,8 +5,8 @@ namespace _Project.Scripts.Features.Physics.Colliders
 {
     public class RectangleCollider: BaseCollider
     {
-        [SerializeField] private Vector2 _pointA;
-        [SerializeField] private Vector2 _pointB;
+        [SerializeField] private Vector2 _pointA = Vector2.zero;
+        [SerializeField] private Vector2 _pointB = Vector2.zero;
 
         /// <summary>
         /// PointA is a bottom left point of the rectangle

@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.Features.Destroyers.ClickObjectDestroyer.Config;
+using _Project.Scripts.Features.Destroyers.Services.InfectiousProvider.Config;
 using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider;
 using _Project.Scripts.Features.Gizmo.GizmoProvider.BaseGizmoProvider;
@@ -16,6 +17,7 @@ namespace _Project.Scripts.Common.Configs
         [SerializeField] private GravityForceProviderConfig _gravityForceProviderConfig;
         [SerializeField] private BaseGizmoProviderConfig _baseGizmoProviderConfig;
         [SerializeField] private RandomProviderConfig _randomProviderConfig;
+        [SerializeField] private InfectiousProviderConfig _infectiousProviderConfig;
         [SerializeField] private ClickObjectDestroyerConfig _clickObjectDestroyerConfig;
         
         [SerializeField] private FieldCatcher _fieldCatcher;
@@ -26,7 +28,9 @@ namespace _Project.Scripts.Common.Configs
         public BaseGizmoProviderConfig BaseGizmoProviderConfig => _baseGizmoProviderConfig;
         public GravityForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
         public RandomProviderConfig RandomProviderConfig => _randomProviderConfig;
+        public InfectiousProviderConfig InfectiousProviderConfig => _infectiousProviderConfig;
         public ClickObjectDestroyerConfig ClickObjectDestroyerConfig => _clickObjectDestroyerConfig;
+        
         public FieldCatcher FieldCatcher => _fieldCatcher;
         public FieldProvider FieldProvider => _fieldProvider;
         public FieldCatcherSpawner FieldCatcherSpawner => _fieldCatcherSpawner;

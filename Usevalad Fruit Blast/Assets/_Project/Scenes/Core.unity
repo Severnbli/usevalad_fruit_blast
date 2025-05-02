@@ -803,6 +803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130e47aa9ad14de686f5937e95edf51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _infectiousProvider: {fileID: 0}
+  _destroyDelay: 0
   DestroyableObjects: []
   _touchProvider: {fileID: 0}
   _mouseProvider: {fileID: 0}
@@ -1375,8 +1377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fieldProvider: {fileID: 1110915080}
   _config: {fileID: 11400000, guid: f158b463581e3e64faf0b71ec1857451, type: 2}
-  _deathCollidersOffset: 4
-  _deathCollidersSize: 0.5
+  _catcherProtectHeight: 2
 --- !u!114 &1747694247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1730,7 +1731,10 @@ MonoBehaviour:
   _baseGizmoProviderConfig: {fileID: 11400000, guid: 699be5686a82f454299f33979de6d938, type: 2}
   _randomProviderConfig:
     _seed: 24
+  _infectiousProviderConfig:
+    _infectiousDistance: 1.5
   _clickObjectDestroyerConfig:
+    _destroyDelay: 0.2
     _destroyDistance: 0.5
   _fieldCatcher: {fileID: 1747694246}
   _fieldProvider: {fileID: 1110915080}
