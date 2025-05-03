@@ -25,8 +25,9 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
 
         private void ConnectToScaleProvider()
         {
-            if (!TryGetScaleProvider(out var scaleProvider))
+            if (!Context.TryGetComponentFromContainer(out ScaleProvider.ScaleProvider scaleProvider))
             {
+                Debug.LogError("Check system priority setup: scale provider must be earlier than scalable object!");
                 return;
             }
             
@@ -35,25 +36,12 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
 
         private void DisconnectFromScaleProvider()
         {
-            if (!TryGetScaleProvider(out var scaleProvider))
+            if (!Context.TryGetComponentFromContainer(out ScaleProvider.ScaleProvider scaleProvider))
             {
                 return;
             }
             
             scaleProvider.OnChangeScale -= UpdateScale;
-        }
-
-        private bool TryGetScaleProvider(out ScaleProvider.ScaleProvider scaleProvider)
-        {
-            scaleProvider = null;
-            
-            if (Context.TryGetComponentFromContainer(out scaleProvider))
-            {
-                return true;
-            }
-            
-            Debug.LogError("Check system priority setup: scale provider must be earlier than scalable object!");
-            return false;
         }
 
         private void UpdateScale(float scale)
