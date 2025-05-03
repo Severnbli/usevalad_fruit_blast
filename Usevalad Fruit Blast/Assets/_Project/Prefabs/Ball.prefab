@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3266040144489940990}
   - component: {fileID: 4966109046579939203}
+  - component: {fileID: -8243827273518741607}
+  - component: {fileID: -1500605503366290551}
+  - component: {fileID: -1622585881591700272}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -84,3 +87,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8243827273518741607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413519283949544479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49838827d024ab8896d88cada5a494a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isTrigger: 0
+  _point: {x: 0, y: 0}
+  _radius: 0.5
+--- !u!114 &-1500605503366290551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413519283949544479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f415d70674054f26a115ae76c665d04c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mass: 1
+  _gravityFactor: 1
+  _bouncinessFactor: 0.7
+  _isStatic: 0
+  _useGravity: 1
+--- !u!114 &-1622585881591700272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413519283949544479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d78a9f872742eb96f45578d42392b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gizmoColor: {r: 0, g: 1, b: 1, a: 1}
