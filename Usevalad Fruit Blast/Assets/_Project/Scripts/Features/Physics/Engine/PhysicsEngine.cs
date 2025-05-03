@@ -3,6 +3,8 @@ using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Forces;
+using _Project.Scripts.Features.Physics.Services.Collisions;
+using _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver;
 using UnityEngine;
 
@@ -28,16 +30,7 @@ namespace _Project.Scripts.Features.Physics.Engine
 
         private void ResolveCollisions()
         {
-            // for (var k = 0; k < _collisionResolvingIterations; k++)
-            // {
-            //     for (var i = 0; i < Colliders.Count - 1; i++)
-            //     {
-            //         for (var j = i + 1; j < Colliders.Count; j++)
-            //         {
-            //             Colliders[i].ResolveCollision(Colliders[j], _collisionResolver);
-            //         }
-            //     }
-            // }
+            _collisionResolver.ResolveCollisions(Colliders);
         }
 
         private void ApplyForces()

@@ -11,7 +11,7 @@ namespace _Project.Scripts.Features.Physics.Dynamic
     {
         [SerializeField] private float _mass = 1f;
         [SerializeField] private float _gravityFactor = 1f;
-        [SerializeField] private float _bouncinessFactor;
+        [SerializeField] private float _bouncinessFactor = 0.5f;
         [SerializeField] private bool _isStatic;
         [SerializeField] private bool _useGravity = true;
         

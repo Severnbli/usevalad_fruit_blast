@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minBodySpeed: 0.1
   _maxBodySpeed: 100
-  _collisionResolvingIterations: 6
+  _collisionResolverConfig:
+    _collisionResolvingIterations: 4
+    _positionCorrectionPercent: 1
+    _positionCorrectionSlop: 0
