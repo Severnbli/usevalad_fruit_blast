@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
+using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
@@ -65,6 +66,9 @@ namespace _Project.Scripts.System.SystemConfigurator
             
             Context.Container.AddFeatureWithConfig<FieldCatcherSpawner, PhysicsObjectSpawnerConfig>(
                 _systemConfig.PhysicsObjectSpawnerConfig);
+            
+            Context.Container.AddFeatureWithConfig<ScaleProvider, ScaleProviderConfig>(
+                _systemConfig.ScaleProviderConfig);
         }
     }
 }
