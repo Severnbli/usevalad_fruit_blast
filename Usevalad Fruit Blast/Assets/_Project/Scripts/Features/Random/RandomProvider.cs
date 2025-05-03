@@ -11,6 +11,7 @@ namespace _Project.Scripts.Features.Random
         
         public void Configure(RandomProviderConfig randomProviderConfig)
         {
+            _randomProviderConfig = randomProviderConfig;
             UpdateRandom(_randomProviderConfig.Seed);
         }
 
