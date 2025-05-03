@@ -22,7 +22,7 @@ namespace _Project.Scripts.System.SystemConfigurator
         
         public SystemConfig SystemConfig => _systemConfig;
         
-        private void OnEnable()
+        private void Awake()
         {
             Setup();
         }
