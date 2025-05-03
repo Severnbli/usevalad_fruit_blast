@@ -1,4 +1,5 @@
 ﻿using System;
+using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
@@ -19,6 +20,7 @@ namespace _Project.Scripts.System.SystemConfigurator
         [SerializeField] private FieldCatcherConfig _fieldCatcherConfig;
         [SerializeField, InlineProperty] private RandomProviderConfig _randomProviderConfig;
         [SerializeField] private PhysicsObjectSpawnerConfig _physicsObjectSpawnerConfig;
+        [SerializeField, InlineProperty] private ScaleProviderConfig _scaleProviderConfig;
         
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public ForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
@@ -26,5 +28,6 @@ namespace _Project.Scripts.System.SystemConfigurator
         public FieldCatcherConfig FieldCatcherConfig => _fieldCatcherConfig;
         public RandomProviderConfig RandomProviderConfig => _randomProviderConfig;
         public PhysicsObjectSpawnerConfig PhysicsObjectSpawnerConfig => _physicsObjectSpawnerConfig;
+        public ScaleProviderConfig ScaleProviderConfig => _scaleProviderConfig;
     }
 }
