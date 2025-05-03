@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9c83cc3aeb9457398fb37f4ebaec854, type: 3}
+  m_Name: PhysicsObjectSpawnerConfig
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 5413519283949544479, guid: cfbb42da505a14f419c3349cb7015911, type: 3}
+  _objectContainerTransform: {fileID: 0}
+  _spawnGroups:
+  - _id: 1
+    _sprite: {fileID: 21300000, guid: ee58e755215ad2344b5a2eb8d4498fa0, type: 3}
+    _isActive: 1
+  - _id: 2
+    _sprite: {fileID: 21300000, guid: 557e65f1da184de49910083a52e08bad, type: 3}
+    _isActive: 1
+  - _id: 3
+    _sprite: {fileID: 21300000, guid: 65a28f530ad56f54ebad052f5b903eec, type: 3}
+    _isActive: 1
+  - _id: 4
+    _sprite: {fileID: 21300000, guid: 6f8904ae0f646b243a94209a275005a4, type: 3}
+    _isActive: 1
+  - _id: 5
+    _sprite: {fileID: 21300000, guid: d7614debd4415df4299d0b5d9750d8a0, type: 3}
+    _isActive: 1
+  - _id: 6
+    _sprite: {fileID: 21300000, guid: 903524ec99ee27343a6582eb3e3f7f16, type: 3}
+    _isActive: 1
+  - _id: 7
+    _sprite: {fileID: 21300000, guid: 0a9e1995928a1124bbe9c2439f29b4a1, type: 3}
+    _isActive: 1
+  - _id: 8
+    _sprite: {fileID: 21300000, guid: 80439a3d0c0fe8241a312c6ec6574cc7, type: 3}
+    _isActive: 1
+  - _id: 9
+    _sprite: {fileID: 21300000, guid: 9d73b643aefd82a4dbc7180c4af51694, type: 3}
+    _isActive: 1
+  - _id: 10
+    _sprite: {fileID: 21300000, guid: 18ae692482e3d1140b7e0028c1aeb27f, type: 3}
+    _isActive: 1
+  - _id: 11
+    _sprite: {fileID: 21300000, guid: ff6a57ca4e576964cb6271c6fcbc8f41, type: 3}
+    _isActive: 1
+  - _id: 12
+    _sprite: {fileID: 21300000, guid: 3ab27c7e2ae7998428b37c269496c8f8, type: 3}
+    _isActive: 1
+  _minScale: 1
+  _maxScale: 1
+  _minMass: 1
+  _maxMass: 1
+  _minBounciness: 0.8
+  _maxBounciness: 0.8
+  _minGravityFactor: 1
+  _maxGravityFactor: 1
+  _minStartVelocity: {x: 0, y: 0}
+  _maxStartVelocity: {x: 0, y: 0}
