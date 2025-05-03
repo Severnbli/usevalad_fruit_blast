@@ -30,7 +30,7 @@ namespace _Project.Scripts.Features.Physics.Engine
 
         private void ResolveCollisions()
         {
-            _collisionResolver.ResolveCollisions(Colliders);
+            _collisionResolver.IterativeResolveCollisions(Colliders);
         }
 
         private void ApplyForces()

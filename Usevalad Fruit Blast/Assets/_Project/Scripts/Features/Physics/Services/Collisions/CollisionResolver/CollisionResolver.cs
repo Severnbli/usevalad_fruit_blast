@@ -127,8 +127,6 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
             {
                 case (true, false):
                 {
-                    correction *= -1;
-
                     correctionObj1 = Vector3.zero;
                     correctionObj2 = new Vector3(correction.x, correction.y);
                     

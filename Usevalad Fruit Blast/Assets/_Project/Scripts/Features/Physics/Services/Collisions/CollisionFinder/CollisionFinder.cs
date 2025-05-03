@@ -142,8 +142,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
             out Vector2 normal, out float depth)
         {
             normal = c1.Point - c2.Point;
-            normal.Normalize();
             depth = c1.Radius + c2.Radius - normal.magnitude;
+            normal.Normalize();
         }
 
         private void CalculateMinSeparationNormalAndDepth(BaseCollider obj1, BaseCollider obj2, 
