@@ -17,4 +17,4 @@ MonoBehaviour:
   _collisionResolverConfig:
     _collisionResolvingIterations: 4
     _positionCorrectionPercent: 1
-    _positionCorrectionSlop: 0
+    _positionCorrectionSlop: 0.05
