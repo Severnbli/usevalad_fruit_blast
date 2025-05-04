@@ -493,6 +493,8 @@ MonoBehaviour:
     _randomProviderConfig:
       _seed: 24
     _physicsObjectSpawnerConfig: {fileID: 11400000, guid: aa501d050b8fae942ad73a095856e00e, type: 2}
+    _scaleProviderConfig:
+      _benchmarkResolution: {x: 1080, y: 1920}
 --- !u!1 &1011431694
 GameObject:
   m_ObjectHideFlags: 0
