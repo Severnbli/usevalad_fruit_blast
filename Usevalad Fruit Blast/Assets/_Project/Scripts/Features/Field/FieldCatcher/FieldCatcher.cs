@@ -1,6 +1,7 @@
 ﻿using _Project.Scripts.Common.Dimensions;
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.System;
+using _Project.Scripts.System.Logs.Logger;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldCatcher
@@ -42,6 +43,14 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
         
         public abstract Margin GetMargin();
         public abstract Vector2 GetSize();
+        
+        public virtual float GetArea()
+        {
+            var size = GetSize();
+            
+            return size.x * size.y;
+        }
+        
         public abstract Vector2 GetCatcherSize();
         public abstract void OpenCatcher();
         public abstract void CloseCatcher();
@@ -50,7 +59,8 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
         {
             if (!Context.TryGetComponentFromContainer<FieldProvider.FieldProvider>(out var fieldProvider))
             {
-                Debug.LogError("Check system priority setup: field provider must be earlier than field catcher!");
+                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
+                    GetType().ToString(), fieldProvider.GetType().ToString()));
                 return;
             }
             

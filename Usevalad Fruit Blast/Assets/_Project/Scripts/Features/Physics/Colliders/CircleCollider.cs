@@ -23,6 +23,11 @@ namespace _Project.Scripts.Features.Physics.Colliders
         {
             return Mathf.PI * _radius * _radius;
         }
+
+        public override float GetAreaWithScale()
+        {
+            return GetArea() * Mathf.Max(transform.localScale.x, transform.localScale.y);
+        }
         
         public override Vector2 GetCenter()
         {

@@ -2,6 +2,7 @@
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.System;
+using _Project.Scripts.System.Logs.Logger;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Forces
@@ -25,7 +26,8 @@ namespace _Project.Scripts.Features.Physics.Forces
 
             if (!Context.TryGetComponentFromContainer(out PhysicsEngine physicsEngine))
             {
-                Debug.LogError("Check system priority setup: physics engine must be earlier than force provider!");
+                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
+                    GetType().ToString(), physicsEngine.GetType().ToString()));
                 return;
             }
             

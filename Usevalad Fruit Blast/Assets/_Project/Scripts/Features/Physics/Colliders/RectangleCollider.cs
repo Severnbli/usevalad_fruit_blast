@@ -31,6 +31,11 @@ namespace _Project.Scripts.Features.Physics.Colliders
         {
             return Mathf.Abs((_pointA.x - _pointB.x) * (_pointA.y - _pointB.y));
         }
+
+        public override float GetAreaWithScale()
+        {
+            return GetArea() * Mathf.Max(transform.localScale.x, transform.localScale.y);
+        }
         
         public override Vector2 GetCenter()
         {

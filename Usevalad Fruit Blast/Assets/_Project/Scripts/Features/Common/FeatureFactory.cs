@@ -1,4 +1,5 @@
 ﻿using System;
+using _Project.Scripts.System.Logs.Logger;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Common
@@ -20,7 +21,8 @@ namespace _Project.Scripts.Features.Common
 
             if (feature is not IConfigurableFeature<TConfig> configurableFeature)
             {
-                Debug.LogError($"Check SystemConfigurator with feature {typeof(TFeature).Name} configuration!");
+                LogManager.RegisterLogMessage(LogManager.LogType.Error, 
+                    $"Check SystemConfigurator with feature {typeof(TFeature).Name} configuration!");
             }
             else
             {
