@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e478e5e94a48839758e0371d12f6b1, type: 3}
   m_Name: ColliderFieldCatcherConfig
   m_EditorClassIdentifier: 
-  _size: {x: 3, y: 4}
+  _size: {x: 512, y: 1024}
   _margin:
     _top: 1.5
     _left: 0.5
