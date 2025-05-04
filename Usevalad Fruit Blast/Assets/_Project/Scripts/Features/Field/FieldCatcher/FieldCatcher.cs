@@ -46,7 +46,7 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
         public abstract Margin GetMargin();
         public abstract Vector2 GetSize();
         
-        public virtual float GetArea()
+        public float GetArea()
         {
             return _lastCatcherSize.x * _lastCatcherSize.y;
         }
