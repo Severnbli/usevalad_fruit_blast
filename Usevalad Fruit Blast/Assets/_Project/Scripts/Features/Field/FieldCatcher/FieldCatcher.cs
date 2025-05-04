@@ -1,7 +1,7 @@
 ﻿using _Project.Scripts.Common.Dimensions;
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.System;
-using _Project.Scripts.System.Logs.Logger;
+using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldCatcher
@@ -57,10 +57,10 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
 
         public override void Init()
         {
-            if (!Context.TryGetComponentFromContainer<FieldProvider.FieldProvider>(out var fieldProvider))
+            if (!Context.TryGetComponentFromContainer(out FieldProvider.FieldProvider fieldProvider))
             {
-                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), fieldProvider.GetType().ToString()));
+                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
+                    fieldProvider.GetType().ToString()));
                 return;
             }
             

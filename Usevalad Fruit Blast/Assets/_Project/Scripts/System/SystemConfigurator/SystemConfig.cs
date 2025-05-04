@@ -2,6 +2,7 @@
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
+using _Project.Scripts.Features.Lifecycle.LifecycleManager;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
 using _Project.Scripts.Features.Physics.Engine;
@@ -9,6 +10,7 @@ using _Project.Scripts.Features.Physics.Forces;
 using _Project.Scripts.Features.Random;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Project.Scripts.System.SystemConfigurator
 {
@@ -23,6 +25,7 @@ namespace _Project.Scripts.System.SystemConfigurator
         [SerializeField, InlineProperty] private ObjectsContainerConfig _objectsContainerConfig;
         [SerializeField] private PhysicsObjectSpawnerConfig _physicsObjectSpawnerConfig;
         [SerializeField, InlineProperty] private ScaleProviderConfig _scaleProviderConfig;
+        [SerializeField] private LifecycleManagerConfig _lifecycleManagerConfig;
         
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public ForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
@@ -32,5 +35,6 @@ namespace _Project.Scripts.System.SystemConfigurator
         public ObjectsContainerConfig ObjectsContainerConfig => _objectsContainerConfig;
         public PhysicsObjectSpawnerConfig PhysicsObjectSpawnerConfig => _physicsObjectSpawnerConfig;
         public ScaleProviderConfig ScaleProviderConfig => _scaleProviderConfig;
+        public LifecycleManagerConfig LifecycleManagerConfig => _lifecycleManagerConfig;
     }
 }

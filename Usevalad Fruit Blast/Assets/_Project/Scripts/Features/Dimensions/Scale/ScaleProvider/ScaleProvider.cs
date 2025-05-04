@@ -1,9 +1,8 @@
 ﻿using System;
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Field.FieldCatcher;
-using _Project.Scripts.Features.Field.FieldProvider;
 using _Project.Scripts.System;
-using _Project.Scripts.System.Logs.Logger;
+using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Dimensions.Scale.ScaleProvider
@@ -39,8 +38,8 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScaleProvider
 
             if (!Context.TryGetComponentFromContainer(out _fieldCatcher))
             {
-                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), _fieldCatcher.GetType().ToString()));
+                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
+                    _fieldCatcher.GetType().ToString()));
             }
         }
         

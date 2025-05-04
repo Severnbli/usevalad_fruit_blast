@@ -1,4 +1,4 @@
-﻿namespace _Project.Scripts.System.Logs.Logger
+﻿namespace _Project.Scripts.System.Logs
 {
     public static class LogMessages
     {

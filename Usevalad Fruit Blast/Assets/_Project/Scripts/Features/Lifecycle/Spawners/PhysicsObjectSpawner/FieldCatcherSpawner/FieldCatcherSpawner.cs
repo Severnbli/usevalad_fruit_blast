@@ -1,6 +1,6 @@
 ﻿using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.System;
-using _Project.Scripts.System.Logs.Logger;
+using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner
@@ -17,8 +17,8 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.Fiel
 
             if (!Context.TryGetComponentFromContainer(out FieldCatcher fieldCatcher))
             {
-                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), fieldCatcher.GetType().ToString()));
+                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
+                    fieldCatcher.GetType().ToString()));
                 return;
             }
             
