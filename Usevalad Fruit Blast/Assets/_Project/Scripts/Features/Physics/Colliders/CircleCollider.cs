@@ -21,12 +21,8 @@ namespace _Project.Scripts.Features.Physics.Colliders
         
         public override float GetArea()
         {
-            return Mathf.PI * _radius * _radius;
-        }
-
-        public override float GetAreaWithScale()
-        {
-            return GetArea() * Mathf.Max(transform.localScale.x, transform.localScale.y);
+            var radius = Radius;
+            return Mathf.PI * radius * radius;
         }
         
         public override Vector2 GetCenter()
