@@ -15,8 +15,8 @@ MonoBehaviour:
   _size: {x: 512, y: 1024}
   _margin:
     _top: 1.5
-    _left: 0.5
-    _right: 0.5
+    _left: 0.2
+    _right: 0.2
     _bottom: 1
   _catcherProtectHeight: 3
   _bordersWidth: 1
