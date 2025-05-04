@@ -9,13 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69e47d6ed611491cbea666d08b5242a5, type: 3}
-  m_Name: FieldCatcherConfig
+  m_Script: {fileID: 11500000, guid: 56e478e5e94a48839758e0371d12f6b1, type: 3}
+  m_Name: ColliderFieldCatcherConfig
   m_EditorClassIdentifier: 
-  _size: {x: 3, y: 4}
+  _size: {x: 0, y: 0}
   _margin:
-    _top: 1
-    _left: 0.5
-    _right: 0.5
-    _bottom: 1
-  _catcherProtectHeight: 5
+    _top: 0
+    _left: 0
+    _right: 0
+    _bottom: 0
+  _catcherProtectHeight: 2
+  _bordersWidth: 2

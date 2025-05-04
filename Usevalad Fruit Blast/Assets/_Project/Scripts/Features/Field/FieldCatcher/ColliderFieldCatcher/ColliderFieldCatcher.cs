@@ -1,18 +1,27 @@
 ﻿using _Project.Scripts.Common.Dimensions;
+using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
 {
-    public class ColliderFieldCatcher : FieldCatcher
+    public class ColliderFieldCatcher : FieldCatcher, IConfigurableFeature<ColliderFieldCatcherConfig>
     {
+        [SerializeField] private ColliderFieldCatcherConfig _colliderFieldCatcherConfig;
+        
         private RectangleCollider _leftCollider;
         private RectangleCollider _rightCollider;
         private RectangleCollider _bottomCollider;
         private DynamicBody _dynamicBody;
         private Vector2 _lastCatcherSize = Vector2.zero;
 
+        public void Configure(ColliderFieldCatcherConfig colliderFieldCatcherConfig)
+        {
+            _colliderFieldCatcherConfig = colliderFieldCatcherConfig;
+            base.Configure(_colliderFieldCatcherConfig);
+        }
+        
         public void Start()
         {
             _leftCollider = gameObject.AddComponent<RectangleCollider>();
@@ -53,16 +62,19 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             var halfFieldSize = FieldProvider.GetFieldSize() / 2f;
             var halfCatcherSize = catcherSize / 2f;
             
-            _leftCollider.PointA = new Vector2(-halfFieldSize.x, -halfFieldSize.y);
+            _leftCollider.PointA = new Vector2(-halfCatcherSize.x - _colliderFieldCatcherConfig.BordersWidth,
+                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y);
             _leftCollider.PointB = new Vector2(-halfCatcherSize.x, 
                 halfFieldSize.y + Mathf.Abs(_fieldCatcherConfig.CatcherProtectHeight));
 
-            _rightCollider.PointA = new Vector2(halfCatcherSize.x, -halfFieldSize.y);
-            _rightCollider.PointB = new Vector2(halfFieldSize.x, 
+            _rightCollider.PointA = new Vector2(halfCatcherSize.x, 
+                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y);
+            _rightCollider.PointB = new Vector2(halfCatcherSize.x + _colliderFieldCatcherConfig.BordersWidth, 
                 halfFieldSize.y + Mathf.Abs(_fieldCatcherConfig.CatcherProtectHeight));
 
-            _bottomCollider.PointA = new Vector2(-halfCatcherSize.x + 0.1f, -halfFieldSize.y);
-            _bottomCollider.PointB = new Vector2(halfCatcherSize.x - 0.1f, 
+            _bottomCollider.PointA = new Vector2(-halfCatcherSize.x - _colliderFieldCatcherConfig.BordersWidth, 
+                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y - _colliderFieldCatcherConfig.BordersWidth);
+            _bottomCollider.PointB = new Vector2(halfCatcherSize.x + _colliderFieldCatcherConfig.BordersWidth, 
                 halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y);
         }
 
