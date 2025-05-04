@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b65b0945474a60b8d3e3ed83635517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fieldCatcherConfig: {fileID: 11400000, guid: 6090dec47d27a4c47919b5d933c860e1, type: 2}
+  _fieldCatcherConfig: {fileID: 11400000, guid: 7657b58aefe5ed747bdf74568ec02134, type: 2}
   _fieldProvider: {fileID: 1673919595}
   _gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &984758139
@@ -489,7 +489,7 @@ MonoBehaviour:
       _direction: {x: 0, y: -1}
     _cameraFieldProviderConfig:
       _targetCamera: {fileID: 1011431697}
-    _fieldCatcherConfig: {fileID: 11400000, guid: 6090dec47d27a4c47919b5d933c860e1, type: 2}
+    _colliderFieldCatcherConfig: {fileID: 11400000, guid: 7657b58aefe5ed747bdf74568ec02134, type: 2}
     _randomProviderConfig:
       _seed: 24
     _physicsObjectSpawnerConfig: {fileID: 11400000, guid: aa501d050b8fae942ad73a095856e00e, type: 2}

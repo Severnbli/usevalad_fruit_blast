@@ -77,9 +77,9 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
                 spriteRenderer.sprite = randGroup.Sprite;
             }
             
-            if (configuredObject.TryGetComponent<ContainerableObject>(out var identifiable))
+            if (configuredObject.TryGetComponent<ContainerableObject>(out var containerableObject))
             { 
-                identifiable.Id = randGroup.Id;
+                containerableObject.Id = randGroup.Id;
             }
         }
     }
