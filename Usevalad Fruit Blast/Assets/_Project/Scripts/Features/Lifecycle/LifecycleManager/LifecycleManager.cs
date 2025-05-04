@@ -9,9 +9,9 @@ using _Project.Scripts.System.Logs.Logger;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace _Project.Scripts.Features.Lifecycle.LifecycleProvider
+namespace _Project.Scripts.Features.Lifecycle.LifecycleManager
 {
-    public class LifecycleProvider : BaseFeature
+    public class LifecycleManager : BaseFeature
     {
         [SerializeField] private ObjectSpawner _objectSpawner;
         [SerializeField] private PointerProvider[] _pointerProviders;

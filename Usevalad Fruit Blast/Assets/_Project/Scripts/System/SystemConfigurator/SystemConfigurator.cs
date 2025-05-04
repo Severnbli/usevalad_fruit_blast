@@ -4,14 +4,13 @@ using _Project.Scripts.Features.Controls.Pointer.Touch;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
-using _Project.Scripts.Features.Lifecycle.LifecycleProvider;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
-using _Project.Scripts.Features.Lifecycle.Spawners;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
 using _Project.Scripts.Features.Physics.Colliders.ColliderDrawer;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Forces;
+using _Project.Scripts.Features.Lifecycle.LifecycleManager;
 using _Project.Scripts.Features.Physics.Forces.GravityForceProvider;
 using _Project.Scripts.Features.Random;
 using UnityEngine;
@@ -75,7 +74,7 @@ namespace _Project.Scripts.System.SystemConfigurator
             Context.Container.AddFeatureWithConfig<ScaleProvider, ScaleProviderConfig>(
                 _systemConfig.ScaleProviderConfig);
 
-            Context.Container.AddFeature<LifecycleProvider>();
+            Context.Container.AddFeature<LifecycleManager>();
         }
     }
 }
