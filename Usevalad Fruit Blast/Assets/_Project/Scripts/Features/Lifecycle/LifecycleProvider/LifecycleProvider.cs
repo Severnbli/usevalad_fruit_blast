@@ -1,7 +1,8 @@
-﻿using _Project.Scripts.Features.Common;
+﻿using System.Threading;
+using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Controls.Pointer;
 using _Project.Scripts.Features.Field.FieldCatcher;
-using _Project.Scripts.Features.Lifecycle.Objects;
+using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners;
 using _Project.Scripts.System;
 using _Project.Scripts.System.Logs.Logger;
@@ -19,6 +20,7 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleProvider
 
         private bool _isFillingActive = false;
         private float _fillingDelay = 0.2f;
+        private float _maxCorruptedArea = 0.75f;
         
         public ObjectSpawner ObjectSpawner => _objectSpawner;
         public PointerProvider[] PointerProviders => _pointerProviders;
@@ -60,19 +62,21 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleProvider
         {
             _isFillingActive = true;
             SetPointerProvidersAvailability(false);
-            FillTheCatcher().Forget();
+            FillTheCatcher(this.GetCancellationTokenOnDestroy()).Forget();
         }
 
-        private async UniTaskVoid FillTheCatcher()
+        private async UniTask FillTheCatcher(CancellationToken token)
         {
-            while (true)
+            while (!token.IsCancellationRequested)
             {
-                if (ObjectsContainer.GetTotalArea() / FieldCatcher.GetArea() < 0.75f)
+                var corruptedArea = ObjectsContainer.GetTotalArea() / FieldCatcher.GetArea();
+                
+                if (corruptedArea < _maxCorruptedArea)
                 {
                     ObjectSpawner.Spawn();
                 }
-                
-                await UniTask.WaitForSeconds(_fillingDelay);
+
+                await UniTask.WaitForSeconds(_fillingDelay, cancellationToken: token);
             }
         }
 
