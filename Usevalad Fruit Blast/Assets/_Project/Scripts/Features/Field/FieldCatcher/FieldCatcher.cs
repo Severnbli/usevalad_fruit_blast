@@ -12,6 +12,8 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
         
         public FieldCatcherConfig FieldCatcherConfig => _fieldCatcherConfig;
         public FieldProvider.FieldProvider FieldProvider { get; protected set; }
+        
+        protected Vector2 _lastCatcherSize = Vector2.zero;
 
         public static Vector2 CalculateCatcherSize(FieldProvider.FieldProvider fieldProvider, FieldCatcherConfig fieldCatcherConfig)
         {
@@ -46,9 +48,7 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
         
         public virtual float GetArea()
         {
-            var size = GetSize();
-            
-            return size.x * size.y;
+            return _lastCatcherSize.x * _lastCatcherSize.y;
         }
         
         public abstract Vector2 GetCatcherSize();

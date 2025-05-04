@@ -14,7 +14,6 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
         private RectangleCollider _rightCollider;
         private RectangleCollider _bottomCollider;
         private DynamicBody _dynamicBody;
-        private Vector2 _lastCatcherSize = Vector2.zero;
 
         public void Configure(ColliderFieldCatcherConfig colliderFieldCatcherConfig)
         {

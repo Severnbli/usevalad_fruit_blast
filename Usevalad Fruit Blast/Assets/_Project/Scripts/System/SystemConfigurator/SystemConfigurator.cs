@@ -4,6 +4,7 @@ using _Project.Scripts.Features.Controls.Pointer.Touch;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
+using _Project.Scripts.Features.Lifecycle.LifecycleProvider;
 using _Project.Scripts.Features.Lifecycle.Objects;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
@@ -71,6 +72,8 @@ namespace _Project.Scripts.System.SystemConfigurator
             
             Context.Container.AddFeatureWithConfig<ScaleProvider, ScaleProviderConfig>(
                 _systemConfig.ScaleProviderConfig);
+
+            Context.Container.AddFeature<LifecycleProvider>();
         }
     }
 }

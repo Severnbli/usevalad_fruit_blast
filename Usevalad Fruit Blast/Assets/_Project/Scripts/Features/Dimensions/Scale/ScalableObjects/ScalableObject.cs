@@ -1,4 +1,5 @@
 ﻿using _Project.Scripts.System;
+using _Project.Scripts.System.Logs.Logger;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
@@ -6,8 +7,9 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
     public class ScalableObject : MonoBehaviour
     {
         private Vector3 _baseScale;
+        private ScaleProvider.ScaleProvider _scaleProvider;
         
-        private void OnEnable()
+        private void Start()
         {
             SetBaseScale(transform.localScale);
             ConnectToScaleProvider();
@@ -25,23 +27,23 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
 
         private void ConnectToScaleProvider()
         {
-            if (!Context.TryGetComponentFromContainer(out ScaleProvider.ScaleProvider scaleProvider))
+            if (!Context.TryGetComponentFromContainer(out _scaleProvider))
             {
-                
+                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
+                    GetType().ToString(), _scaleProvider.GetType().ToString()));
                 return;
             }
             
-            scaleProvider.OnChangeScale += UpdateScale;
+            _scaleProvider.OnChangeScale += UpdateScale;
+            UpdateScale(_scaleProvider.Scale);
         }
 
         private void DisconnectFromScaleProvider()
         {
-            if (!Context.TryGetComponentFromContainer(out ScaleProvider.ScaleProvider scaleProvider))
+            if (_scaleProvider != null)
             {
-                return;
+                _scaleProvider.OnChangeScale -= UpdateScale;
             }
-            
-            scaleProvider.OnChangeScale -= UpdateScale;
         }
 
         private void UpdateScale(float scale)

@@ -5,6 +5,7 @@ using _Project.Scripts.Features.Lifecycle.Objects;
 using _Project.Scripts.Features.Lifecycle.Spawners;
 using _Project.Scripts.System;
 using _Project.Scripts.System.Logs.Logger;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.LifecycleProvider
@@ -15,6 +16,9 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleProvider
         [SerializeField] private PointerProvider[] _pointerProviders;
         [SerializeField] private FieldCatcher _fieldCatcher;
         [SerializeField] private ObjectsContainer _objectsContainer;
+
+        private bool _isFillingActive = false;
+        private float _fillingDelay = 0.2f;
         
         public ObjectSpawner ObjectSpawner => _objectSpawner;
         public PointerProvider[] PointerProviders => _pointerProviders;
@@ -48,16 +52,36 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleProvider
                 LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
                     GetType().ToString(), _objectsContainer.GetType().ToString()));
             }
+            
+            SetupLifecycle();
         }
 
-        private void SetProvidersAvailability(bool isEnable)
+        private void SetupLifecycle()
+        {
+            _isFillingActive = true;
+            SetPointerProvidersAvailability(false);
+            FillTheCatcher().Forget();
+        }
+
+        private async UniTaskVoid FillTheCatcher()
+        {
+            while (true)
+            {
+                if (ObjectsContainer.GetTotalArea() / FieldCatcher.GetArea() < 0.75f)
+                {
+                    ObjectSpawner.Spawn();
+                }
+                
+                await UniTask.WaitForSeconds(_fillingDelay);
+            }
+        }
+
+        private void SetPointerProvidersAvailability(bool isEnable)
         {
             foreach (var pointerProvider in _pointerProviders)
             {
                 pointerProvider?.SetIsEnable(isEnable);
             }
         }
-
-        
     }
 }

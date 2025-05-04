@@ -22,7 +22,7 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
                 return;
             }
             
-            objectContainer.ContainedObjects.Add(gameObject);
+            objectContainer.ContainerableObjects.Add(this);
         }
 
         private void Start()
@@ -37,7 +37,7 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
                 return;
             }
             
-            objectContainer.ContainedObjects.Remove(gameObject);
+            objectContainer.ContainerableObjects.Remove(this);
         }
 
         public float GetArea()
@@ -50,6 +50,7 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
                 {
                     area += collider.GetAreaWithScale();
                 }
+                
             }
             
             return area;
