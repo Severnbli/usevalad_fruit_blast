@@ -4,7 +4,7 @@ using _Project.Scripts.Features.Lifecycle.Objects;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Random;
 using _Project.Scripts.System;
-using _Project.Scripts.System.Logs.Logger;
+using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Spawners
@@ -26,14 +26,14 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
         {
             if (!Context.TryGetComponentFromContainer(out _randomProvider))
             {
-                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), _randomProvider.GetType().ToString()));
+                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
+                    _randomProvider.GetType().ToString()));
             }
             
             if (!Context.TryGetComponentFromContainer(out _objectsContainer))
             {
-                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), _objectsContainer.GetType().ToString()));
+                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
+                    _objectsContainer.GetType().ToString()));
             }
         }
 

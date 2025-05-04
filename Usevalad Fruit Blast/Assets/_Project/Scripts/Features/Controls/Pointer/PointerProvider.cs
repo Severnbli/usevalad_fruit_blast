@@ -1,7 +1,7 @@
 ﻿using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Field.FieldProvider;
 using _Project.Scripts.System;
-using _Project.Scripts.System.Logs.Logger;
+using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Controls.Pointer
@@ -9,7 +9,7 @@ namespace _Project.Scripts.Features.Controls.Pointer
     public class PointerProvider : BaseFeature
     {
         [SerializeField] protected FieldProvider _fieldProvider;
-        [SerializeField] protected bool _isEnabled;
+        [SerializeField] protected bool _isEnabled = true;
         
         public FieldProvider FieldProvider => _fieldProvider;
         public bool IsEnabled => _isEnabled;
@@ -20,8 +20,8 @@ namespace _Project.Scripts.Features.Controls.Pointer
 
             if (!Context.TryGetComponentFromContainer(out FieldProvider fieldProvider))
             {
-                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), fieldProvider.GetType().ToString()));
+                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
+                    fieldProvider.GetType().ToString()));
                 return;
             }
             

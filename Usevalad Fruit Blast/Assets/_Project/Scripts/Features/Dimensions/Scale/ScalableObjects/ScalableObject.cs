@@ -1,5 +1,5 @@
 ﻿using _Project.Scripts.System;
-using _Project.Scripts.System.Logs.Logger;
+using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
@@ -29,8 +29,8 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
         {
             if (!Context.TryGetComponentFromContainer(out _scaleProvider))
             {
-                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), _scaleProvider.GetType().ToString()));
+                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
+                    _scaleProvider.GetType().ToString()));
                 return;
             }
             

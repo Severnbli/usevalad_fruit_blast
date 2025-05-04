@@ -497,6 +497,7 @@ MonoBehaviour:
     _physicsObjectSpawnerConfig: {fileID: 11400000, guid: aa501d050b8fae942ad73a095856e00e, type: 2}
     _scaleProviderConfig:
       _benchmarkSize: {x: 3.5, y: 7.5}
+    _lifecycleManagerConfig: {fileID: 11400000, guid: 2b1f751cacd40ca46a36c68417644385, type: 2}
 --- !u!1 &1011431694
 GameObject:
   m_ObjectHideFlags: 0

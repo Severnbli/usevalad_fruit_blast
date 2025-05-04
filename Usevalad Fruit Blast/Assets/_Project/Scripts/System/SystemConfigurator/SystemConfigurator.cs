@@ -74,7 +74,8 @@ namespace _Project.Scripts.System.SystemConfigurator
             Context.Container.AddFeatureWithConfig<ScaleProvider, ScaleProviderConfig>(
                 _systemConfig.ScaleProviderConfig);
 
-            Context.Container.AddFeature<LifecycleManager>();
+            Context.Container.AddFeatureWithConfig<LifecycleManager, LifecycleManagerConfig>(
+                _systemConfig.LifecycleManagerConfig);
         }
     }
 }

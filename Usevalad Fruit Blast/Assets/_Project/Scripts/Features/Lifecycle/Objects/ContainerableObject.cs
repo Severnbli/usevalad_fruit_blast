@@ -1,6 +1,6 @@
 ﻿using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.System;
-using _Project.Scripts.System.Logs.Logger;
+using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Objects
@@ -18,8 +18,8 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
         {
             if (!Context.TryGetComponentFromContainer(out _objectContainer))
             {
-                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), _objectContainer.GetType().ToString()));
+                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
+                    _objectContainer.GetType().ToString()));
                 return;
             }
             

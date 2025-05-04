@@ -2,7 +2,7 @@
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.System;
-using _Project.Scripts.System.Logs.Logger;
+using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Forces
@@ -26,8 +26,8 @@ namespace _Project.Scripts.Features.Physics.Forces
 
             if (!Context.TryGetComponentFromContainer(out PhysicsEngine physicsEngine))
             {
-                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), physicsEngine.GetType().ToString()));
+                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
+                    physicsEngine.GetType().ToString()));
                 return;
             }
             
