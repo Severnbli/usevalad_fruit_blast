@@ -496,7 +496,7 @@ MonoBehaviour:
       _objectsContainerTransform: {fileID: 1383450489}
     _physicsObjectSpawnerConfig: {fileID: 11400000, guid: aa501d050b8fae942ad73a095856e00e, type: 2}
     _scaleProviderConfig:
-      _benchmarkResolution: {x: 1080, y: 1920}
+      _benchmarkSize: {x: 3.5, y: 7.5}
 --- !u!1 &1011431694
 GameObject:
   m_ObjectHideFlags: 0
