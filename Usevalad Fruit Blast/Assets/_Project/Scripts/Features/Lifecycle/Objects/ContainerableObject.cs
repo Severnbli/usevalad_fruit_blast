@@ -10,19 +10,20 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
         [SerializeField] private int _id;
         
         private DynamicBody _dynamicBody;
+        private ObjectsContainer.ObjectsContainer _objectContainer;
         
         public int Id { get => _id; set => _id = value; }
 
         private void OnEnable()
         {
-            if (!Context.TryGetComponentFromContainer(out ObjectsContainer objectContainer))
+            if (!Context.TryGetComponentFromContainer(out _objectContainer))
             {
                 LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), objectContainer.GetType().ToString()));
+                    GetType().ToString(), _objectContainer.GetType().ToString()));
                 return;
             }
             
-            objectContainer.ContainerableObjects.Add(this);
+            _objectContainer.ContainerableObjects.Add(this);
         }
 
         private void Start()
@@ -32,12 +33,12 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
 
         private void OnDisable()
         {
-            if (!Context.TryGetComponentFromContainer(out ObjectsContainer objectContainer))
+            if (_objectContainer == null)
             {
                 return;
             }
             
-            objectContainer.ContainerableObjects.Remove(this);
+            _objectContainer.ContainerableObjects.Remove(this);
         }
 
         public float GetArea()
@@ -48,9 +49,8 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
             {
                 foreach (var collider in _dynamicBody.Colliders)
                 {
-                    area += collider.GetAreaWithScale();
+                    area += collider.GetArea();
                 }
-                
             }
             
             return area;
