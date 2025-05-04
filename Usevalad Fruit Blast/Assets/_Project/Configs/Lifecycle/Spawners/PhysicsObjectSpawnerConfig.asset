@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: PhysicsObjectSpawnerConfig
   m_EditorClassIdentifier: 
   _prefab: {fileID: 5413519283949544479, guid: cfbb42da505a14f419c3349cb7015911, type: 3}
-  _objectContainerTransform: {fileID: 0}
   _spawnGroups:
   - _id: 1
     _sprite: {fileID: 21300000, guid: ee58e755215ad2344b5a2eb8d4498fa0, type: 3}
@@ -51,13 +50,13 @@ MonoBehaviour:
   - _id: 12
     _sprite: {fileID: 21300000, guid: 3ab27c7e2ae7998428b37c269496c8f8, type: 3}
     _isActive: 1
-  _minScale: 1
-  _maxScale: 1
-  _minMass: 1
-  _maxMass: 1
-  _minBounciness: 0.8
+  _minScale: 0.5
+  _maxScale: 0.7
+  _minMass: 0.7
+  _maxMass: 1.2
+  _minBounciness: 0.5
   _maxBounciness: 0.8
   _minGravityFactor: 1
   _maxGravityFactor: 1
-  _minStartVelocity: {x: 0, y: 0}
-  _maxStartVelocity: {x: 0, y: 0}
+  _minStartVelocity: {x: 0, y: -1}
+  _maxStartVelocity: {x: 0, y: -4}
