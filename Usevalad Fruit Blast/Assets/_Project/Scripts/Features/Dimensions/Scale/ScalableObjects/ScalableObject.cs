@@ -7,7 +7,7 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
     {
         private Vector3 _baseScale;
         
-        private void Start()
+        private void OnEnable()
         {
             SetBaseScale(transform.localScale);
             ConnectToScaleProvider();

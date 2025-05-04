@@ -1,6 +1,6 @@
 ﻿using System;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
-using _Project.Scripts.Features.Field.FieldCatcher;
+using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
 using _Project.Scripts.Features.Physics.Engine;
@@ -17,7 +17,7 @@ namespace _Project.Scripts.System.SystemConfigurator
         [SerializeField] private PhysicsEngineConfig _physicsEngineConfig;
         [SerializeField, InlineProperty] private ForceProviderConfig _gravityForceProviderConfig;
         [SerializeField, InlineProperty] private CameraFieldProviderConfig _cameraFieldProviderConfig;
-        [SerializeField] private FieldCatcherConfig _fieldCatcherConfig;
+        [SerializeField] private ColliderFieldCatcherConfig _colliderFieldCatcherConfig;
         [SerializeField, InlineProperty] private RandomProviderConfig _randomProviderConfig;
         [SerializeField] private PhysicsObjectSpawnerConfig _physicsObjectSpawnerConfig;
         [SerializeField, InlineProperty] private ScaleProviderConfig _scaleProviderConfig;
@@ -25,7 +25,7 @@ namespace _Project.Scripts.System.SystemConfigurator
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public ForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
         public CameraFieldProviderConfig CameraFieldProviderConfig => _cameraFieldProviderConfig;
-        public FieldCatcherConfig FieldCatcherConfig => _fieldCatcherConfig;
+        public ColliderFieldCatcherConfig ColliderFieldCatcherConfig => _colliderFieldCatcherConfig;
         public RandomProviderConfig RandomProviderConfig => _randomProviderConfig;
         public PhysicsObjectSpawnerConfig PhysicsObjectSpawnerConfig => _physicsObjectSpawnerConfig;
         public ScaleProviderConfig ScaleProviderConfig => _scaleProviderConfig;

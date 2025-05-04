@@ -55,8 +55,8 @@ namespace _Project.Scripts.System.SystemConfigurator
             
             Context.Container.AddFeatureWithConfig<CameraFieldProvider, CameraFieldProviderConfig>(
                 _systemConfig.CameraFieldProviderConfig);
-            Context.Container.AddFeatureWithConfig<ColliderFieldCatcher, FieldCatcherConfig>(
-                _systemConfig.FieldCatcherConfig);
+            Context.Container.AddFeatureWithConfig<ColliderFieldCatcher, ColliderFieldCatcherConfig>(
+                _systemConfig.ColliderFieldCatcherConfig);
             
             Context.Container.AddFeatureWithConfig<RandomProvider, RandomProviderConfig>(
                 _systemConfig.RandomProviderConfig);
