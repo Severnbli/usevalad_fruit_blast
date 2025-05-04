@@ -51,7 +51,7 @@ MonoBehaviour:
     _sprite: {fileID: 21300000, guid: 3ab27c7e2ae7998428b37c269496c8f8, type: 3}
     _isActive: 1
   _minScale: 0.5
-  _maxScale: 0.7
+  _maxScale: 0.8
   _minMass: 0.7
   _maxMass: 1.2
   _minBounciness: 0.5
