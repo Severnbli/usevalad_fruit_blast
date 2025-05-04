@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.System;
+using _Project.Scripts.System.Logs.Logger;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner
@@ -16,7 +17,8 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.Fiel
 
             if (!Context.TryGetComponentFromContainer(out FieldCatcher fieldCatcher))
             {
-                Debug.LogError("Check system priority setup: field catcher must be earlier than field catcher spawner!");
+                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
+                    GetType().ToString(), fieldCatcher.GetType().ToString()));
                 return;
             }
             

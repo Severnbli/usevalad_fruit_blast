@@ -10,6 +10,11 @@ namespace _Project.Scripts.Features.Controls.Pointer.MouseProvider
 
         private void Update()
         {
+            if (!_isEnabled)
+            {
+                return;
+            }
+            
             CheckPrimaryMouseButtonDown();
             CheckPrimaryMouseButtonUp();
         }

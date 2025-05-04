@@ -3,6 +3,7 @@ using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Lifecycle.Objects;
 using _Project.Scripts.Features.Random;
 using _Project.Scripts.System;
+using _Project.Scripts.System.Logs.Logger;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Spawners
@@ -21,7 +22,8 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
         {
             if (!Context.TryGetComponentFromContainer(out RandomProvider randomProvider))
             {
-                Debug.LogError("Check system priority setup: random provider must be earlier than object spawner!");
+                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
+                    GetType().ToString(), randomProvider.GetType().ToString()));
                 return;
             }
             
@@ -75,7 +77,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
                 spriteRenderer.sprite = randGroup.Sprite;
             }
             
-            if (configuredObject.TryGetComponent<Identifiable>(out var identifiable))
+            if (configuredObject.TryGetComponent<ContainerableObject>(out var identifiable))
             { 
                 identifiable.Id = randGroup.Id;
             }

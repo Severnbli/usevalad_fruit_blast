@@ -27,7 +27,7 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
         {
             if (!Context.TryGetComponentFromContainer(out ScaleProvider.ScaleProvider scaleProvider))
             {
-                Debug.LogError("Check system priority setup: scale provider must be earlier than scalable object!");
+                
                 return;
             }
             

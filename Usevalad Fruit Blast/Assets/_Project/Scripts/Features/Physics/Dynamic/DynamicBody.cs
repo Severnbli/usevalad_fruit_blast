@@ -1,4 +1,5 @@
-﻿using _Project.Scripts.Features.Physics.Colliders;
+﻿using System.Collections.Generic;
+using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.System;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace _Project.Scripts.Features.Physics.Dynamic
         [SerializeField] private bool _isStatic;
         [SerializeField] private bool _useGravity = true;
         
+        public List<BaseCollider> Colliders { get; private set; } = new();
         public Vector2 Velocity { get; set; }
         
         public float Mass { get => _mass; set => _mass = value; }
@@ -30,6 +32,7 @@ namespace _Project.Scripts.Features.Physics.Dynamic
             foreach (var collider in colliders)
             {
                 collider.DynamicBody = this;
+                Colliders.Add(collider);
             }
             
             if (!Context.TryGetComponentFromContainer(out PhysicsEngine engine))

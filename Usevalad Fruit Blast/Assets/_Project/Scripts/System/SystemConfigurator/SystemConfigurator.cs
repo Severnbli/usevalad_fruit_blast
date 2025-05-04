@@ -2,9 +2,9 @@
 using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
-using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
+using _Project.Scripts.Features.Lifecycle.Objects;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
 using _Project.Scripts.Features.Physics.Colliders.ColliderDrawer;
@@ -46,6 +46,8 @@ namespace _Project.Scripts.System.SystemConfigurator
 
         private void SetupFeatures()
         {
+            Context.Container.AddFeature<ObjectsContainer>();
+            
             Context.Container.AddFeature<ColliderDrawer>();
             
             Context.Container.AddFeatureWithConfig<PhysicsEngine, PhysicsEngineConfig>(

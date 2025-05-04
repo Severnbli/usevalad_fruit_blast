@@ -9,6 +9,11 @@ namespace _Project.Scripts.Features.Controls.Pointer.Touch
 
         private void Update()
         {
+            if (!_isEnabled)
+            {
+                return;
+            }
+            
             CheckBeginTouch();
         }
 

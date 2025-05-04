@@ -29,9 +29,12 @@ namespace _Project.Scripts.Features.Physics.Colliders
             {
                 engine.Colliders.Remove(this);
             }
+
+            DynamicBody?.Colliders.Remove(this);
         }
         
         public abstract float GetArea();
+        public abstract float GetAreaWithScale();
         public abstract Vector2 GetCenter();
         public abstract void GetBoundingRectangle(out Vector2 min, out Vector2 max);
     }
