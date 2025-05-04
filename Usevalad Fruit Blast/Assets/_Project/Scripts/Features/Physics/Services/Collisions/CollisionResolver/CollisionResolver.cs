@@ -67,6 +67,11 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
                 
                 return false;
             }
+
+            if (bc1.DynamicBody.IsSleep && bc2.DynamicBody.IsSleep)
+            {
+                return false;
+            }
             
             return true;
         }

@@ -16,6 +16,8 @@ namespace _Project.Scripts.Features.Physics.Dynamic
         [SerializeField] private bool _isStatic;
         [SerializeField] private bool _useGravity = true;
         
+        public bool IsSleep { get; set; }
+        
         public List<BaseCollider> Colliders { get; private set; } = new();
         public Vector2 Velocity { get; set; }
         

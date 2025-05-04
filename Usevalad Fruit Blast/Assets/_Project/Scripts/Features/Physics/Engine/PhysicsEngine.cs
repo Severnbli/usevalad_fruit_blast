@@ -3,8 +3,6 @@ using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Forces;
-using _Project.Scripts.Features.Physics.Services.Collisions;
-using _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver;
 using UnityEngine;
 
@@ -48,11 +46,20 @@ namespace _Project.Scripts.Features.Physics.Engine
         {
             foreach (var dynamicBody in DynamicBodies)
             {
-                if (dynamicBody.IsStatic || dynamicBody.Velocity.magnitude < _physicsEngineConfig.MinBodySpeed)
+                if (dynamicBody.IsStatic)
                 {
                     dynamicBody.Velocity = Vector3.zero;
                     continue;
                 }
+
+                if (dynamicBody.Velocity.magnitude < _physicsEngineConfig.MinBodySpeed)
+                {
+                    dynamicBody.IsSleep = true;
+                    dynamicBody.Velocity = Vector3.zero;
+                    continue;
+                }
+                
+                dynamicBody.IsSleep = false;
         
                 if (dynamicBody.Velocity.magnitude > _physicsEngineConfig.MaxBodySpeed)
                 {
