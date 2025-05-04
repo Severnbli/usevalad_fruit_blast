@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Lifecycle.Objects;
+using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Random;
 using _Project.Scripts.System;
 using _Project.Scripts.System.Logs.Logger;
@@ -11,23 +12,29 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
     public abstract class ObjectSpawner : BaseFeature, IConfigurableFeature<ObjectSpawnerConfig>
     {
         [SerializeField] protected ObjectSpawnerConfig _objectSpawnerConfig;
+        
         protected RandomProvider _randomProvider;
+        protected ObjectsContainer _objectsContainer;
         
         public ObjectSpawnerConfig ObjectSpawnerConfig => _objectSpawnerConfig;
         public RandomProvider RandomProvider => _randomProvider;
+        public ObjectsContainer ObjectsContainer => _objectsContainer;
         
         public abstract void Spawn();
         
         public override void Init()
         {
-            if (!Context.TryGetComponentFromContainer(out RandomProvider randomProvider))
+            if (!Context.TryGetComponentFromContainer(out _randomProvider))
             {
                 LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
-                    GetType().ToString(), randomProvider.GetType().ToString()));
-                return;
+                    GetType().ToString(), _randomProvider.GetType().ToString()));
             }
             
-            _randomProvider = randomProvider;
+            if (!Context.TryGetComponentFromContainer(out _objectsContainer))
+            {
+                LogManager.RegisterLogMessage(LogManager.LogType.Error, LogMessages.DependencyNotFound(
+                    GetType().ToString(), _objectsContainer.GetType().ToString()));
+            }
         }
 
         public void Configure(ObjectSpawnerConfig objectSpawnerConfig)
@@ -49,7 +56,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
                             + _objectSpawnerConfig.MinScale;
             
             configuredObject.transform.localScale = new Vector3(randScale, randScale);
-            configuredObject.transform.SetParent(_objectSpawnerConfig.ObjectContainerTransform);
+            configuredObject.transform.SetParent(_objectsContainer.GetObjectContainerTransform());
            
             ConfigureWithActiveGroups(configuredObject);
             
