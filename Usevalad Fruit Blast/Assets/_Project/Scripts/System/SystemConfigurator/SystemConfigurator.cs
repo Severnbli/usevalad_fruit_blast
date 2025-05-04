@@ -5,7 +5,8 @@ using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Lifecycle.LifecycleProvider;
-using _Project.Scripts.Features.Lifecycle.Objects;
+using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
+using _Project.Scripts.Features.Lifecycle.Spawners;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
 using _Project.Scripts.Features.Physics.Colliders.ColliderDrawer;
@@ -47,8 +48,6 @@ namespace _Project.Scripts.System.SystemConfigurator
 
         private void SetupFeatures()
         {
-            Context.Container.AddFeature<ObjectsContainer>();
-            
             Context.Container.AddFeature<ColliderDrawer>();
             
             Context.Container.AddFeatureWithConfig<PhysicsEngine, PhysicsEngineConfig>(
@@ -63,6 +62,9 @@ namespace _Project.Scripts.System.SystemConfigurator
             
             Context.Container.AddFeatureWithConfig<RandomProvider, RandomProviderConfig>(
                 _systemConfig.RandomProviderConfig);
+            
+            Context.Container.AddFeatureWithConfig<ObjectsContainer, ObjectsContainerConfig>(
+                _systemConfig.ObjectsContainerConfig);
             
             Context.Container.AddFeature<TouchProvider>();
             Context.Container.AddFeature<MouseProvider>();
