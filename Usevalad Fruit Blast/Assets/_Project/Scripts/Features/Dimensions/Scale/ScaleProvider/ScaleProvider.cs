@@ -45,15 +45,13 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScaleProvider
             var widthDelta = _scaleProviderConfig.BenchmarkResolution.x - _lastScale.x;
             var heightDelta = _scaleProviderConfig.BenchmarkResolution.y - _lastScale.y;
 
-            if (widthDelta < heightDelta)
+            if (widthDelta > heightDelta)
             {
-                Scale = (_scaleProviderConfig.BenchmarkResolution.x - widthDelta) 
-                        / _scaleProviderConfig.BenchmarkResolution.x; 
+                Scale = _lastScale.x / _scaleProviderConfig.BenchmarkResolution.x;
             }
             else
             {
-                Scale = (_scaleProviderConfig.BenchmarkResolution.y - heightDelta) 
-                        / _scaleProviderConfig.BenchmarkResolution.y;
+                Scale = _lastScale.y / _scaleProviderConfig.BenchmarkResolution.y;
             }
             
             OnChangeScale?.Invoke(Scale);

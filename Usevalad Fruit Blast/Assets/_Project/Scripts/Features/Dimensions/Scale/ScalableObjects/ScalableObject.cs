@@ -40,10 +40,12 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
 
         private void DisconnectFromScaleProvider()
         {
-            if (_scaleProvider != null)
+            if (_scaleProvider == null)
             {
-                _scaleProvider.OnChangeScale -= UpdateScale;
+                return;
             }
+            
+            _scaleProvider.OnChangeScale -= UpdateScale;
         }
 
         private void UpdateScale(float scale)
