@@ -7,8 +7,8 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScaleProvider
     [Serializable]
     public class ScaleProviderConfig : IFeatureConfig
     {
-        [SerializeField] private Vector2 _benchmarkResolution = new Vector2(1080, 1920);
+        [SerializeField] private Vector2 _benchmarkSize = new Vector2(3.5f, 7.5f);
         
-        public Vector2 BenchmarkResolution => _benchmarkResolution;
+        public Vector2 BenchmarkSize => _benchmarkSize;
     }
 }
