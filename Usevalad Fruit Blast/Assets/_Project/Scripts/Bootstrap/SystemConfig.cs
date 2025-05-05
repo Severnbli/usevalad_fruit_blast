@@ -1,6 +1,5 @@
 ﻿using System;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
-using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer;
@@ -12,7 +11,6 @@ using _Project.Scripts.Features.Physics.Forces;
 using _Project.Scripts.Features.Random;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.System.SystemConfigurator
 {

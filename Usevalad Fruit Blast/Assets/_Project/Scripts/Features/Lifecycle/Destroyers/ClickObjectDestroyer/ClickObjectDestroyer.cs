@@ -1,74 +1,63 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Lifecycle.Objects;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Figures;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder;
-using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
 {
-    public class ClickObjectDestroyer : ObjectDestroyer, IConfigurableFeature<ClickObjectDestroyerConfig>
+    public class ClickObjectDestroyer : ObjectDestroyer, IConfigurableFeature<ClickObjectDestroyerConfig>,
+        IDestroyableFeature
     {
-        [SerializeField] private TouchProvider _touchProvider;
-        [SerializeField] private MouseProvider _mouseProvider;
-        [SerializeField] private ObjectsContainer _objectsContainer;
-        [SerializeField] private FieldCatcher _fieldCatcher;
-        [SerializeField] private ClickObjectDestroyerConfig _clickObjectDestroyerConfig;
-        
-        public TouchProvider TouchProvider => _touchProvider;
-        public MouseProvider MouseProvider => _mouseProvider;
-        public ObjectsContainer ObjectsContainer => _objectsContainer;
-        public FieldCatcher FieldCatcher => _fieldCatcher;
-        public ClickObjectDestroyerConfig ClickObjectDestroyerConfig => _clickObjectDestroyerConfig;
+        private TouchProvider _touchProvider;
+        private MouseProvider _mouseProvider;
+        private ObjectsContainer _objectsContainer;
+        private FieldCatcher _fieldCatcher;
+        private ClickObjectDestroyerConfig _clickObjectDestroyerConfig;
 
         public override void Init()
         {
             base.Init();
 
-            if (!Context.TryGetComponentFromContainer(out _touchProvider))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _touchProvider.GetType().ToString()));
-            }
-            else
+            if (Context.TryGetComponentFromContainer(out _touchProvider))
             {
                 _touchProvider.OnBeginTouch += DestroyObjectAt;
             }
 
-            if (!Context.TryGetComponentFromContainer(out _mouseProvider))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(),
-                    _mouseProvider.GetType().ToString()));
-            }
-            else
+            if (Context.TryGetComponentFromContainer(out _mouseProvider))
             {
                 _mouseProvider.OnPrimaryMouseButtonDown += DestroyObjectAt;
             }
 
-            if (!Context.TryGetComponentFromContainer(out _objectsContainer))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _objectsContainer.GetType().ToString()));
-            }
+            Context.TryGetComponentFromContainer(out _objectsContainer);
 
-            if (!Context.TryGetComponentFromContainer(out _fieldCatcher))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _objectsContainer.GetType().ToString()));
-            }
+            Context.TryGetComponentFromContainer(out _fieldCatcher);
         }
 
         public void Configure(ClickObjectDestroyerConfig clickObjectDestroyerConfig)
         {
             _clickObjectDestroyerConfig = clickObjectDestroyerConfig;
+        }
+
+        public void OnDestroy()
+        {
+            if (_touchProvider != null)
+            {
+                _touchProvider.OnBeginTouch -= DestroyObjectAt;
+            }
+
+            if (_mouseProvider != null)
+            {
+                _mouseProvider.OnPrimaryMouseButtonDown -= DestroyObjectAt;
+            }
         }
         
         public override void DestroyObjectAt(Vector2 position)
@@ -128,7 +117,7 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
 
         private bool IsClickMatchFieldCatcherRules(Vector2 position)
         {
-            var topMarginAxis = _fieldCatcher.GetPosition().y + _fieldCatcher.FieldProvider.GetFieldSize().y
+            var topMarginAxis = _fieldCatcher.GetPosition().y + _fieldCatcher.GetFieldProvider().GetFieldSize().y
                                 - _fieldCatcher.FieldCatcherConfig.Margin.Top;
 
             return position.y <= topMarginAxis;
@@ -244,7 +233,7 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
             {
                 if (orderToDelay.TryGetValue(order, out var delay))
                 {
-                    Destroy(obj.gameObject, delay);
+                    Object.Destroy(obj.gameObject, delay);
                 }
             }
         }

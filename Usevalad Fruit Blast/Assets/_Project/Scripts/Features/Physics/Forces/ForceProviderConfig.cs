@@ -1,5 +1,5 @@
 ﻿using System;
-using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.FeatureCore;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Forces

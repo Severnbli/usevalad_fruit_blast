@@ -1,5 +1,5 @@
 ﻿using _Project.Scripts.Common.Dimensions;
-using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.FeatureCore;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldCatcher

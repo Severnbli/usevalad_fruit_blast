@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
-using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.FeatureCore;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Forces;
@@ -8,7 +10,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Engine
 {
-    public class PhysicsEngine : BaseFeature, IConfigurableFeature<PhysicsEngineConfig>
+    public class PhysicsEngine : BaseFeature, IConfigurableFeature<PhysicsEngineConfig>, IFixedUpdatableFeature
     {
         [SerializeField] private PhysicsEngineConfig _physicsEngineConfig;
         
@@ -18,6 +20,12 @@ namespace _Project.Scripts.Features.Physics.Engine
         public readonly List<BaseCollider> Colliders = new();
         public readonly List<DynamicBody> DynamicBodies = new();
         public readonly List<ForceProvider> ForceProviders = new();
+        
+        public void Configure(PhysicsEngineConfig physicsEngineConfig)
+        {
+            _physicsEngineConfig = physicsEngineConfig;
+            _collisionResolver = new CollisionResolver(_physicsEngineConfig.CollisionResolverConfig);
+        }
         
         public void FixedUpdate()
         {
@@ -63,17 +71,11 @@ namespace _Project.Scripts.Features.Physics.Engine
         
                 if (dynamicBody.Velocity.magnitude > _physicsEngineConfig.MaxBodySpeed)
                 {
-                    Destroy(dynamicBody.gameObject);
+                    Object.Destroy(dynamicBody.gameObject);
                 }
         
                 dynamicBody.transform.Translate(dynamicBody.Velocity * Time.fixedDeltaTime);
             }
-        }
-        
-        public void Configure(PhysicsEngineConfig physicsEngineConfig)
-        {
-            _physicsEngineConfig = physicsEngineConfig;
-            _collisionResolver = new CollisionResolver(_physicsEngineConfig.CollisionResolverConfig);
         }
     }
 }

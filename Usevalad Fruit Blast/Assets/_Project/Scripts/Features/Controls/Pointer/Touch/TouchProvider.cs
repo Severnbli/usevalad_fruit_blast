@@ -1,15 +1,16 @@
 ﻿using System;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Controls.Pointer.Touch
 {
-    public class TouchProvider : PointerProvider
+    public class TouchProvider : PointerProvider, IUpdatableFeature
     {
         public event Action<Vector2> OnBeginTouch;
 
-        private void Update()
+        public void Update()
         {
-            if (!_isEnabled)
+            if (!IsEnable)
             {
                 return;
             }
@@ -19,7 +20,7 @@ namespace _Project.Scripts.Features.Controls.Pointer.Touch
 
         private void CheckBeginTouch()
         {
-            if (!TryGetTouchPhase(out TouchPhase touchPhase, out var touch) || touchPhase != TouchPhase.Began)
+            if (!TryGetTouchPhase(out var touchPhase, out var touch) || touchPhase != TouchPhase.Began)
             {
                 return;
             }

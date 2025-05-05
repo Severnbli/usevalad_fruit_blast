@@ -1,4 +1,4 @@
-﻿namespace _Project.Scripts.Features.Common
+﻿namespace _Project.Scripts.Features.FeatureCore
 {
     public interface IFeatureConfig
     {

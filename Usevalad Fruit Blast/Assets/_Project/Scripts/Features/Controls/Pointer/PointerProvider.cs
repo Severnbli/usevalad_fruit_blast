@@ -1,36 +1,23 @@
-﻿using _Project.Scripts.Features.Common;
+﻿using _Project.Scripts.Features.FeatureCore;
 using _Project.Scripts.Features.Field.FieldProvider;
-using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
-using UnityEngine;
 
 namespace _Project.Scripts.Features.Controls.Pointer
 {
-    public class PointerProvider : BaseFeature
+    public abstract class PointerProvider : BaseFeature
     {
-        [SerializeField] protected FieldProvider _fieldProvider;
-        [SerializeField] protected bool _isEnabled = true;
-        
-        public FieldProvider FieldProvider => _fieldProvider;
-        public bool IsEnabled => _isEnabled;
+        protected FieldProvider _fieldProvider;
+        public bool IsEnable { get; private set; } = true;
         
         public override void Init()
         {
             base.Init();
 
-            if (!Context.TryGetComponentFromContainer(out FieldProvider fieldProvider))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    fieldProvider.GetType().ToString()));
-                return;
-            }
-            
-            _fieldProvider = fieldProvider;
+            Context.TryGetComponentFromContainer(out _fieldProvider);
         }
 
         public void SetIsEnable(bool isEnable)
         {
-            _isEnabled = isEnable;
+            IsEnable = isEnable;
         }
     }
 }

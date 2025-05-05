@@ -1,4 +1,4 @@
-﻿using _Project.Scripts.Features.Common;
+﻿using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using _Project.Scripts.Features.Physics.Dynamic;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner
 {
     public abstract class PhysicsObjectSpawner : ObjectSpawner, IConfigurableFeature<PhysicsObjectSpawnerConfig>
     {
-        [SerializeField] protected PhysicsObjectSpawnerConfig _physicsObjectSpawnerConfig;
+        protected PhysicsObjectSpawnerConfig _physicsObjectSpawnerConfig;
         
         public PhysicsObjectSpawnerConfig PhysicsObjectSpawnerConfig => _physicsObjectSpawnerConfig;
 

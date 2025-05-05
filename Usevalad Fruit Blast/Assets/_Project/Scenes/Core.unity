@@ -371,7 +371,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fieldCatcherConfig: {fileID: 11400000, guid: 7657b58aefe5ed747bdf74568ec02134, type: 2}
-  _fieldProvider: {fileID: 1673919595}
+  _cameraFieldProviderConfig:
+    _targetCamera: {fileID: 0}
   _gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &984758139
 GameObject:
@@ -490,7 +491,10 @@ MonoBehaviour:
       _direction: {x: 0, y: -1}
     _cameraFieldProviderConfig:
       _targetCamera: {fileID: 1011431697}
-    _colliderFieldCatcherConfig: {fileID: 11400000, guid: 7657b58aefe5ed747bdf74568ec02134, type: 2}
+    _colliderFieldCatcherConfig:
+      _fieldCatcherConfig: {fileID: 11400000, guid: 6c9a6e7250b776d4ba9831aa38ed160e, type: 2}
+      _catcherObject: {fileID: 2063400114}
+      _bordersWidth: 2
     _randomProviderConfig:
       _seed: 24
     _objectsContainerConfig:
@@ -816,6 +820,7 @@ Transform:
   m_Children:
   - {fileID: 1011431695}
   - {fileID: 1383450489}
+  - {fileID: 2063400115}
   m_Father: {fileID: 984758140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1657415173
@@ -908,51 +913,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657415173}
   m_CullTransparentMesh: 1
---- !u!1 &1673919594
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1673919596}
-  - component: {fileID: 1673919595}
-  m_Layer: 0
-  m_Name: FieldProvider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1673919595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1673919594}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40d0738c0f534a1e9d523fc818586849, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetCamera: {fileID: 1011431697}
---- !u!4 &1673919596
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1673919594}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1831793861}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1831793860
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,7 +942,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1673919596}
   - {fileID: 922203951}
   m_Father: {fileID: 1000294204}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1077,6 +1036,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AspectMode: 1
   m_AspectRatio: 1.2
+--- !u!1 &2063400114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2063400115}
+  - component: {fileID: 2063400116}
+  m_Layer: 0
+  m_Name: Catcher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2063400115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063400114}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1549357554}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2063400116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063400114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d78a9f872742eb96f45578d42392b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gizmoColor: {r: 0, g: 1, b: 0.51806116, a: 0.47058824}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

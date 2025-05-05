@@ -1,6 +1,6 @@
-﻿using _Project.Scripts.Features.Physics.Dynamic;
-using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
+﻿using _Project.Scripts.Bootstrap;
+using _Project.Scripts.Common.Finders;
+using _Project.Scripts.Features.Physics.Dynamic;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Objects
@@ -16,10 +16,13 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
 
         private void OnEnable()
         {
-            if (!Context.TryGetComponentFromContainer(out _objectContainer))
+            if (!ObjectFinder.TryFindObjectByType(out SystemCoordinator systemCoordinator))
             {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _objectContainer.GetType().ToString()));
+                return;
+            }
+
+            if (!systemCoordinator.Context.TryGetComponentFromContainer(out _objectContainer))
+            {
                 return;
             }
             

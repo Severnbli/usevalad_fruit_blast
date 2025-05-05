@@ -1,15 +1,15 @@
-﻿using _Project.Scripts.Features.Common;
+﻿using _Project.Scripts.Features.FeatureCore;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Engine;
-using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Forces
 {
     public abstract class ForceProvider : BaseFeature, IConfigurableFeature<ForceProviderConfig>
     {
-        [SerializeField] private ForceProviderConfig _forceProviderConfig;
+        private ForceProviderConfig _forceProviderConfig;
+        private PhysicsEngine _physicsEngine;
         
         public ForceProviderConfig ForceProviderConfig => _forceProviderConfig;
         
@@ -24,27 +24,14 @@ namespace _Project.Scripts.Features.Physics.Forces
         {
             base.Init();
 
-            if (!Context.TryGetComponentFromContainer(out PhysicsEngine physicsEngine))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    physicsEngine.GetType().ToString()));
-                return;
-            }
+            Context.TryGetComponentFromContainer(out _physicsEngine);
             
-            physicsEngine.ForceProviders.Add(this);
+            _physicsEngine.ForceProviders.Add(this);
         }
 
         public void Configure(ForceProviderConfig forceProviderConfig)
         {
             _forceProviderConfig = forceProviderConfig;
-        }
-        
-        protected void OnDestroy()
-        {
-            if (Context.TryGetComponentFromContainer(out PhysicsEngine physicsEngine))
-            {
-                physicsEngine.ForceProviders.Remove(this);
-            }
         }
     }
 }

@@ -1,16 +1,17 @@
 ﻿using System;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Controls.Pointer.MouseProvider
 {
-    public class MouseProvider : PointerProvider
+    public class MouseProvider : PointerProvider, IUpdatableFeature
     {
         public event Action<Vector2> OnPrimaryMouseButtonDown;
         public event Action<Vector2> OnPrimaryMouseButtonUp;
 
-        private void Update()
+        public void Update()
         {
-            if (!_isEnabled)
+            if (!IsEnable)
             {
                 return;
             }

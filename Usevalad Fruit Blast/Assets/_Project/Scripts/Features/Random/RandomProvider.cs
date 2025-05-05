@@ -1,11 +1,11 @@
-﻿using _Project.Scripts.Features.Common;
-using UnityEngine;
+﻿using _Project.Scripts.Features.FeatureCore;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 
 namespace _Project.Scripts.Features.Random
 {
     public class RandomProvider : BaseFeature, IConfigurableFeature<RandomProviderConfig>
     {
-        [SerializeField] private RandomProviderConfig _randomProviderConfig;
+        private RandomProviderConfig _randomProviderConfig;
         
         public global::System.Random Random { get; private set; }
         

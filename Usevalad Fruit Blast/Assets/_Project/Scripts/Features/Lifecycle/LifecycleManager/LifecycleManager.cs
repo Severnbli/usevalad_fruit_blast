@@ -1,11 +1,12 @@
 ﻿using System.Threading;
-using _Project.Scripts.Features.Common;
+using _Project.Scripts.Bootstrap;
+using _Project.Scripts.Common.Finders;
 using _Project.Scripts.Features.Controls.Pointer;
+using _Project.Scripts.Features.FeatureCore;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners;
-using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -13,44 +14,32 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleManager
 {
     public class LifecycleManager : BaseFeature, IConfigurableFeature<LifecycleManagerConfig>
     {
-        [SerializeField] private LifecycleManagerConfig _lifecycleManagerConfig;
-        [SerializeField] private ObjectSpawner _objectSpawner;
-        [SerializeField] private PointerProvider[] _pointerProviders;
-        [SerializeField] private FieldCatcher _fieldCatcher;
-        [SerializeField] private ObjectsContainer _objectsContainer;
+        private LifecycleManagerConfig _lifecycleManagerConfig;
+        private ObjectSpawner _objectSpawner;
+        private PointerProvider[] _pointerProviders;
+        private FieldCatcher _fieldCatcher;
+        private ObjectsContainer _objectsContainer;
+        private SystemCoordinator _systemCoordinator;
         
         public ObjectSpawner ObjectSpawner => _objectSpawner;
         public PointerProvider[] PointerProviders => _pointerProviders;
         public FieldCatcher FieldCatcher => _fieldCatcher;
         public ObjectsContainer ObjectsContainer => _objectsContainer;
+        public SystemCoordinator SystemCoordinator => _systemCoordinator;
         
         public override void Init()
         {
             base.Init();
 
-            if (!Context.TryGetComponentFromContainer(out _objectSpawner))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _objectSpawner.GetType().ToString()));
-            }
+            Context.TryGetComponentFromContainer(out _objectSpawner);
+
+            Context.TryGetComponentsFromContainer(out _pointerProviders);
+
+            Context.TryGetComponentFromContainer(out _fieldCatcher);
+
+            Context.TryGetComponentFromContainer(out _objectsContainer);
             
-            if (!Context.TryGetComponentsFromContainer(out _pointerProviders))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _pointerProviders.GetType().ToString()));
-            }
-            
-            if (!Context.TryGetComponentFromContainer(out _fieldCatcher))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _fieldCatcher.GetType().ToString()));
-            }
-            
-            if (!Context.TryGetComponentFromContainer(out _objectsContainer))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _objectsContainer.GetType().ToString()));
-            }
+            ObjectFinder.TryFindObjectByType(out _systemCoordinator);
         }
 
         public void Configure(LifecycleManagerConfig lifecycleManagerConfig)
@@ -63,7 +52,7 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleManager
         {
             // _isFillingActive = true;
             // SetPointerProvidersAvailability(false);
-            FillTheCatcher(this.GetCancellationTokenOnDestroy()).Forget();
+            FillTheCatcher(_systemCoordinator.gameObject.GetCancellationTokenOnDestroy()).Forget();
         }
         
         private async UniTask FillTheCatcher(CancellationToken token)

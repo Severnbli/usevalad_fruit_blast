@@ -1,13 +1,16 @@
-﻿using _Project.Scripts.Features.Physics.Dynamic;
+﻿using _Project.Scripts.Bootstrap;
+using _Project.Scripts.Common.Finders;
+using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Figures;
-using _Project.Scripts.System;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Colliders
 {
     public abstract class BaseCollider : MonoBehaviour
     {
+        private PhysicsEngine _physicsEngine;
+        
         [SerializeField] private bool _isTrigger = false;
         
         public bool IsTrigger { get => _isTrigger; set => _isTrigger = value; }
@@ -15,22 +18,22 @@ namespace _Project.Scripts.Features.Physics.Colliders
         
         protected void Start()
         {
-            if (!Context.TryGetComponentFromContainer(out PhysicsEngine engine))
+            if (!ObjectFinder.TryFindObjectByType(out SystemCoordinator systemCoordinator))
             {
-                Debug.LogError("Physics engine not found");
+                return;
+            }
+
+            if (!systemCoordinator.Context.TryGetComponentFromContainer(out _physicsEngine))
+            {
                 return;
             }
             
-            engine.Colliders.Add(this);
+            _physicsEngine.Colliders.Add(this);
         }
         
         protected void OnDestroy()
         {
-            if (Context.TryGetComponentFromContainer(out PhysicsEngine engine))
-            {
-                engine.Colliders.Remove(this);
-            }
-
+            _physicsEngine?.Colliders.Remove(this);
             DynamicBody?.Colliders.Remove(this);
         }
 

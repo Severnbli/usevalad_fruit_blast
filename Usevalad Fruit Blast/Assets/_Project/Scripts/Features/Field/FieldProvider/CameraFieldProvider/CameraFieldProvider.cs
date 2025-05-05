@@ -1,25 +1,27 @@
-﻿using _Project.Scripts.Features.Common;
+﻿using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider
 {
     public class CameraFieldProvider : FieldProvider, IConfigurableFeature<CameraFieldProviderConfig>
     {
-        [SerializeField] private Camera _targetCamera;
-        
-        public Camera TargetCamera { get => _targetCamera; set => _targetCamera = value; }
+        protected CameraFieldProviderConfig CameraFieldProviderConfig { get; private set; }
         
         public override Vector2 GetFieldSize()
         {
-            var cameraHeight = 2 * TargetCamera.orthographicSize;
-            var cameraWidth = cameraHeight * TargetCamera.aspect;
+            var targetCamera = CameraFieldProviderConfig.TargetCamera;
+            
+            var cameraHeight = 2 * targetCamera.orthographicSize;
+            var cameraWidth = cameraHeight * targetCamera.aspect;
             
             return new Vector2(cameraWidth, cameraHeight);
         }
 
         public override Vector2 GetFieldPosition()
         {
-            return new Vector2(TargetCamera.transform.position.x, TargetCamera.transform.position.y);
+            var cameraPosition = CameraFieldProviderConfig.TargetCamera.transform.position;
+            
+            return new Vector2(cameraPosition.x, cameraPosition.y);
         }
 
         public override Vector2 GetConvertedScreenSpacePosition(Vector2 screenSpacePosition)
@@ -34,9 +36,9 @@ namespace _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider
             return position;
         }
 
-        public void Configure(CameraFieldProviderConfig config)
+        public void Configure(CameraFieldProviderConfig cameraFieldProviderConfig)
         {
-            _targetCamera = config.TargetCamera;   
+            CameraFieldProviderConfig = cameraFieldProviderConfig;
         }
     }
 }
