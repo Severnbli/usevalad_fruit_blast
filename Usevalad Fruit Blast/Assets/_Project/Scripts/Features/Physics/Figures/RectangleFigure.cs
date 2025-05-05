@@ -42,5 +42,11 @@ namespace _Project.Scripts.Features.Physics.Figures
             min = _pointAA;
             max = _pointBB;
         }
+
+        public void GetBoundingCircle(out Vector2 center, out float radius)
+        {
+            center = GetCenter();
+            radius = (_pointBB - _pointAA).magnitude / 2f;
+        }
     }
 }

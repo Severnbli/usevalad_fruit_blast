@@ -1,7 +1,9 @@
 ﻿using System;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
+using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
+using _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer;
 using _Project.Scripts.Features.Lifecycle.LifecycleManager;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
@@ -26,6 +28,7 @@ namespace _Project.Scripts.System.SystemConfigurator
         [SerializeField] private PhysicsObjectSpawnerConfig _physicsObjectSpawnerConfig;
         [SerializeField, InlineProperty] private ScaleProviderConfig _scaleProviderConfig;
         [SerializeField] private LifecycleManagerConfig _lifecycleManagerConfig;
+        [SerializeField, InlineProperty] private ClickObjectDestroyerConfig _clickObjectDestroyerConfig;
         
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public ForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
@@ -36,5 +39,6 @@ namespace _Project.Scripts.System.SystemConfigurator
         public PhysicsObjectSpawnerConfig PhysicsObjectSpawnerConfig => _physicsObjectSpawnerConfig;
         public ScaleProviderConfig ScaleProviderConfig => _scaleProviderConfig;
         public LifecycleManagerConfig LifecycleManagerConfig => _lifecycleManagerConfig;
+        public ClickObjectDestroyerConfig ClickObjectDestroyerConfig => _clickObjectDestroyerConfig;
     }
 }
