@@ -102,8 +102,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isTrigger: 0
-  _point: {x: 0, y: 0.025}
-  _radius: 1.4
+  _circleFigure:
+    _point: {x: 0, y: 0.025}
+    _radius: 1.4
 --- !u!114 &-1500605503366290551
 MonoBehaviour:
   m_ObjectHideFlags: 0

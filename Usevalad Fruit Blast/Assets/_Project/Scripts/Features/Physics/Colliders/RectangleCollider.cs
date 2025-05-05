@@ -1,52 +1,33 @@
-﻿using UnityEngine;
+﻿using _Project.Scripts.Features.Physics.Figures;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Colliders
 {
     public class RectangleCollider : BaseCollider
     {
-        [SerializeField] private Vector2 _pointA = Vector2.zero;
-        [SerializeField] private Vector2 _pointB = Vector2.zero;
+        [SerializeField, HideLabel] private RectangleFigure _rectangleFigure = new();
 
-        /// <summary>
-        /// PointA is a bottom left point of the rectangle
-        /// </summary>
-        public Vector2 PointA
+        public RectangleFigure RectangleFigure { get => _rectangleFigure; set => _rectangleFigure = value; }
+
+        public override IPhysicsFigure GetUnmodifiedFigure()
         {
-            get => new(transform.position.x + transform.localScale.x * _pointA.x, 
-                transform.position.y + transform.localScale.y * _pointA.y); 
-            set => _pointA = value;
+            return _rectangleFigure;
         }
 
-        /// <summary>
-        /// PointB is a top right point of the rectangle
-        /// </summary>
-        public Vector2 PointB
-        {
-            get => new(transform.position.x + transform.localScale.x * _pointB.x, 
-                transform.position.y + transform.localScale.y *_pointB.y);
-            set => _pointB = value;
-        }
-        
-        public override float GetArea()
-        {
-            var scaleFactor = Mathf.Max(transform.localScale.x, transform.localScale.y);
-            
-            return Mathf.Abs((_pointA.x - _pointB.x) * scaleFactor * (_pointA.y - _pointB.y) * scaleFactor);
-        }
-        
-        public override Vector2 GetCenter()
-        {
-            var massCenter = PointB;
-            massCenter.x -= (_pointB.x - _pointA.x) / 2;
-            massCenter.y -= (_pointB.y - _pointA.y) / 2;
-            
-            return massCenter;
-        }
+        public override IPhysicsFigure GetFigure() => GetModifiedRectangleFigure();
 
-        public override void GetBoundingRectangle(out Vector2 min, out Vector2 max)
+        public RectangleFigure GetModifiedRectangleFigure()
         {
-            min = PointA;
-            max = PointB;
+            var rectangleFigure = _rectangleFigure.Clone();
+
+            rectangleFigure.PointAA *= GetMaxScale();
+            rectangleFigure.PointAA += GetPosition();
+                    
+            rectangleFigure.PointBB *= GetMaxScale();
+            rectangleFigure.PointBB += GetPosition();
+                
+            return rectangleFigure;
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using _Project.Scripts.Features.Common;
+﻿using System.Threading;
+using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Controls.Pointer;
 using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners;
 using _Project.Scripts.System;
 using _Project.Scripts.System.Logs;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.LifecycleManager
@@ -54,29 +56,30 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleManager
         public void Configure(LifecycleManagerConfig lifecycleManagerConfig)
         {
             _lifecycleManagerConfig = lifecycleManagerConfig;
+            RunLifecycle();
         }
 
-        // public void RunLifecycle()
-        // {
-        //     _isFillingActive = true;
-        //     SetPointerProvidersAvailability(false);
-        //     FillTheCatcher(this.GetCancellationTokenOnDestroy()).Forget();
-        // }
-        //
-        // private async UniTask FillTheCatcher(CancellationToken token)
-        // {
-        //     while (!token.IsCancellationRequested)
-        //     {
-        //         var corruptedArea = ObjectsContainer.GetTotalArea() / FieldCatcher.GetArea();
-        //         
-        //         if (corruptedArea < _maxCorruptedArea)
-        //         {
-        //             ObjectSpawner.Spawn();
-        //         }
-        //
-        //         await UniTask.WaitForSeconds(_fillingDelay, cancellationToken: token);
-        //     }
-        // }
+        public void RunLifecycle()
+        {
+            // _isFillingActive = true;
+            // SetPointerProvidersAvailability(false);
+            FillTheCatcher(this.GetCancellationTokenOnDestroy()).Forget();
+        }
+        
+        private async UniTask FillTheCatcher(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
+            {
+                var corruptedArea = ObjectsContainer.GetTotalArea() / FieldCatcher.GetArea();
+                
+                if (corruptedArea < _lifecycleManagerConfig.MaxCorruptedFieldCatcherArea)
+                {
+                    ObjectSpawner.Spawn();
+                }
+        
+                await UniTask.WaitForSeconds(0.2f, cancellationToken: token);
+            }
+        }
 
         private void SetPointerProvidersAvailability(bool isEnable)
         {

@@ -1,5 +1,6 @@
 ﻿using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Engine;
+using _Project.Scripts.Features.Physics.Figures;
 using _Project.Scripts.System;
 using UnityEngine;
 
@@ -32,9 +33,18 @@ namespace _Project.Scripts.Features.Physics.Colliders
 
             DynamicBody?.Colliders.Remove(this);
         }
-        
-        public abstract float GetArea();
-        public abstract Vector2 GetCenter();
-        public abstract void GetBoundingRectangle(out Vector2 min, out Vector2 max);
+
+        public float GetMaxScale()
+        {
+            return Mathf.Max(transform.localScale.x, transform.localScale.y);
+        }
+
+        public Vector2 GetPosition()
+        {
+            return new Vector2(transform.position.x, transform.position.y);
+        }
+
+        public abstract IPhysicsFigure GetUnmodifiedFigure();
+        public abstract IPhysicsFigure GetFigure();
     }
 }

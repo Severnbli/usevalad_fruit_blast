@@ -41,20 +41,19 @@ namespace _Project.Scripts.Features.Physics.Colliders.ColliderDrawer
 
         private void DrawCircleGizmo(CircleCollider circle)
         {
-            var point = circle.Point;
+            var circleFigure = circle.GetModifiedCircleFigure();
             
-            Gizmos.DrawWireSphere(new Vector3(point.x, point.y), circle.Radius);
+            Gizmos.DrawWireSphere(new Vector3(circleFigure.Point.x, circleFigure.Point.y), circleFigure.Radius);
         }
 
         private void DrawRectangleGizmo(RectangleCollider rectangle)
         {
-            var pointA = rectangle.PointA;
-            var pointB = rectangle.PointB;
+            var rectangleFigure = rectangle.GetModifiedRectangleFigure();
             
-            Gizmos.DrawLine(new Vector3(pointA.x, pointB.y), pointB);
-            Gizmos.DrawLine(new Vector3(pointA.x, pointB.y), pointA);
-            Gizmos.DrawLine(new Vector3(pointB.x, pointA.y), pointB);
-            Gizmos.DrawLine(new Vector3(pointB.x, pointA.y), pointA);
+            Gizmos.DrawLine(new Vector3(rectangleFigure.PointAA.x, rectangleFigure.PointBB.y), rectangleFigure.PointBB);
+            Gizmos.DrawLine(new Vector3(rectangleFigure.PointAA.x, rectangleFigure.PointBB.y), rectangleFigure.PointAA);
+            Gizmos.DrawLine(new Vector3(rectangleFigure.PointBB.x, rectangleFigure.PointAA.y), rectangleFigure.PointBB);
+            Gizmos.DrawLine(new Vector3(rectangleFigure.PointBB.x, rectangleFigure.PointAA.y), rectangleFigure.PointAA);
         }
     }
 }
