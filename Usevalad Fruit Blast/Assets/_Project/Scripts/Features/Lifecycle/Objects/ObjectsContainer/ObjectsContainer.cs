@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.Physics.Colliders;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer
@@ -28,6 +29,18 @@ namespace _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer
         public Transform GetObjectContainerTransform()
         {
             return _objectsContainerConfig.ObjectsContainerTransform;
+        }
+
+        public List<T> GetComponentsFromContainerableObjects<T>()
+        {
+            var list = new List<T>();
+            
+            foreach (var containerableObject in ContainerableObjects)
+            {
+                list.AddRange(containerableObject.GetComponents<T>());
+            }
+            
+            return list;
         }
     }
 }

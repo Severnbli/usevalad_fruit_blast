@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Lifecycle.Objects;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
@@ -45,11 +46,13 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
         public virtual bool TryGetConfiguredObject(out GameObject configuredObject)
         {
             configuredObject = Instantiate(_objectSpawnerConfig.Prefab, Vector3.zero, Quaternion.identity);
-
+            
             if (configuredObject == null)
             {
                 return false;
             }
+            
+            configuredObject.name = Guid.NewGuid().ToString();
             
             var randScale = (float) _randomProvider.Random.NextDouble() 
                             * (_objectSpawnerConfig.MaxScale - _objectSpawnerConfig.MinScale) 
@@ -75,7 +78,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
             
             var randGroup = activeSpawnGroups[_randomProvider.Random.Next(activeSpawnGroups.Count)];
             
-            if (!configuredObject.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+            if (!configuredObject.gameObject.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
             {
                 Debug.LogWarning($"Object Spawner: {configuredObject.name} is missing a SpriteRenderer");
             }
@@ -84,8 +87,8 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
                 spriteRenderer.sprite = randGroup.Sprite;
             }
             
-            if (configuredObject.TryGetComponent<ContainerableObject>(out var containerableObject))
-            { 
+            if (configuredObject.gameObject.TryGetComponent<ContainerableObject>(out var containerableObject))
+            {
                 containerableObject.Id = randGroup.Id;
             }
         }

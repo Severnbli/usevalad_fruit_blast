@@ -12,7 +12,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner
 
         public void Configure(PhysicsObjectSpawnerConfig physicsObjectSpawnerConfig)
         {
-            base.Configure(physicsObjectSpawnerConfig);
+            base.Configure(physicsObjectSpawnerConfig.ObjectSpawnerConfig);
             
             _physicsObjectSpawnerConfig = physicsObjectSpawnerConfig;
         }
