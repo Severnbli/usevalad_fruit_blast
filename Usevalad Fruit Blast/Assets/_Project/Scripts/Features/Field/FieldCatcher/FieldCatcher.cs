@@ -1,19 +1,26 @@
 ﻿using _Project.Scripts.Common.Dimensions;
-using _Project.Scripts.Features.Common;
-using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
+using _Project.Scripts.Features.FeatureCore;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldCatcher
 {
     public abstract class FieldCatcher : BaseFeature, IConfigurableFeature<FieldCatcherConfig>
     {
-        [SerializeField] protected FieldCatcherConfig _fieldCatcherConfig;
-        
-        public FieldCatcherConfig FieldCatcherConfig => _fieldCatcherConfig;
-        public FieldProvider.FieldProvider FieldProvider { get; protected set; }
-        
+        protected FieldProvider.FieldProvider _fieldProvider;
         protected Vector2 _lastCatcherSize = Vector2.zero;
+        
+        public FieldCatcherConfig FieldCatcherConfig { get; private set; }
+        
+        public override void Init()
+        {
+            Context.TryGetComponentFromContainer(out _fieldProvider);
+        }
+        
+        public void Configure(FieldCatcherConfig fieldCatcherConfig)
+        {
+            FieldCatcherConfig = fieldCatcherConfig;
+        }
 
         public static Vector2 CalculateCatcherSize(FieldProvider.FieldProvider fieldProvider, FieldCatcherConfig fieldCatcherConfig)
         {
@@ -37,10 +44,15 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
             
             return new Vector2(width, height);
         }
-        
-        public virtual Vector2 GetPosition()
+
+        public FieldProvider.FieldProvider GetFieldProvider()
         {
-            return FieldProvider.GetFieldPosition();
+            return _fieldProvider;
+        }
+        
+        public Vector2 GetPosition()
+        {
+            return _fieldProvider.GetFieldPosition();
         }
         
         public abstract Margin GetMargin();
@@ -54,22 +66,5 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
         public abstract Vector2 GetCatcherSize();
         public abstract void OpenCatcher();
         public abstract void CloseCatcher();
-
-        public override void Init()
-        {
-            if (!Context.TryGetComponentFromContainer(out FieldProvider.FieldProvider fieldProvider))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    fieldProvider.GetType().ToString()));
-                return;
-            }
-            
-            FieldProvider = fieldProvider;
-        }
-        
-        public void Configure(FieldCatcherConfig config)
-        {
-            _fieldCatcherConfig = config;
-        }
     }
 }

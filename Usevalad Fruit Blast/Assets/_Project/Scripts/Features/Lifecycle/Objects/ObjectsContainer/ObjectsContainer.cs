@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using _Project.Scripts.Features.Common;
-using _Project.Scripts.Features.Physics.Colliders;
+using _Project.Scripts.Features.FeatureCore;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer

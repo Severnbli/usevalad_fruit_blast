@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using _Project.Scripts.Bootstrap;
+using _Project.Scripts.Common.Finders;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Engine;
-using _Project.Scripts.System;
 using UnityEngine;
 
 
@@ -15,6 +17,8 @@ namespace _Project.Scripts.Features.Physics.Dynamic
         [SerializeField] private float _bouncinessFactor = 0.5f;
         [SerializeField] private bool _isStatic;
         [SerializeField] private bool _useGravity = true;
+        
+        private PhysicsEngine _physicsEngine;
         
         public bool IsSleep { get; set; }
         
@@ -36,24 +40,26 @@ namespace _Project.Scripts.Features.Physics.Dynamic
                 collider.DynamicBody = this;
                 Colliders.Add(collider);
             }
-            
-            if (!Context.TryGetComponentFromContainer(out PhysicsEngine engine))
+
+            if (!ObjectFinder.TryFindObjectByType(out SystemCoordinator systemCoordinator))
             {
-                Debug.LogError("Physics engine not found");
                 return;
             }
             
-            engine.DynamicBodies.Add(this);
+            if (systemCoordinator.Context.TryGetComponentFromContainer(out _physicsEngine))
+            {
+                _physicsEngine.DynamicBodies.Add(this);
+            }
         }
         
         protected void OnDestroy()
         {
-            if (!Context.TryGetComponentFromContainer(out PhysicsEngine engine))
-            {
-                return;
-            }
+            _physicsEngine?.DynamicBodies.Remove(this);
             
-            engine.DynamicBodies.Remove(this);
+            Colliders
+                .Where(x => x != null)
+                .ToList()
+                .ForEach(x => x.DynamicBody = null);
         }
         
         public void ApplyForce(Vector2 force)

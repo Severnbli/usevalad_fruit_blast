@@ -1,34 +1,40 @@
 ﻿using _Project.Scripts.Common.Dimensions;
-using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
-using _Project.Scripts.Features.Physics.Figures;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
 {
-    public class ColliderFieldCatcher : FieldCatcher, IConfigurableFeature<ColliderFieldCatcherConfig>
+    public class ColliderFieldCatcher : FieldCatcher, IConfigurableFeature<ColliderFieldCatcherConfig>, 
+        IFixedUpdatableFeature
     {
-        [SerializeField] private ColliderFieldCatcherConfig _colliderFieldCatcherConfig;
-        
         private RectangleCollider _leftCollider;
         private RectangleCollider _rightCollider;
         private RectangleCollider _bottomCollider;
         private DynamicBody _dynamicBody;
-
+        
+        public ColliderFieldCatcherConfig ColliderFieldCatcherConfig { get; private set; }
+        
         public void Configure(ColliderFieldCatcherConfig colliderFieldCatcherConfig)
         {
-            _colliderFieldCatcherConfig = colliderFieldCatcherConfig;
-            base.Configure(_colliderFieldCatcherConfig);
-        }
-        
-        public void Start()
-        {
-            _leftCollider = gameObject.AddComponent<RectangleCollider>();
-            _rightCollider = gameObject.AddComponent<RectangleCollider>();
-            _bottomCollider = gameObject.AddComponent<RectangleCollider>();
+            ColliderFieldCatcherConfig = colliderFieldCatcherConfig;
+
+            ConfigureColliders();
             
-            _dynamicBody = gameObject.AddComponent<DynamicBody>();
+            base.Configure(ColliderFieldCatcherConfig.FieldCatcherConfig);
+        }
+
+        private void ConfigureColliders()
+        {
+            var catcherObject = ColliderFieldCatcherConfig.CatcherObject;
+            
+            _leftCollider = catcherObject.AddComponent<RectangleCollider>();
+            _rightCollider = catcherObject.AddComponent<RectangleCollider>();
+            _bottomCollider = catcherObject.AddComponent<RectangleCollider>();
+            
+            _dynamicBody = catcherObject.AddComponent<DynamicBody>();
             _dynamicBody.IsStatic = true;
         }
 
@@ -39,18 +45,18 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
 
         public void UpdateCatcher()
         {
-            UpdatePosition();
+            UpdateCatcherPosition();
             UpdateColliders();
         }
         
-        public void UpdatePosition()
+        public void UpdateCatcherPosition()
         {
-            transform.position = FieldProvider.GetFieldPosition();
+            ColliderFieldCatcherConfig.CatcherObject.transform.position = _fieldProvider.GetFieldPosition();
         }
 
         public void UpdateColliders()
         {
-            var catcherSize = CalculateCatcherSize(FieldProvider, _fieldCatcherConfig);
+            var catcherSize = CalculateCatcherSize(_fieldProvider, FieldCatcherConfig);
 
             if (catcherSize.Equals(_lastCatcherSize))
             {
@@ -59,26 +65,26 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             
             _lastCatcherSize = catcherSize;
             
-            var halfFieldSize = FieldProvider.GetFieldSize() / 2f;
+            var halfFieldSize = _fieldProvider.GetFieldSize() / 2f;
             var halfCatcherSize = catcherSize / 2f;
 
             var rectangleFigure = _leftCollider.RectangleFigure;
-            rectangleFigure.PointAA = new Vector2(-halfCatcherSize.x - _colliderFieldCatcherConfig.BordersWidth,
-                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y - _colliderFieldCatcherConfig.BordersWidth);
+            rectangleFigure.PointAA = new Vector2(-halfCatcherSize.x - ColliderFieldCatcherConfig.BordersWidth,
+                halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y - ColliderFieldCatcherConfig.BordersWidth);
             rectangleFigure.PointBB = new Vector2(-halfCatcherSize.x, 
-                halfFieldSize.y + Mathf.Abs(_fieldCatcherConfig.CatcherProtectHeight));
+                halfFieldSize.y + Mathf.Abs(FieldCatcherConfig.CatcherProtectHeight));
             
             rectangleFigure = _rightCollider.RectangleFigure;
             rectangleFigure.PointAA = new Vector2(halfCatcherSize.x, 
-                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y - _colliderFieldCatcherConfig.BordersWidth);
-            rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + _colliderFieldCatcherConfig.BordersWidth, 
-                halfFieldSize.y + Mathf.Abs(_fieldCatcherConfig.CatcherProtectHeight));
+                halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y - ColliderFieldCatcherConfig.BordersWidth);
+            rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + ColliderFieldCatcherConfig.BordersWidth, 
+                halfFieldSize.y + Mathf.Abs(FieldCatcherConfig.CatcherProtectHeight));
             
             rectangleFigure = _bottomCollider.RectangleFigure;
-            rectangleFigure.PointAA = new Vector2(-halfCatcherSize.x - _colliderFieldCatcherConfig.BordersWidth, 
-                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y - _colliderFieldCatcherConfig.BordersWidth);
-            rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + _colliderFieldCatcherConfig.BordersWidth, 
-                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y);
+            rectangleFigure.PointAA = new Vector2(-halfCatcherSize.x - ColliderFieldCatcherConfig.BordersWidth, 
+                halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y - ColliderFieldCatcherConfig.BordersWidth);
+            rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + ColliderFieldCatcherConfig.BordersWidth, 
+                halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y);
         }
 
         public override Vector2 GetCatcherSize()
@@ -88,12 +94,12 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
 
         public override Margin GetMargin()
         {
-            return _fieldCatcherConfig.Margin;
+            return FieldCatcherConfig.Margin;
         }
 
         public override Vector2 GetSize()
         {
-            return _fieldCatcherConfig.Size;
+            return FieldCatcherConfig.Size;
         }
 
         public override void OpenCatcher()

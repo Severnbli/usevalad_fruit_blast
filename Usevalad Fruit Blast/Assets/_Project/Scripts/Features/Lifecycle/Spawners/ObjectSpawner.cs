@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Linq;
-using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.FeatureCore;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using _Project.Scripts.Features.Lifecycle.Objects;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Random;
-using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Spawners
 {
     public abstract class ObjectSpawner : BaseFeature, IConfigurableFeature<ObjectSpawnerConfig>
     {
-        [SerializeField] protected ObjectSpawnerConfig _objectSpawnerConfig;
+        protected ObjectSpawnerConfig _objectSpawnerConfig;
         
         protected RandomProvider _randomProvider;
         protected ObjectsContainer _objectsContainer;
@@ -25,17 +24,9 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
         
         public override void Init()
         {
-            if (!Context.TryGetComponentFromContainer(out _randomProvider))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _randomProvider.GetType().ToString()));
-            }
-            
-            if (!Context.TryGetComponentFromContainer(out _objectsContainer))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _objectsContainer.GetType().ToString()));
-            }
+            Context.TryGetComponentFromContainer(out _randomProvider);
+
+            Context.TryGetComponentFromContainer(out _objectsContainer);
         }
 
         public void Configure(ObjectSpawnerConfig objectSpawnerConfig)
@@ -45,7 +36,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
 
         public virtual bool TryGetConfiguredObject(out GameObject configuredObject)
         {
-            configuredObject = Instantiate(_objectSpawnerConfig.Prefab, Vector3.zero, Quaternion.identity);
+            configuredObject = UnityEngine.Object.Instantiate(_objectSpawnerConfig.Prefab, Vector3.zero, Quaternion.identity);
             
             if (configuredObject == null)
             {

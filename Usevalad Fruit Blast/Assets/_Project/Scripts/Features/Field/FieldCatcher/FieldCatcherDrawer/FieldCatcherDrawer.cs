@@ -1,4 +1,5 @@
 ﻿using System;
+using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldCatcher.FieldCatcherDrawer
@@ -6,16 +7,20 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.FieldCatcherDrawer
     public class FieldCatcherDrawer : MonoBehaviour
     {
         [SerializeField] private FieldCatcherConfig _fieldCatcherConfig;
-        [SerializeField] private FieldProvider.FieldProvider _fieldProvider;
+        [SerializeField] private CameraFieldProviderConfig _cameraFieldProviderConfig;
         [SerializeField] private Color _gizmoColor = Color.yellow;
+
+        private static readonly CameraFieldProvider FieldProvider = new();
         
         private void OnDrawGizmos()
         {
             try
             {
-                var halfCatcherSize = FieldCatcher.CalculateCatcherSize(_fieldProvider, _fieldCatcherConfig) / 2f;
-                var halfFieldSize = _fieldProvider.GetFieldSize() / 2f;
-                var position = _fieldProvider.GetFieldPosition();
+                FieldProvider.Configure(_cameraFieldProviderConfig);
+                
+                var halfCatcherSize = FieldCatcher.CalculateCatcherSize(FieldProvider, _fieldCatcherConfig) / 2f;
+                var halfFieldSize = FieldProvider.GetFieldSize() / 2f;
+                var position = FieldProvider.GetFieldPosition();
                 var margin = _fieldCatcherConfig.Margin;
                 
                 var rightUpPoint = new Vector2(position.x + halfCatcherSize.x, 

@@ -1,6 +1,4 @@
 ﻿using _Project.Scripts.Features.Field.FieldCatcher;
-using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner
@@ -15,14 +13,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.Fiel
         {
             base.Init();
 
-            if (!Context.TryGetComponentFromContainer(out FieldCatcher fieldCatcher))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    fieldCatcher.GetType().ToString()));
-                return;
-            }
-            
-            _fieldCatcher = fieldCatcher;
+            Context.TryGetComponentFromContainer(out _fieldCatcher);
         }
         
         public override void Spawn()
@@ -46,7 +37,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.Fiel
                 widthWithSpriteSize -= spriteRenderer.bounds.size.x;
             }
 
-            position.y += _fieldCatcher.FieldProvider.GetFieldSize().y / 1.5f;
+            position.y += _fieldCatcher.GetFieldProvider().GetFieldSize().y / 1.5f;
             position.x += widthWithSpriteSize * ((float) _randomProvider.Random.NextDouble() - 1/2f);
             
             return position;

@@ -1,4 +1,4 @@
-﻿using _Project.Scripts.Features.Common;
+﻿using _Project.Scripts.Features.FeatureCore;
 using _Project.Scripts.Features.Lifecycle.Objects;
 using UnityEngine;
 

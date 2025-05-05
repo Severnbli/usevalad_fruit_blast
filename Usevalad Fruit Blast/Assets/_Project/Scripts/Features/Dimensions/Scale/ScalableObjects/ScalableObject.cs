@@ -1,5 +1,5 @@
-﻿using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
+﻿using _Project.Scripts.Bootstrap;
+using _Project.Scripts.Common.Finders;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
@@ -27,10 +27,15 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScalableObjects
 
         private void ConnectToScaleProvider()
         {
-            if (!Context.TryGetComponentFromContainer(out _scaleProvider))
+            if (!ObjectFinder.TryFindObjectByType(out SystemCoordinator systemCoordinator))
             {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _scaleProvider.GetType().ToString()));
+                return;
+            }
+            
+            var context = systemCoordinator.Context;
+
+            if (!context.TryGetComponentFromContainer(out _scaleProvider))
+            {
                 return;
             }
             

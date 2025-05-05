@@ -1,4 +1,4 @@
-﻿using _Project.Scripts.Features.Common;
+﻿using _Project.Scripts.Features.FeatureCore;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

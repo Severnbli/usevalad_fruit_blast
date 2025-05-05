@@ -1,26 +1,23 @@
 ﻿using System;
-using _Project.Scripts.Features.Common;
+using _Project.Scripts.Features.FeatureCore;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using _Project.Scripts.Features.Field.FieldCatcher;
-using _Project.Scripts.System;
-using _Project.Scripts.System.Logs;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Dimensions.Scale.ScaleProvider
 {
-    public class ScaleProvider : BaseFeature, IConfigurableFeature<ScaleProviderConfig>
+    public class ScaleProvider : BaseFeature, IConfigurableFeature<ScaleProviderConfig>, IFixedUpdatableFeature
     {
-        [SerializeField] private ScaleProviderConfig _scaleProviderConfig;
-        [SerializeField] private FieldCatcher _fieldCatcher;
+        protected ScaleProviderConfig _scaleProviderConfig;
+        protected FieldCatcher _fieldCatcher;
 
         private Vector2 _lastSize = Vector2.zero;
-        
-        public ScaleProviderConfig ScaleProviderConfig => _scaleProviderConfig;
-        public FieldCatcher FieldCatcher => _fieldCatcher;
         
         public float Scale { get; private set; }
         public event Action<float> OnChangeScale;
 
-        private void FixedUpdate()
+        public void FixedUpdate()
         {
             var fieldCatcherSize = _fieldCatcher.GetCatcherSize();
             
@@ -36,11 +33,7 @@ namespace _Project.Scripts.Features.Dimensions.Scale.ScaleProvider
         {
             base.Init();
 
-            if (!Context.TryGetComponentFromContainer(out _fieldCatcher))
-            {
-                Debug.LogError(LogMessages.DependencyNotFound(GetType().ToString(), 
-                    _fieldCatcher.GetType().ToString()));
-            }
+            Context.TryGetComponentFromContainer(out _fieldCatcher);
         }
         
         public void Configure(ScaleProviderConfig scaleProviderConfig)

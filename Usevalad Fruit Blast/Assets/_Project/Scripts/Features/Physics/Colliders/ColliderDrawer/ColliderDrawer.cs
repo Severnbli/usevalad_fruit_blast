@@ -1,9 +1,8 @@
-﻿using _Project.Scripts.Features.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Colliders.ColliderDrawer
 {
-    public class ColliderDrawer : BaseFeature
+    public class ColliderDrawer : MonoBehaviour
     {
         [SerializeField] private Color _gizmoColor = Color.cyan;
          
