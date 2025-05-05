@@ -1,42 +1,30 @@
-﻿using UnityEngine;
+﻿using _Project.Scripts.Features.Physics.Figures;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Colliders
 {
     public class CircleCollider : BaseCollider
     {
-        [SerializeField] private Vector2 _point;
-        [SerializeField] private float _radius;
-        
-        public Vector2 Point
+        [SerializeField, HideLabel] private CircleFigure _circleFigure = new();
+
+        public CircleFigure CircleFigure { get => _circleFigure; set => _circleFigure = value; }
+
+        public override IPhysicsFigure GetUnmodifiedFigure()
         {
-            get => new(transform.position.x + _point.x, transform.position.y + _point.y);
-            set => _point = value;
+            return _circleFigure;
         }
 
-        public float Radius
-        {
-            get => _radius * Mathf.Max(transform.localScale.x, transform.localScale.y);
-            set => _radius = value;
-        }
-        
-        public override float GetArea()
-        {
-            var radius = Radius;
-            return Mathf.PI * radius * radius;
-        }
-        
-        public override Vector2 GetCenter()
-        {
-            return Point;
-        }
+        public override IPhysicsFigure GetFigure() => GetModifiedCircleFigure();
 
-        public override void GetBoundingRectangle(out Vector2 min, out Vector2 max)
+        public CircleFigure GetModifiedCircleFigure()
         {
-            var point = Point;
-            var radius = Radius;
+            var circleFigure = _circleFigure.Clone();
+
+            circleFigure.Point += GetPosition();
+            circleFigure.Radius *= GetMaxScale();
             
-            min = new Vector2(point.x - radius, point.y - radius);
-            max = new Vector2(point.x + radius, point.y + radius);
+            return circleFigure;
         }
     }
 }

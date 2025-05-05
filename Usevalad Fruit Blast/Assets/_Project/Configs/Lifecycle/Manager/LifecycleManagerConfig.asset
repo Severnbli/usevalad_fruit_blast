@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5bf10ec3bec40ae85e25c8c6a51795f, type: 3}
   m_Name: LifecycleManagerConfig
   m_EditorClassIdentifier: 
-  _maxCorruptedFieldCatcherArea: 0.8
+  _maxCorruptedFieldCatcherArea: 0.85
   _timeToFillFieldCatcherArea: 0.3
   _isPointersAvailableOnSensitiveTimes: 0

@@ -2,6 +2,7 @@
 using _Project.Scripts.Features.Common;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
+using _Project.Scripts.Features.Physics.Figures;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
@@ -60,20 +61,23 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             
             var halfFieldSize = FieldProvider.GetFieldSize() / 2f;
             var halfCatcherSize = catcherSize / 2f;
-            
-            _leftCollider.PointA = new Vector2(-halfCatcherSize.x - _colliderFieldCatcherConfig.BordersWidth,
-                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y);
-            _leftCollider.PointB = new Vector2(-halfCatcherSize.x, 
-                halfFieldSize.y + Mathf.Abs(_fieldCatcherConfig.CatcherProtectHeight));
 
-            _rightCollider.PointA = new Vector2(halfCatcherSize.x, 
-                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y);
-            _rightCollider.PointB = new Vector2(halfCatcherSize.x + _colliderFieldCatcherConfig.BordersWidth, 
-                halfFieldSize.y + Mathf.Abs(_fieldCatcherConfig.CatcherProtectHeight));
-
-            _bottomCollider.PointA = new Vector2(-halfCatcherSize.x - _colliderFieldCatcherConfig.BordersWidth, 
+            var rectangleFigure = _leftCollider.RectangleFigure;
+            rectangleFigure.PointAA = new Vector2(-halfCatcherSize.x - _colliderFieldCatcherConfig.BordersWidth,
                 halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y - _colliderFieldCatcherConfig.BordersWidth);
-            _bottomCollider.PointB = new Vector2(halfCatcherSize.x + _colliderFieldCatcherConfig.BordersWidth, 
+            rectangleFigure.PointBB = new Vector2(-halfCatcherSize.x, 
+                halfFieldSize.y + Mathf.Abs(_fieldCatcherConfig.CatcherProtectHeight));
+            
+            rectangleFigure = _rightCollider.RectangleFigure;
+            rectangleFigure.PointAA = new Vector2(halfCatcherSize.x, 
+                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y - _colliderFieldCatcherConfig.BordersWidth);
+            rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + _colliderFieldCatcherConfig.BordersWidth, 
+                halfFieldSize.y + Mathf.Abs(_fieldCatcherConfig.CatcherProtectHeight));
+            
+            rectangleFigure = _bottomCollider.RectangleFigure;
+            rectangleFigure.PointAA = new Vector2(-halfCatcherSize.x - _colliderFieldCatcherConfig.BordersWidth, 
+                halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y - _colliderFieldCatcherConfig.BordersWidth);
+            rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + _colliderFieldCatcherConfig.BordersWidth, 
                 halfFieldSize.y - _fieldCatcherConfig.Margin.Top - catcherSize.y);
         }
 
