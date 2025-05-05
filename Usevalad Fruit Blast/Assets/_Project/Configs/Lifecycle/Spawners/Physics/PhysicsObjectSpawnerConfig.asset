@@ -12,46 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c83cc3aeb9457398fb37f4ebaec854, type: 3}
   m_Name: PhysicsObjectSpawnerConfig
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 5413519283949544479, guid: cfbb42da505a14f419c3349cb7015911, type: 3}
-  _spawnGroups:
-  - _id: 1
-    _sprite: {fileID: 21300000, guid: e219372db4b9d644da2507c3b8f5eece, type: 3}
-    _isActive: 1
-  - _id: 2
-    _sprite: {fileID: 21300000, guid: 2d2062467ac100b4fafa65a3323e1607, type: 3}
-    _isActive: 1
-  - _id: 3
-    _sprite: {fileID: 21300000, guid: a589327a1dd219140af899e24776bdca, type: 3}
-    _isActive: 1
-  - _id: 4
-    _sprite: {fileID: 21300000, guid: 2a1479d58be8dcc45998467ea8f03e78, type: 3}
-    _isActive: 1
-  - _id: 5
-    _sprite: {fileID: 21300000, guid: dcce7c1f3996db0439d09af459752c27, type: 3}
-    _isActive: 1
-  - _id: 6
-    _sprite: {fileID: 21300000, guid: ae32417d65c3e79469e6a988c2f64119, type: 3}
-    _isActive: 1
-  - _id: 7
-    _sprite: {fileID: 21300000, guid: 0bbc7dc42c6dec44abf7a2a5731922c4, type: 3}
-    _isActive: 1
-  - _id: 8
-    _sprite: {fileID: 21300000, guid: 6e73bc61ae166b24b8147d9676cec2ac, type: 3}
-    _isActive: 1
-  - _id: 9
-    _sprite: {fileID: 21300000, guid: 50f9dc1893a34914e9a119400dced625, type: 3}
-    _isActive: 1
-  - _id: 10
-    _sprite: {fileID: 21300000, guid: e0fb5a544a6da8e47831b2954bca8842, type: 3}
-    _isActive: 1
-  - _id: 11
-    _sprite: {fileID: 21300000, guid: 15b36d32c04e6064e9bb6938ccce695a, type: 3}
-    _isActive: 1
-  - _id: 12
-    _sprite: {fileID: 21300000, guid: 14ec3155f61d0ad4f9732a773eaaceeb, type: 3}
-    _isActive: 1
-  _minScale: 0.3
-  _maxScale: 0.4
+  _objectSpawnerConfig: {fileID: 11400000, guid: df8c8f099612a4c448e951e577a2216a, type: 2}
   _minMass: 0.7
   _maxMass: 1.2
   _minBounciness: 0.5
