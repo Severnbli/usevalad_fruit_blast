@@ -14,7 +14,7 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
         
         public int Id { get => _id; set => _id = value; }
 
-        private void OnEnable()
+        private void Start()
         {
             if (!ObjectFinder.TryFindObjectByType(out SystemCoordinator systemCoordinator))
             {
@@ -27,14 +27,11 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
             }
             
             _objectContainer.ContainerableObjects.Add(this);
-        }
-
-        private void Start()
-        {
+            
             _dynamicBody = GetComponent<DynamicBody>();
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             if (_objectContainer == null)
             {
