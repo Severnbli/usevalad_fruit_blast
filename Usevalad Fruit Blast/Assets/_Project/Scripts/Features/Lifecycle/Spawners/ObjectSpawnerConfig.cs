@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Spawners
 {
-    [CreateAssetMenu(fileName = "ObjectSpawnerConfig", menuName = "Configs/Spawners/Common/Base Spawner Config")]
+    [CreateAssetMenu(fileName = "ObjectSpawnerConfig", menuName = "Configs/Lifecycle/Spawners/Common/Base Spawner Config")]
     public class ObjectSpawnerConfig : ScriptableObject, IFeatureConfig
     {
         [SerializeField] protected GameObject _prefab;

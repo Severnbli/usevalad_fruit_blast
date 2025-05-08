@@ -1,11 +1,10 @@
-﻿using System;
-using _Project.Scripts.Features.FeatureCore;
+﻿using _Project.Scripts.Features.FeatureCore;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Random
 {
-    [Serializable]
-    public class RandomProviderConfig : IFeatureConfig
+    [CreateAssetMenu(fileName = "RandomProviderConfig", menuName = "Configs/Random/Random Provider Config")]
+    public class RandomProviderConfig : ScriptableObject, IFeatureConfig
     {
         [SerializeField] private int _seed;
         

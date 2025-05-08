@@ -20,17 +20,17 @@ namespace _Project.Scripts.Bootstrap
     public class SystemConfig
     {
         [SerializeField] private PhysicsEngineConfig _physicsEngineConfig;
-        [SerializeField, InlineProperty] private ForceProviderConfig _gravityForceProviderConfig;
-        [SerializeField, InlineProperty] private ForceProviderConfig _explosionForceProviderConfig;
+        [SerializeField] private ForceProviderConfig _gravityForceProviderConfig;
+        [SerializeField] private ForceProviderConfig _explosionForceProviderConfig;
         [SerializeField, InlineProperty] private CameraFieldProviderConfig _cameraFieldProviderConfig;
         [SerializeField] private ColliderFieldCatcherConfig _colliderFieldCatcherConfig;
-        [SerializeField, InlineProperty] private RandomProviderConfig _randomProviderConfig;
+        [SerializeField] private RandomProviderConfig _randomProviderConfig;
         [SerializeField, InlineProperty] private ObjectsContainerConfig _objectsContainerConfig;
-        [SerializeField, InlineProperty] private ExplosionProviderConfig _explosionProviderConfig;
+        [SerializeField] private ExplosionProviderConfig _explosionProviderConfig;
         [SerializeField] private PhysicsObjectSpawnerConfig _physicsObjectSpawnerConfig;
-        [SerializeField, InlineProperty] private ScaleProviderConfig _scaleProviderConfig;
+        [SerializeField] private ScaleProviderConfig _scaleProviderConfig;
         [SerializeField] private LifecycleManagerConfig _lifecycleManagerConfig;
-        [SerializeField, InlineProperty] private ClickObjectDestroyerConfig _clickObjectDestroyerConfig;
+        [SerializeField] private ClickObjectDestroyerConfig _clickObjectDestroyerConfig;
         
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public ForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
