@@ -8,7 +8,7 @@ namespace _Project.Scripts.Features.Physics.Forces
 {
     public abstract class ForceProvider : BaseFeature, IConfigurableFeature<ForceProviderConfig>
     {
-        private ForceProviderConfig _forceProviderConfig;
+        protected ForceProviderConfig _forceProviderConfig;
         private PhysicsEngine _physicsEngine;
         
         public ForceProviderConfig ForceProviderConfig => _forceProviderConfig;
