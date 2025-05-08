@@ -948,57 +948,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _systemConfig:
     _physicsEngineConfig: {fileID: 11400000, guid: afc1944023ed93a42a4d8025aa4bda9a, type: 2}
-    _gravityForceProviderConfig:
-      _factor: 9.8
-      _direction: {x: 0, y: -1}
-    _explosionForceProviderConfig:
-      _factor: 300
-      _direction: {x: 0, y: 0}
+    _gravityForceProviderConfig: {fileID: 11400000, guid: b233b4398ab673142a86e38ea0f63665, type: 2}
+    _explosionForceProviderConfig: {fileID: 11400000, guid: 7786363e1fea7bd45ada301ad0738c51, type: 2}
     _cameraFieldProviderConfig:
       _targetCamera: {fileID: 1011431697}
     _colliderFieldCatcherConfig:
       _fieldCatcherConfig: {fileID: 11400000, guid: 6c9a6e7250b776d4ba9831aa38ed160e, type: 2}
       _catcherObject: {fileID: 2063400114}
       _bordersWidth: 2
-    _randomProviderConfig:
-      _seed: 24
+    _randomProviderConfig: {fileID: 11400000, guid: 24e2c5c77c77e5b4f9fde74aba70c6d7, type: 2}
     _objectsContainerConfig:
       _objectsContainerTransform: {fileID: 1383450489}
-    _explosionProviderConfig:
-      _maxAffectedDistance: 6
+    _explosionProviderConfig: {fileID: 11400000, guid: 2d4677b788c3f9d45bdf3335d678347e, type: 2}
     _physicsObjectSpawnerConfig: {fileID: 11400000, guid: aa501d050b8fae942ad73a095856e00e, type: 2}
-    _scaleProviderConfig:
-      _benchmarkSize: {x: 3.5, y: 7.5}
+    _scaleProviderConfig: {fileID: 11400000, guid: 7ee2b05eefef81f40af0026a14d1a11c, type: 2}
     _lifecycleManagerConfig: {fileID: 11400000, guid: 2b1f751cacd40ca46a36c68417644385, type: 2}
-    _clickObjectDestroyerConfig:
-      _clickOffset: 0.1
-      _infectionDistance: 0.2
-      _minInfectedObjects: 3
-      _destroyDuration: 0.4
-      _destroyCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+    _clickObjectDestroyerConfig: {fileID: 11400000, guid: bd9bec295080b104982b50c44c3f48d4, type: 2}
 --- !u!1 &1011431694
 GameObject:
   m_ObjectHideFlags: 0

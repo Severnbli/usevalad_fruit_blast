@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner
 {
-    [CreateAssetMenu(fileName = "PhysicsObjectSpawnerConfig", menuName = "Configs/Spawners/Physics Object Spawner/Physicsc Object Spawner Config")]
+    [CreateAssetMenu(fileName = "PhysicsObjectSpawnerConfig", menuName = "Configs/Lifecycle/Spawners/Physics Object Spawner/Physicsc Object Spawner Config")]
     public class PhysicsObjectSpawnerConfig : ScriptableObject, IFeatureConfig
     {
         [SerializeField] private ObjectSpawnerConfig _objectSpawnerConfig;

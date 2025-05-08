@@ -1,11 +1,10 @@
-﻿using System;
-using _Project.Scripts.Features.FeatureCore;
+﻿using _Project.Scripts.Features.FeatureCore;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Forces
 {
-    [Serializable]
-    public class ForceProviderConfig : IFeatureConfig
+    [CreateAssetMenu(fileName = "ForceProviderConfig", menuName = "Configs/Physics/Forces/Force Provider Config")]
+    public class ForceProviderConfig : ScriptableObject, IFeatureConfig
     {
         [SerializeField] private float _factor;
         [SerializeField] private Vector2 _direction;

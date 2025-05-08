@@ -1,11 +1,10 @@
-﻿using System;
-using _Project.Scripts.Features.FeatureCore;
+﻿using _Project.Scripts.Features.FeatureCore;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
 {
-    [Serializable]
-    public class ClickObjectDestroyerConfig : IFeatureConfig
+    [CreateAssetMenu(fileName = "ClickObjectDestroyerConfig", menuName = "Configs/Lifecycle/Destroyers/Click Object Destroyer Config")]
+    public class ClickObjectDestroyerConfig : ScriptableObject, IFeatureConfig
     {
         [SerializeField] private float _clickOffset = 0.1f;
         [SerializeField] private float _infectionDistance = 0.5f;
