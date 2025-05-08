@@ -11,14 +11,11 @@ using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer;
 using _Project.Scripts.Features.Lifecycle.LifecycleManager;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
-using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
-using _Project.Scripts.Features.Physics.Colliders.ColliderDrawer;
 using _Project.Scripts.Features.Physics.Engine;
-using _Project.Scripts.Features.Physics.Forces;
+using _Project.Scripts.Features.Physics.Forces.ExplosionForceProvider;
 using _Project.Scripts.Features.Physics.Forces.GravityForceProvider;
 using _Project.Scripts.Features.Random;
-using _Project.Scripts.System.SystemConfigurator;
 using UnityEngine;
 
 namespace _Project.Scripts.Bootstrap
@@ -65,6 +62,7 @@ namespace _Project.Scripts.Bootstrap
         {
             Context.AddFeatureWithConfig(new PhysicsEngine(), _systemConfig.PhysicsEngineConfig);
             Context.AddFeatureWithConfig(new GravityForceProvider(), _systemConfig.GravityForceProviderConfig);
+            Context.AddFeatureWithConfig(new ExplosionForceProvider(), _systemConfig.ExplosionForceProviderConfig);
             
             Context.AddFeatureWithConfig(new CameraFieldProvider(), _systemConfig.CameraFieldProviderConfig);
             Context.AddFeatureWithConfig(new ColliderFieldCatcher(), _systemConfig.ColliderFieldCatcherConfig);
@@ -98,11 +96,11 @@ namespace _Project.Scripts.Bootstrap
 
         private void DestroyDestroyableFeatures()
         {
-            var onDestroyableFeatures = Context.Container.OfType<IDestroyableFeature>().ToList();
+            var destroyableFeatures = Context.Container.OfType<IDestroyableFeature>().ToList();
 
-            foreach (var onDestroyableFeature in onDestroyableFeatures)
+            foreach (var destroyableFeature in destroyableFeatures)
             {
-                onDestroyableFeature.OnDestroy();
+                destroyableFeature.OnDestroy();
             }
         }
     }

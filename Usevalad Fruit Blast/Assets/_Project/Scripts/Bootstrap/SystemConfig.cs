@@ -8,17 +8,19 @@ using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Forces;
+using _Project.Scripts.Features.Physics.Forces.ExplosionForceProvider;
 using _Project.Scripts.Features.Random;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace _Project.Scripts.System.SystemConfigurator
+namespace _Project.Scripts.Bootstrap
 {
     [Serializable]
     public class SystemConfig
     {
         [SerializeField] private PhysicsEngineConfig _physicsEngineConfig;
         [SerializeField, InlineProperty] private ForceProviderConfig _gravityForceProviderConfig;
+        [SerializeField, InlineProperty] private ForceProviderConfig _explosionForceProviderConfig;
         [SerializeField, InlineProperty] private CameraFieldProviderConfig _cameraFieldProviderConfig;
         [SerializeField] private ColliderFieldCatcherConfig _colliderFieldCatcherConfig;
         [SerializeField, InlineProperty] private RandomProviderConfig _randomProviderConfig;
@@ -30,6 +32,7 @@ namespace _Project.Scripts.System.SystemConfigurator
         
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public ForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
+        public ForceProviderConfig ExplosionForceProviderConfig => _explosionForceProviderConfig;
         public CameraFieldProviderConfig CameraFieldProviderConfig => _cameraFieldProviderConfig;
         public ColliderFieldCatcherConfig ColliderFieldCatcherConfig => _colliderFieldCatcherConfig;
         public RandomProviderConfig RandomProviderConfig => _randomProviderConfig;
