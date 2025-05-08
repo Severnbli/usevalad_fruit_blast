@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.Common.Repositories;
+using _Project.Scripts.Features.Controls.Gyroscope;
 using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
@@ -73,6 +74,7 @@ namespace _Project.Scripts.Bootstrap
             
             Context.AddFeature(new TouchProvider());
             Context.AddFeature(new MouseProvider());
+            Context.AddFeature(new GyroscopeProvider());
             
             Context.AddFeatureWithConfig(new FieldCatcherSpawner(), _systemConfig.PhysicsObjectSpawnerConfig);
             Context.AddFeatureWithConfig(new ScaleProvider(), _systemConfig.ScaleProviderConfig);
