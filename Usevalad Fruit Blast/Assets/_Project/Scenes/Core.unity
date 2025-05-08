@@ -489,6 +489,9 @@ MonoBehaviour:
     _gravityForceProviderConfig:
       _factor: 9.8
       _direction: {x: 0, y: -1}
+    _explosionForceProviderConfig:
+      _factor: 300
+      _direction: {x: 0, y: 0}
     _cameraFieldProviderConfig:
       _targetCamera: {fileID: 1011431697}
     _colliderFieldCatcherConfig:
@@ -499,13 +502,15 @@ MonoBehaviour:
       _seed: 24
     _objectsContainerConfig:
       _objectsContainerTransform: {fileID: 1383450489}
+    _explosionProviderConfig:
+      _maxAffectedDistance: 6
     _physicsObjectSpawnerConfig: {fileID: 11400000, guid: aa501d050b8fae942ad73a095856e00e, type: 2}
     _scaleProviderConfig:
       _benchmarkSize: {x: 3.5, y: 7.5}
     _lifecycleManagerConfig: {fileID: 11400000, guid: 2b1f751cacd40ca46a36c68417644385, type: 2}
     _clickObjectDestroyerConfig:
       _clickOffset: 0.1
-      _infectionDistance: 0.1
+      _infectionDistance: 0.2
       _minInfectedObjects: 3
       _destroyDuration: 0.4
       _destroyCurve:
