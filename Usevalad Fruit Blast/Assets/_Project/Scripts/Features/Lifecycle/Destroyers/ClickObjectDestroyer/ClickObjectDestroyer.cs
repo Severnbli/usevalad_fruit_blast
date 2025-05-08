@@ -10,6 +10,7 @@ using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Figures;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
@@ -22,6 +23,9 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
         private ObjectsContainer _objectsContainer;
         private FieldCatcher _fieldCatcher;
         private ClickObjectDestroyerConfig _clickObjectDestroyerConfig;
+
+        private readonly Dictionary<ContainerableObject, int> _objectsToDestroy = new();
+        private readonly Dictionary<ContainerableObject, int> _filterObjects = new();
 
         public override void Init()
         {
@@ -62,24 +66,24 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
         
         public override void DestroyObjectAt(Vector2 position)
         {
-            if (!TryGetNearestObjectThatMatchRules(position, out var nearestObject))
-            {
-                return;
-            }
-
-            var infectedObjects = new Dictionary<ContainerableObject, int>();
-            
-            infectedObjects.Add(nearestObject, 0);
-            
-            SearchForInfectedObjects(nearestObject, infectedObjects);
-
-            if (infectedObjects.Count < _clickObjectDestroyerConfig.MinInfectedObjects 
-                && TryGetBetterInfectedGroup(infectedObjects, out var betterInfectedObjects))
+            if (!TryGetNearestObjectThatMatchRules(position, out var nearestObject)
+                || _objectsToDestroy.ContainsKey(nearestObject))
             {
                 return;
             }
             
-            DestroyWithEasing(infectedObjects);
+            _objectsToDestroy.Clear();
+            _objectsToDestroy.Add(nearestObject, 0);
+            
+            SearchForInfectedObjects(nearestObject, _objectsToDestroy);
+
+            if (_objectsToDestroy.Count < _clickObjectDestroyerConfig.MinInfectedObjects 
+                && TryGetBetterInfectedGroup(_objectsToDestroy, out var betterInfectedObjects))
+            {
+                return;
+            }
+            
+            DestroyWithEasing(_objectsToDestroy);
         }
 
         public override bool TryGetNearestObjectThatMatchRules(Vector2 position, out ContainerableObject nearestObject)
@@ -117,7 +121,7 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
 
         private bool IsClickMatchFieldCatcherRules(Vector2 position)
         {
-            var topMarginAxis = _fieldCatcher.GetPosition().y + _fieldCatcher.GetFieldProvider().GetFieldSize().y
+            var topMarginAxis = _fieldCatcher.GetPosition().y + _fieldCatcher.GetFieldProvider().GetFieldSize().y / 2f
                                 - _fieldCatcher.FieldCatcherConfig.Margin.Top;
 
             return position.y <= topMarginAxis;
@@ -126,6 +130,12 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
         private void SearchForInfectedObjects(ContainerableObject currentObject, 
             Dictionary<ContainerableObject, int> infectedObjects, Dictionary<ContainerableObject, int> filteredObjects = null)
         {
+            if (ReferenceEquals(infectedObjects, filteredObjects))
+            {
+                Debug.LogError("ClickObjectDestroyer: filter and infected objects are the same!");
+                return;
+            }
+            
             if (!currentObject.TryGetComponent(out BaseCollider currentCollider))
             {
                 return;
@@ -171,21 +181,22 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
         private bool TryGetBetterInfectedGroup(Dictionary<ContainerableObject, int> selectedInfectedObjects,
             out Dictionary<ContainerableObject, int> betterInfectedObjects)
         {
-            var filteredObjects = new Dictionary<ContainerableObject, int>(selectedInfectedObjects);
+            _filterObjects.Clear();
+            _filterObjects.AddRange(selectedInfectedObjects);
             var listOfResultGroup = new List<Dictionary<ContainerableObject, int>>();
             
             foreach (var containerableObject in _objectsContainer.ContainerableObjects)
             {
-                if (filteredObjects.ContainsKey(containerableObject))
+                if (_filterObjects.ContainsKey(containerableObject))
                 {
                     continue;
                 }
 
                 var group = new Dictionary<ContainerableObject, int>();
                 group.Add(containerableObject, 0);
-                filteredObjects.Add(containerableObject, 0);
+                _filterObjects.Add(containerableObject, 0);
                 
-                SearchForInfectedObjects(containerableObject, group, filteredObjects);
+                SearchForInfectedObjects(containerableObject, group, _filterObjects);
                 listOfResultGroup.Add(group);
             }
 
@@ -222,7 +233,7 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
 
             Dictionary<int, float> orderToDelay = new();
 
-            foreach (int order in infectedObjects.Values.Distinct())
+            foreach (var order in infectedObjects.Values.Distinct())
             {
                 var t = orderRange == 0 ? 0f : (order - minOrder) / (float)orderRange;
                 var delay = _clickObjectDestroyerConfig.DestroyCurve.Evaluate(t) * _clickObjectDestroyerConfig.DestroyDuration;
