@@ -10,7 +10,7 @@ namespace _Project.Scripts.Features.Physics.Forces.ExplosionForceProvider
         
         public override Vector2 GetForceByDynamicBody(DynamicBody dynamicBody)
         {
-            if (!_explosionData.TryGetValue(dynamicBody, out var forcePercentageVector))
+            if (!_explosionData.Remove(dynamicBody, out var forcePercentageVector))
             {
                 return Vector2.zero;
             }

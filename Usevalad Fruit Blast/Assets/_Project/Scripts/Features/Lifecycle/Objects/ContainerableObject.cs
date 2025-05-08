@@ -9,7 +9,7 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
     {
         [SerializeField] private int _id;
         
-        private DynamicBody _dynamicBody;
+        public DynamicBody DynamicBody { get; private set; }
         private ObjectsContainer.ObjectsContainer _objectContainer;
         
         public int Id { get => _id; set => _id = value; }
@@ -28,7 +28,7 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
             
             _objectContainer.ContainerableObjects.Add(this);
             
-            _dynamicBody = GetComponent<DynamicBody>();
+            DynamicBody = GetComponent<DynamicBody>();
         }
 
         private void OnDestroy()
@@ -45,9 +45,9 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
         {
             var area = 0f;
 
-            if (_dynamicBody != null)
+            if (DynamicBody != null)
             {
-                foreach (var collider in _dynamicBody.Colliders)
+                foreach (var collider in DynamicBody.Colliders)
                 {
                     area += collider.GetFigure().GetArea();
                 }

@@ -9,6 +9,7 @@ using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Forces;
 using _Project.Scripts.Features.Physics.Forces.ExplosionForceProvider;
+using _Project.Scripts.Features.Physics.Services.Explosions.ExplosionProvider;
 using _Project.Scripts.Features.Random;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -25,6 +26,7 @@ namespace _Project.Scripts.Bootstrap
         [SerializeField] private ColliderFieldCatcherConfig _colliderFieldCatcherConfig;
         [SerializeField, InlineProperty] private RandomProviderConfig _randomProviderConfig;
         [SerializeField, InlineProperty] private ObjectsContainerConfig _objectsContainerConfig;
+        [SerializeField, InlineProperty] private ExplosionProviderConfig _explosionProviderConfig;
         [SerializeField] private PhysicsObjectSpawnerConfig _physicsObjectSpawnerConfig;
         [SerializeField, InlineProperty] private ScaleProviderConfig _scaleProviderConfig;
         [SerializeField] private LifecycleManagerConfig _lifecycleManagerConfig;
@@ -37,6 +39,7 @@ namespace _Project.Scripts.Bootstrap
         public ColliderFieldCatcherConfig ColliderFieldCatcherConfig => _colliderFieldCatcherConfig;
         public RandomProviderConfig RandomProviderConfig => _randomProviderConfig;
         public ObjectsContainerConfig ObjectsContainerConfig => _objectsContainerConfig;
+        public ExplosionProviderConfig ExplosionProviderConfig => _explosionProviderConfig;
         public PhysicsObjectSpawnerConfig PhysicsObjectSpawnerConfig => _physicsObjectSpawnerConfig;
         public ScaleProviderConfig ScaleProviderConfig => _scaleProviderConfig;
         public LifecycleManagerConfig LifecycleManagerConfig => _lifecycleManagerConfig;
