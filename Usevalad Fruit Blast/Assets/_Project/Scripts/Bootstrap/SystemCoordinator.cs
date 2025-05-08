@@ -15,6 +15,7 @@ using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCat
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Forces.ExplosionForceProvider;
 using _Project.Scripts.Features.Physics.Forces.GravityForceProvider;
+using _Project.Scripts.Features.Physics.Services.Explosions.ExplosionProvider;
 using _Project.Scripts.Features.Random;
 using UnityEngine;
 
@@ -68,6 +69,7 @@ namespace _Project.Scripts.Bootstrap
             Context.AddFeatureWithConfig(new ColliderFieldCatcher(), _systemConfig.ColliderFieldCatcherConfig);
             Context.AddFeatureWithConfig(new RandomProvider(), _systemConfig.RandomProviderConfig);
             Context.AddFeatureWithConfig(new ObjectsContainer(), _systemConfig.ObjectsContainerConfig);
+            Context.AddFeatureWithConfig(new ExplosionProvider(), _systemConfig.ExplosionProviderConfig);
             
             Context.AddFeature(new TouchProvider());
             Context.AddFeature(new MouseProvider());
