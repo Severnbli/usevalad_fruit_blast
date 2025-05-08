@@ -505,7 +505,7 @@ MonoBehaviour:
     _lifecycleManagerConfig: {fileID: 11400000, guid: 2b1f751cacd40ca46a36c68417644385, type: 2}
     _clickObjectDestroyerConfig:
       _clickOffset: 0.1
-      _infectionDistance: 0.2
+      _infectionDistance: 0.1
       _minInfectedObjects: 3
       _destroyDuration: 0.4
       _destroyCurve:
