@@ -9,7 +9,7 @@ namespace _Project.Scripts.Features.Physics.Forces
         [SerializeField] private float _factor;
         [SerializeField] private Vector2 _direction;
         
-        public float Factor => _factor;
-        public Vector2 Direction => _direction;
+        public float Factor { get => _factor; set => _factor = value; }
+        public Vector2 Direction { get => _direction; set => _direction = value; }
     }
 }

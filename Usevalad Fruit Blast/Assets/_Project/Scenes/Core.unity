@@ -964,6 +964,7 @@ MonoBehaviour:
     _scaleProviderConfig: {fileID: 11400000, guid: 7ee2b05eefef81f40af0026a14d1a11c, type: 2}
     _lifecycleManagerConfig: {fileID: 11400000, guid: 2b1f751cacd40ca46a36c68417644385, type: 2}
     _clickObjectDestroyerConfig: {fileID: 11400000, guid: bd9bec295080b104982b50c44c3f48d4, type: 2}
+    _gyroscopeGravityChangerConfig: {fileID: 11400000, guid: 9d85ecbbbd6e33d44967c2f4e2ed137b, type: 2}
 --- !u!1 &1011431694
 GameObject:
   m_ObjectHideFlags: 0

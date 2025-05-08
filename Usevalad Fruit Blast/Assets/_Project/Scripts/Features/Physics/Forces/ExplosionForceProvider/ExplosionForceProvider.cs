@@ -15,7 +15,7 @@ namespace _Project.Scripts.Features.Physics.Forces.ExplosionForceProvider
                 return Vector2.zero;
             }
 
-            return forcePercentageVector * _forceProviderConfig.Factor;
+            return forcePercentageVector * ForceProviderConfig.Factor;
         }
 
         public bool TryAddExplosionData(DynamicBody dynamicBody, Vector2 distanceVector)
