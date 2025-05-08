@@ -10,6 +10,7 @@ using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Forces;
 using _Project.Scripts.Features.Physics.Forces.ExplosionForceProvider;
 using _Project.Scripts.Features.Physics.Services.Explosions.ExplosionProvider;
+using _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityChanger;
 using _Project.Scripts.Features.Random;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -31,6 +32,7 @@ namespace _Project.Scripts.Bootstrap
         [SerializeField] private ScaleProviderConfig _scaleProviderConfig;
         [SerializeField] private LifecycleManagerConfig _lifecycleManagerConfig;
         [SerializeField] private ClickObjectDestroyerConfig _clickObjectDestroyerConfig;
+        [SerializeField] private GyroscopeGravityChangerConfig _gyroscopeGravityChangerConfig;
         
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public ForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
@@ -44,5 +46,6 @@ namespace _Project.Scripts.Bootstrap
         public ScaleProviderConfig ScaleProviderConfig => _scaleProviderConfig;
         public LifecycleManagerConfig LifecycleManagerConfig => _lifecycleManagerConfig;
         public ClickObjectDestroyerConfig ClickObjectDestroyerConfig => _clickObjectDestroyerConfig;
+        public GyroscopeGravityChangerConfig GyroscopeGravityChangerConfig => _gyroscopeGravityChangerConfig;
     }
 }

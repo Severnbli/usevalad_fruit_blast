@@ -17,6 +17,7 @@ using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Forces.ExplosionForceProvider;
 using _Project.Scripts.Features.Physics.Forces.GravityForceProvider;
 using _Project.Scripts.Features.Physics.Services.Explosions.ExplosionProvider;
+using _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityChanger;
 using _Project.Scripts.Features.Random;
 using UnityEngine;
 
@@ -80,6 +81,8 @@ namespace _Project.Scripts.Bootstrap
             Context.AddFeatureWithConfig(new ScaleProvider(), _systemConfig.ScaleProviderConfig);
             Context.AddFeatureWithConfig(new ClickObjectDestroyer(), _systemConfig.ClickObjectDestroyerConfig);
             Context.AddFeatureWithConfig(new LifecycleManager(), _systemConfig.LifecycleManagerConfig);
+            
+            Context.AddFeatureWithConfig(new GyroscopeGravityChanger(), _systemConfig.GyroscopeGravityChangerConfig);
         }
 
         private void Update()

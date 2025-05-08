@@ -96,7 +96,7 @@ namespace _Project.Scripts.Features.Controls.Gyroscope
             return unityAttitude.eulerAngles;
         }
 
-        public bool TryGetHorizontalAngle(out float angle)
+        public bool TryGetRollAngle(out float angle)
         {
             angle = 0f;
 
@@ -105,11 +105,11 @@ namespace _Project.Scripts.Features.Controls.Gyroscope
                 return false;
             }
 
-            angle = GetNormalizedAngle(eulerAngles.x);
+            angle = GetNormalizedAngle(eulerAngles.z);
             return true;
         }
 
-        public bool TryGetVerticalAngle(out float angle)
+        public bool TryGetPitchAngle(out float angle)
         {
             angle = 0f;
 
@@ -131,7 +131,7 @@ namespace _Project.Scripts.Features.Controls.Gyroscope
                 return false;
             }
             
-            angle = GetNormalizedAngle(eulerAngles.z);
+            angle = GetNormalizedAngle(eulerAngles.x);
             return true;
         }
 

@@ -8,14 +8,12 @@ namespace _Project.Scripts.Features.Physics.Forces
 {
     public abstract class ForceProvider : BaseFeature, IConfigurableFeature<ForceProviderConfig>
     {
-        protected ForceProviderConfig _forceProviderConfig;
+        public ForceProviderConfig ForceProviderConfig { get; private set; }
         private PhysicsEngine _physicsEngine;
-        
-        public ForceProviderConfig ForceProviderConfig => _forceProviderConfig;
         
         public Vector2 GetForce()
         {
-            return _forceProviderConfig.Factor * _forceProviderConfig.Direction;
+            return ForceProviderConfig.Factor * ForceProviderConfig.Direction;
         }
         
         public abstract Vector2 GetForceByDynamicBody(DynamicBody dynamicBody);
@@ -31,7 +29,7 @@ namespace _Project.Scripts.Features.Physics.Forces
 
         public void Configure(ForceProviderConfig forceProviderConfig)
         {
-            _forceProviderConfig = forceProviderConfig;
+            ForceProviderConfig = forceProviderConfig;
         }
     }
 }
