@@ -652,8 +652,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 1669483777
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &905114306
 GameObject:
@@ -833,9 +833,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b65b0945474a60b8d3e3ed83635517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fieldCatcherConfig: {fileID: 11400000, guid: 7657b58aefe5ed747bdf74568ec02134, type: 2}
+  _fieldCatcherConfig: {fileID: 11400000, guid: 6c9a6e7250b776d4ba9831aa38ed160e, type: 2}
   _cameraFieldProviderConfig:
-    _targetCamera: {fileID: 0}
+    _targetCamera: {fileID: 1011431697}
   _gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &984758139
 GameObject:
@@ -1949,7 +1949,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1193858843
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &2063400114
