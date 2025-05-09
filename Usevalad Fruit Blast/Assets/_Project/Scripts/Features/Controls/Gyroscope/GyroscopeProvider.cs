@@ -6,33 +6,57 @@ namespace _Project.Scripts.Features.Controls.Gyroscope
 {
     public class GyroscopeProvider : BaseFeature, IDestroyableFeature
     {
+        public bool IsGyroscopeAccessible { get; private set; }
+        public UnityEngine.Gyroscope Gyroscope { get; private set; }
+        
         public override void Init()
         {
             base.Init();
             
-            Input.gyro.enabled = true;
+            SetupGyroscope();
         }
         
         public void OnDestroy()
         {
-            Input.gyro.enabled = false;
+            DisableGyroscope();
         }
 
-        public bool IsGyroscopeAccessible()
+        private bool CheckGyroscopeAccessibility()
         {
-            return Input.gyro.enabled;
+            return SystemInfo.supportsGyroscope;
+        }
+
+        private void SetupGyroscope()
+        {
+            IsGyroscopeAccessible = CheckGyroscopeAccessibility();
+
+            if (!IsGyroscopeAccessible)
+            {
+                return;
+            }
+                
+            Gyroscope = Input.gyro;
+            Gyroscope.enabled = true;
+        }
+
+        private void DisableGyroscope()
+        {
+            if (Gyroscope != null)
+            {
+                Gyroscope.enabled = false;
+            }
         }
 
         public bool TryGetGravity(out Vector3 gravity)
         {
             gravity = default;
 
-            if (!IsGyroscopeAccessible())
+            if (!IsGyroscopeAccessible)
             {
                 return false;
             }
             
-            gravity = Input.gyro.gravity;
+            gravity = Gyroscope.gravity;
             return true;
         }
 
@@ -40,12 +64,12 @@ namespace _Project.Scripts.Features.Controls.Gyroscope
         {
             attitude = default;
 
-            if (!IsGyroscopeAccessible())
+            if (!IsGyroscopeAccessible)
             {
                 return false;
             }
             
-            attitude = Input.gyro.attitude;
+            attitude = Gyroscope.attitude;
             return true;
         }
 
@@ -53,12 +77,12 @@ namespace _Project.Scripts.Features.Controls.Gyroscope
         {
             rotationRate = default;
 
-            if (!IsGyroscopeAccessible())
+            if (!IsGyroscopeAccessible)
             {
                 return false;
             }
             
-            rotationRate = Input.gyro.rotationRate;
+            rotationRate = Gyroscope.rotationRate;
             return true;
         }
 
@@ -66,12 +90,12 @@ namespace _Project.Scripts.Features.Controls.Gyroscope
         {
             userAcceleration = default;
 
-            if (!IsGyroscopeAccessible())
+            if (!IsGyroscopeAccessible)
             {
                 return false;
             }
             
-            userAcceleration = Input.gyro.userAcceleration;
+            userAcceleration = Gyroscope.userAcceleration;
             return true;
         }
 
@@ -91,7 +115,7 @@ namespace _Project.Scripts.Features.Controls.Gyroscope
 
         private Vector3 GetEulerFromDeviceQuaternion(Quaternion quaternion)
         {
-            var unityAttitude = new Quaternion(quaternion.x, quaternion.y, -quaternion.z, -quaternion.w);
+            var unityAttitude = new Quaternion(-quaternion.x, -quaternion.y, quaternion.z, quaternion.w);
             
             return unityAttitude.eulerAngles;
         }

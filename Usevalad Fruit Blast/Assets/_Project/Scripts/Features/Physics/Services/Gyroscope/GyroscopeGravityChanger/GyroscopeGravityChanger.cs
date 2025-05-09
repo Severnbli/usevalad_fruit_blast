@@ -29,27 +29,27 @@ namespace _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityC
 
         public void Update()
         {
-            if (!_gyroscopeProvider.TryGetRollAngle(out var angle))
+            if (!_gyroscopeProvider.TryGetGravity(out var deviceGravity))
             {
                 return;
             }
-            
-            RotateGravity(angle);
+
+            RotateGameGravity(deviceGravity);
         }
 
-        private void RotateGravity(float angle)
+        private void RotateGameGravity(Vector3 deviceGravity)
         {
-            var angleRad = angle * Mathf.Deg2Rad;
+            var gravityVector = new Vector2(deviceGravity.x, deviceGravity.y).normalized;
             
-            var cos = Mathf.Cos(angleRad);
-            var sin = Mathf.Sin(angleRad);
+            var angleToDown = Vector2.SignedAngle(Vector2.down, gravityVector);
 
-            var gravityVector = _gravityForceProvider.ForceProviderConfig.Direction;
+            var clampedAngle = Mathf.Clamp(angleToDown, -_gyroscopeGravityChangerConfig.MaxAngle, 
+                _gyroscopeGravityChangerConfig.MaxAngle);
 
-            var rotated = new Vector2(gravityVector.x * cos - gravityVector.y * sin, 
-                gravityVector.x * sin + gravityVector.y * cos);
-            
-            _gravityForceProvider.ForceProviderConfig.Direction = rotated;
+            var clampedAngleRad = clampedAngle * Mathf.Deg2Rad;
+            var limitedGravityVector = new Vector2(Mathf.Sin(clampedAngleRad), -Mathf.Cos(clampedAngleRad)).normalized;
+
+            _gravityForceProvider.ForceProviderConfig.Direction = limitedGravityVector;
         }
     }
 }
