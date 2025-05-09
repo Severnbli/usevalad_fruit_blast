@@ -15,7 +15,7 @@ MonoBehaviour:
   _clickOffset: 0.1
   _infectionDistance: 0.2
   _minInfectedObjects: 3
-  _destroyDuration: 0.4
+  _destroyDuration: 0.3
   _destroyCurve:
     serializedVersion: 2
     m_Curve:

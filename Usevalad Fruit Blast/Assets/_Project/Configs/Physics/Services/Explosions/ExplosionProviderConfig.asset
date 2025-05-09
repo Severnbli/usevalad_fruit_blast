@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 999c047e1007467a9f582e7f5ca782db, type: 3}
   m_Name: ExplosionProviderConfig
   m_EditorClassIdentifier: 
-  _maxAffectedDistance: 0.1
+  _maxAffectedDistance: 5
