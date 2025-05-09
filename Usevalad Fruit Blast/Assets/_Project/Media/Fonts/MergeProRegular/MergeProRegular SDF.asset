@@ -60,9 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: MergeProRegular SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1928006654
   material: {fileID: 5227136093682210654}
-  materialHashCode: 0
+  materialHashCode: 630068894
   m_Version: 1.1.0
   m_SourceFontFileGUID: 5c3568bedd14ddd42b821a3e4efb1eb5
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 5c3568bedd14ddd42b821a3e4efb1eb5, type: 3}
