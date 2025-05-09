@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed318dd40bca463ba539af2f5e69d511, type: 3}
   m_Name: ExplosionForceProvider
   m_EditorClassIdentifier: 
-  _factor: 500
+  _factor: 150
   _direction: {x: 0, y: 0}
