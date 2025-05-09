@@ -42,3 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BackgroundUI
+    uniqueID: 3101108453
+    locked: 0
+  - name: InteractibleObjects
+    uniqueID: 4114646543
+    locked: 0
+  - name: OverlayUI
+    uniqueID: 1669483777
+    locked: 0
