@@ -1,5 +1,6 @@
 ﻿using System;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
+using _Project.Scripts.Features.Effects.SplitDestroyEffect.SplitDestroyProvider;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer;
@@ -33,6 +34,7 @@ namespace _Project.Scripts.Bootstrap
         [SerializeField] private LifecycleManagerConfig _lifecycleManagerConfig;
         [SerializeField] private ClickObjectDestroyerConfig _clickObjectDestroyerConfig;
         [SerializeField] private GyroscopeGravityChangerConfig _gyroscopeGravityChangerConfig;
+        [SerializeField] private SplitDestroyProviderConfig _splitDestroyProviderConfig;
         
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public ForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
@@ -47,5 +49,6 @@ namespace _Project.Scripts.Bootstrap
         public LifecycleManagerConfig LifecycleManagerConfig => _lifecycleManagerConfig;
         public ClickObjectDestroyerConfig ClickObjectDestroyerConfig => _clickObjectDestroyerConfig;
         public GyroscopeGravityChangerConfig GyroscopeGravityChangerConfig => _gyroscopeGravityChangerConfig;
+        public SplitDestroyProviderConfig SplitDestroyProviderConfig => _splitDestroyProviderConfig;
     }
 }

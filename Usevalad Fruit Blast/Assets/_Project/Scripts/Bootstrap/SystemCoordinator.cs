@@ -5,6 +5,7 @@ using _Project.Scripts.Features.Controls.Gyroscope;
 using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
+using _Project.Scripts.Features.Effects.SplitDestroyEffect.SplitDestroyProvider;
 using _Project.Scripts.Features.FeatureCore;
 using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
@@ -77,12 +78,15 @@ namespace _Project.Scripts.Bootstrap
             Context.AddFeature(new MouseProvider());
             Context.AddFeature(new GyroscopeProvider());
             
-            Context.AddFeatureWithConfig(new FieldCatcherSpawner(), _systemConfig.PhysicsObjectSpawnerConfig);
             Context.AddFeatureWithConfig(new ScaleProvider(), _systemConfig.ScaleProviderConfig);
+            
+            Context.AddFeatureWithConfig(new FieldCatcherSpawner(), _systemConfig.PhysicsObjectSpawnerConfig);
             Context.AddFeatureWithConfig(new ClickObjectDestroyer(), _systemConfig.ClickObjectDestroyerConfig);
             Context.AddFeatureWithConfig(new LifecycleManager(), _systemConfig.LifecycleManagerConfig);
             
             Context.AddFeatureWithConfig(new GyroscopeGravityChanger(), _systemConfig.GyroscopeGravityChangerConfig);
+            
+            Context.AddFeatureWithConfig(new SplitDestroyProvider(), _systemConfig.SplitDestroyProviderConfig);
         }
 
         private void Update()
