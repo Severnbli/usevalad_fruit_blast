@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47632dfe4d604b5da47990272728f2d5, type: 3}
   m_Name: GyroscopeGravityChangerConfig
   m_EditorClassIdentifier: 
-  _maxAngle: 25
+  _maxAngle: 90

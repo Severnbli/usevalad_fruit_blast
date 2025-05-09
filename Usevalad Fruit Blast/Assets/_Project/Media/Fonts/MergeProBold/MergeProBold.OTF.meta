@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Merge Pro
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 5c3568bedd14ddd42b821a3e4efb1eb5, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
