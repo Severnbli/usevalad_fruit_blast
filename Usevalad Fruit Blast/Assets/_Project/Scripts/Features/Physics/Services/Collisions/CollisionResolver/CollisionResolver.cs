@@ -18,6 +18,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
         public void IterativeResolveCollisions(List<BaseCollider> colliders)
         {
+            ResolveCollisionsWithImpulse(colliders);
+            
             for (var i = 0; i < _collisionResolverConfig.CollisionResolvingIterations - 1; i++)
             {
                 ResolveCollisions(colliders);
@@ -39,8 +41,34 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
                 }
             }
         }
-
+        
+        public void ResolveCollisionsWithImpulse(List<BaseCollider> colliders)
+        {
+            for (var i = 0; i < colliders.Count - 1; i++)
+            {
+                for (var j = i + 1; j < colliders.Count; j++)
+                {
+                    if (!IsCollidersSuitable(colliders[i], colliders[j]))
+                    {
+                        continue;
+                    }
+                    
+                    ResolveCollisionWithImpulse(colliders[i], colliders[j]);
+                }
+            }
+        }
+        
         public void ResolveCollision(BaseCollider bc1, BaseCollider bc2)
+        {
+            if (!_collisionFinder.TryFindCollision((bc1, bc2), out var normal, out var depth))
+            {
+                return;
+            }
+                
+            PositionalCorrection(bc1, bc2, normal, depth);
+        }
+
+        public void ResolveCollisionWithImpulse(BaseCollider bc1, BaseCollider bc2)
         {
             if (!_collisionFinder.TryFindCollision((bc1, bc2), out var normal, out var depth))
             {
