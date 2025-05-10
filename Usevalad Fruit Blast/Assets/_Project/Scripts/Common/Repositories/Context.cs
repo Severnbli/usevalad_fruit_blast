@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 namespace _Project.Scripts.Common.Repositories
@@ -7,6 +8,7 @@ namespace _Project.Scripts.Common.Repositories
     public class Context<TContainer>
     {
         public List<TContainer> Container { get; private set; }
+        public CancellationToken CancellationToken { get; private set; } = CancellationToken.None;
 
         public Context()
         {
@@ -28,12 +30,18 @@ namespace _Project.Scripts.Common.Repositories
         public void Clear()
         {
             Container.Clear();
+            CancellationToken = CancellationToken.None;
         }
 
         public void Update()
         {
             Clear();
             Setup(new List<TContainer>());
+        }
+
+        public void SetCancellationToken(CancellationToken cancellationToken)
+        {
+            CancellationToken = cancellationToken;
         }
 
         public T AddComponent<T>(T component) where T : TContainer

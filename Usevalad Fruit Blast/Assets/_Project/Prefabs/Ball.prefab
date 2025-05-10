@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: -6648216271331413990}
   - component: {fileID: -8786941547912948246}
   - component: {fileID: -4735790218021950441}
-  - component: {fileID: 844062650784769019}
+  - component: {fileID: -4951667490306315304}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a358937d8a94e2ab1efcb993c753ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &844062650784769019
+--- !u!114 &-4951667490306315304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -269,9 +269,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5413519283949544479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b168f406def4d49acb017a494a20d22, type: 3}
+  m_Script: {fileID: 11500000, guid: 41f73be188954e918cc515093294c0aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectType: 0
 --- !u!1 &5659858685402035900
 GameObject:
   m_ObjectHideFlags: 0

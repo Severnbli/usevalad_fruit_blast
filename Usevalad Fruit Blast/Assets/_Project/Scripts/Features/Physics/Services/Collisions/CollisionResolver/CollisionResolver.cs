@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Features.Physics.Colliders;
-using _Project.Scripts.Features.Physics.Services.Collisions.Triggers;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver
@@ -8,12 +7,10 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
     public class CollisionResolver
     {
         private readonly CollisionResolverConfig _collisionResolverConfig;
-        private readonly CollisionFinder.CollisionFinder _collisionFinder;
 
         public CollisionResolver(CollisionResolverConfig collisionResolverConfig)
         {
             _collisionResolverConfig = collisionResolverConfig;
-            _collisionFinder = new CollisionFinder.CollisionFinder();
         }
 
         public void IterativeResolveCollisions(List<BaseCollider> colliders)
@@ -60,7 +57,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
         
         public void ResolveCollision(BaseCollider bc1, BaseCollider bc2)
         {
-            if (!_collisionFinder.TryFindCollision((bc1, bc2), out var normal, out var depth))
+            if (!CollisionFinder.CollisionFinder.TryFindCollision((bc1, bc2), out var normal, out var depth))
             {
                 return;
             }
@@ -70,7 +67,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
         public void ResolveCollisionWithImpulse(BaseCollider bc1, BaseCollider bc2)
         {
-            if (!_collisionFinder.TryFindCollision((bc1, bc2), out var normal, out var depth))
+            if (!CollisionFinder.CollisionFinder.TryFindCollision((bc1, bc2), out var normal, out var depth))
             {
                 return;
             }
@@ -90,8 +87,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
             if (bc1.IsTrigger || bc2.IsTrigger)
             {
-                bc1.GetComponent<ColliderTrigger>()?.OnColliderTriggerEnter(bc2);
-                bc2.GetComponent<ColliderTrigger>()?.OnColliderTriggerEnter(bc1);
+                bc1.ColliderTrigger?.OnColliderTriggerEnter(bc2);
+                bc2.ColliderTrigger?.OnColliderTriggerEnter(bc1);
                 
                 return false;
             }

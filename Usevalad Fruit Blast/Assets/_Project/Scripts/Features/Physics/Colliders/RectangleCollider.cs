@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Colliders
 {
-    public class RectangleCollider : BaseCollider
+    public sealed class RectangleCollider : BaseCollider
     {
         [SerializeField, HideLabel] private RectangleFigure _rectangleFigure = new();
 
