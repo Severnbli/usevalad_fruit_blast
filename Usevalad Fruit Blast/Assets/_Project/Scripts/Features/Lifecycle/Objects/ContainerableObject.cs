@@ -49,7 +49,7 @@ namespace _Project.Scripts.Features.Lifecycle.Objects
             {
                 foreach (var collider in DynamicBody.Colliders)
                 {
-                    area += collider.GetFigure().GetArea();
+                    area += collider.GetArea();
                 }
             }
             

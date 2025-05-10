@@ -31,16 +31,17 @@ namespace _Project.Scripts.Features.Physics.Figures
             return _point;
         }
 
-        public void GetBoundingRectangle(out Vector2 min, out Vector2 max)
+        public RectangleFigure GetBoundingRectangleFigure()
         {
-            min = new Vector2(_point.x - _radius, _point.y - _radius);
-            max = new Vector2(_point.x + _radius, _point.y + _radius);
+            var min = new Vector2(_point.x - _radius, _point.y - _radius);
+            var max = new Vector2(_point.x + _radius, _point.y + _radius);
+            
+            return new RectangleFigure(min, max);
         }
 
-        public void GetBoundingCircle(out Vector2 center, out float radius)
+        public CircleFigure GetBoundingCircleFigure()
         {
-            center = _point;
-            radius = _radius;
+            return this;
         }
     }
 }

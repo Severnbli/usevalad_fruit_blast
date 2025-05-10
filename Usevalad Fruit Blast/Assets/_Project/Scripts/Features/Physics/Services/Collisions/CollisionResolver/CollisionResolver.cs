@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Features.Physics.Colliders;
+using Unity.Profiling;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver
@@ -49,7 +50,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
                     {
                         continue;
                     }
-                    
+
                     ResolveCollisionWithImpulse(colliders[i], colliders[j]);
                 }
             }

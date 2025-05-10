@@ -35,16 +35,17 @@ namespace _Project.Scripts.Features.Physics.Figures
             return massCenter;
         }
 
-        public void GetBoundingRectangle(out Vector2 min, out Vector2 max)
+        public RectangleFigure GetBoundingRectangleFigure()
         {
-            min = _pointAA;
-            max = _pointBB;
+            return this;
         }
 
-        public void GetBoundingCircle(out Vector2 center, out float radius)
+        public CircleFigure GetBoundingCircleFigure()
         {
-            center = GetCenter();
-            radius = (_pointBB - _pointAA).magnitude / 2f;
+            var center = GetCenter();
+            var radius = (_pointBB - _pointAA).magnitude / 2f;
+            
+            return new CircleFigure(center, radius);
         }
     }
 }

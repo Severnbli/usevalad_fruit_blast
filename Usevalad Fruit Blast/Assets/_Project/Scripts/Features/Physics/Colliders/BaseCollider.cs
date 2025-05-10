@@ -40,6 +40,10 @@ namespace _Project.Scripts.Features.Physics.Colliders
             _physicsEngine?.Colliders.Remove(this);
             DynamicBody?.Colliders.Remove(this);
         }
+        
+        public abstract float GetArea();
+        public abstract CircleFigure GetBoundingCircleFigure();
+        public abstract RectangleFigure GetBoundingRectangleFigure();
 
         public float GetMaxScale()
         {
@@ -50,8 +54,5 @@ namespace _Project.Scripts.Features.Physics.Colliders
         {
             return new Vector2(transform.position.x, transform.position.y);
         }
-
-        public abstract IPhysicsFigure GetUnmodifiedFigure();
-        public abstract IPhysicsFigure GetFigure();
     }
 }

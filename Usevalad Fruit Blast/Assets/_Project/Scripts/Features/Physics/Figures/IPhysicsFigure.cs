@@ -6,7 +6,7 @@ namespace _Project.Scripts.Features.Physics.Figures
     {
         public float GetArea();
         public Vector2 GetCenter();
-        public void GetBoundingRectangle(out Vector2 min, out Vector2 max);
-        public void GetBoundingCircle(out Vector2 center, out float radius);
+        public RectangleFigure GetBoundingRectangleFigure();
+        public CircleFigure GetBoundingCircleFigure();
     }
 }

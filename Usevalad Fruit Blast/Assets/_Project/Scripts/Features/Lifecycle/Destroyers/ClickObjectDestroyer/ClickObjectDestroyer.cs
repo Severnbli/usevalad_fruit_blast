@@ -104,10 +104,9 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
                     continue;
                 }
                 
-                var figure = collider.GetFigure();
-                figure.GetBoundingCircle(out var point, out var radius);
+                var boundCircleFigure = collider.GetBoundingCircleFigure();
                 
-                var distance = Vector2.Distance(position, point) - radius;
+                var distance = Vector2.Distance(position, boundCircleFigure.Point) - boundCircleFigure.Radius;
 
                 if (distance <= _clickObjectDestroyerConfig.ClickOffset && distance < minDistance)
                 {
@@ -140,10 +139,9 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
             {
                 return;
             }
-            
-            currentCollider.GetFigure().GetBoundingCircle(out var currentPoint, out var currentRadius);
-            var infectiousFigure = new CircleFigure(currentPoint, currentRadius);
-            infectiousFigure.Radius += _clickObjectDestroyerConfig.InfectionDistance;
+
+            var infectiousCircleFigure = currentCollider.GetBoundingCircleFigure();
+            infectiousCircleFigure.Radius += _clickObjectDestroyerConfig.InfectionDistance;
             
             var newInfectedObjects = new List<ContainerableObject>();
 
@@ -158,11 +156,10 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
                 {
                     continue;
                 }
-                
-                collider.GetFigure().GetBoundingCircle(out var point, out var radius);
-                var targetFigure = new CircleFigure(point, radius);
 
-                if (!CollisionFinder.IsCircleCircleCollide(infectiousFigure, targetFigure))
+                var targetCircleFigure = collider.GetBoundingCircleFigure();
+
+                if (!CollisionFinder.IsCircleCircleCollide(infectiousCircleFigure, targetCircleFigure))
                 {
                     continue;
                 }

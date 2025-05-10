@@ -11,14 +11,12 @@ namespace _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer
 {
     public class ObjectsContainer : BaseFeature, IConfigurableFeature<ObjectsContainerConfig>
     {
-        [SerializeField] private ObjectsContainerConfig _objectsContainerConfig;
-        
-        public ObjectsContainerConfig ObjectsContainerConfig => _objectsContainerConfig;
+        public ObjectsContainerConfig ObjectsContainerConfig { get; private set; }
         public List<ContainerableObject> ContainerableObjects { get; protected set; } = new();
 
         public void Configure(ObjectsContainerConfig objectsContainerConfig)
         {
-            _objectsContainerConfig = objectsContainerConfig;
+            ObjectsContainerConfig = objectsContainerConfig;
         }
         
         public float GetTotalArea()
@@ -28,46 +26,9 @@ namespace _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer
             return totalArea;
         }
 
-        public List<IPhysicsFigure> GetContainerablePhysicsFigures()
-        {
-            List<IPhysicsFigure> physicsFigures = new();
-
-            foreach (var containerableObject in ContainerableObjects)
-            {
-                var baseColliders = containerableObject.GetComponents<BaseCollider>();
-
-                foreach (var baseCollider in baseColliders)
-                {
-                    physicsFigures.Add(baseCollider.GetFigure());
-                }
-            }
-            
-            return physicsFigures;
-        }
-
-        public List<ContainerableObject> GetContainerableObjectsThatCollideWith(IPhysicsFigure figure)
-        {
-            List<ContainerableObject> containerableObjects = new();
-            
-            foreach (var containerableObject in ContainerableObjects)
-            {
-                if (!containerableObject.TryGetComponent(out BaseCollider collider))
-                {
-                    continue;
-                }
-                
-                if (CollisionFinder.IsFiguresCollide(figure, collider.GetFigure()))
-                {
-                    containerableObjects.Add(containerableObject);
-                }
-            }
-            
-            return containerableObjects;
-        }
-
         public Transform GetObjectContainerTransform()
         {
-            return _objectsContainerConfig.ObjectsContainerTransform;
+            return ObjectsContainerConfig.ObjectsContainerTransform;
         }
 
         public List<T> GetComponentsFromContainerableObjects<T>()
