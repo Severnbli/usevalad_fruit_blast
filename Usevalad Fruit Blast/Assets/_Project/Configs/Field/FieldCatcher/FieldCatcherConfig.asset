@@ -18,4 +18,4 @@ MonoBehaviour:
     _left: 0.2
     _right: 0.2
     _bottom: 1
-  _catcherProtectHeight: 3
+  _catcherProtectHeight: 10

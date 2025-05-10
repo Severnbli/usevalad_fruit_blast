@@ -21,7 +21,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
             for (var i = 0; i < _collisionResolverConfig.CollisionResolvingIterations - 1; i++)
             {
                 ResolveCollisions(colliders);
-            }
+            }   
         }
 
         public void ResolveCollisions(List<BaseCollider> colliders)
@@ -58,7 +58,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
         
         public void ResolveCollision(BaseCollider bc1, BaseCollider bc2)
         {
-            if (!CollisionFinder.CollisionFinder.TryFindCollision((bc1, bc2), out var normal, out var depth))
+            if (!CollisionFinder.CollisionFinder.TryFindCollision(bc1, bc2, out var normal, out var depth))
             {
                 return;
             }
@@ -68,7 +68,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
         public void ResolveCollisionWithImpulse(BaseCollider bc1, BaseCollider bc2)
         {
-            if (!CollisionFinder.CollisionFinder.TryFindCollision((bc1, bc2), out var normal, out var depth))
+            if (!CollisionFinder.CollisionFinder.TryFindCollision(bc1, bc2, out var normal, out var depth))
             {
                 return;
             }

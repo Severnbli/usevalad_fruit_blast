@@ -13,6 +13,7 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
         private RectangleCollider _leftCollider;
         private RectangleCollider _rightCollider;
         private RectangleCollider _bottomCollider;
+        private RectangleCollider _topCollider;
         private DynamicBody _dynamicBody;
         
         public ColliderFieldCatcherConfig ColliderFieldCatcherConfig { get; private set; }
@@ -71,18 +72,16 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             var rectangleFigure = _leftCollider.RectangleFigure;
             rectangleFigure.PointAA = new Vector2(-halfCatcherSize.x - ColliderFieldCatcherConfig.BordersWidth,
                 halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y - ColliderFieldCatcherConfig.BordersWidth);
-            rectangleFigure.PointBB = new Vector2(-halfCatcherSize.x, 
+            rectangleFigure.PointBB = new Vector2(-halfCatcherSize.x,
                 halfFieldSize.y + Mathf.Abs(FieldCatcherConfig.CatcherProtectHeight));
             _leftCollider.RectangleFigure = rectangleFigure;
             
-            rectangleFigure = _rightCollider.RectangleFigure;
             rectangleFigure.PointAA = new Vector2(halfCatcherSize.x, 
                 halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y - ColliderFieldCatcherConfig.BordersWidth);
             rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + ColliderFieldCatcherConfig.BordersWidth, 
                 halfFieldSize.y + Mathf.Abs(FieldCatcherConfig.CatcherProtectHeight));
             _rightCollider.RectangleFigure = rectangleFigure;
             
-            rectangleFigure = _bottomCollider.RectangleFigure;
             rectangleFigure.PointAA = new Vector2(-halfCatcherSize.x - ColliderFieldCatcherConfig.BordersWidth, 
                 halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y - ColliderFieldCatcherConfig.BordersWidth);
             rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + ColliderFieldCatcherConfig.BordersWidth, 

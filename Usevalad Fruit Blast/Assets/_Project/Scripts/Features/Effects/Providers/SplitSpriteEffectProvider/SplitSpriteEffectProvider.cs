@@ -34,13 +34,13 @@ namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
                 return;
             }
 
-            // if (!_splitSprites.TryGetValue(spriteRenderer.sprite, out var splitSprite))
-            // {
-            //     splitSprite = GetSplitSprites(spriteRenderer.sprite);
-            //     _splitSprites.TryAdd(spriteRenderer.sprite, splitSprite);
-            // }
-            //
-            // SpawnEffectObjects(emitterObject, splitSprite);
+            if (!_splitSprites.TryGetValue(spriteRenderer.sprite, out var splitSprite))
+            {
+                splitSprite = GetSplitSprites(spriteRenderer.sprite);
+                _splitSprites.TryAdd(spriteRenderer.sprite, splitSprite);
+            }
+            
+            SpawnEffectObjects(emitterObject, splitSprite);
         }
 
         public static (Sprite, Sprite) GetSplitSprites(Sprite sprite)
