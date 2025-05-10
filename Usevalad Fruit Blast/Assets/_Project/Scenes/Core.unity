@@ -998,7 +998,7 @@ MonoBehaviour:
     _gyroscopeGravityChangerConfig: {fileID: 11400000, guid: 9d85ecbbbd6e33d44967c2f4e2ed137b, type: 2}
     _effectObjectsContainerConfig:
       _effectObjectsContainerTransform: {fileID: 79218060}
-      _deleteFieldOffset: 1
+      _deleteFieldOffset: 0.1
     _splitSpriteEffectProviderConfig: {fileID: 11400000, guid: 7990ff91d898c8143a6ecedb72b4f21e, type: 2}
 --- !u!1 &1011431694
 GameObject:

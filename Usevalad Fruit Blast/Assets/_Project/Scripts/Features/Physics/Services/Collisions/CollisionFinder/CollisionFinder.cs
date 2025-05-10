@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using _Project.Scripts.Features.Physics.Colliders;
+﻿using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Figures;
 using UnityEngine;
 
@@ -8,47 +6,33 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
 {
     public static class CollisionFinder
     {
-        private delegate bool CollisionFinderFunc(BaseCollider bc1, BaseCollider bc2, out Vector2 normal, out float depth);
-        
-        private static readonly Dictionary<(Type, Type), CollisionFinderFunc> _dispatchMap =
-            new()
-            {
-                {
-                    (typeof(CircleCollider), typeof(CircleCollider)),
-                    (BaseCollider bc1, BaseCollider bc2, out Vector2 normal, out float depth) =>
-                        TryFindCircleCircleCollision((CircleCollider)bc1, (CircleCollider)bc2, out normal, out depth)
-                },
-                {
-                    (typeof(RectangleCollider), typeof(RectangleCollider)),
-                    (BaseCollider bc1, BaseCollider bc2, out Vector2 normal, out float depth) =>
-                        TryFindRectangleRectangleCollision((RectangleCollider)bc1, (RectangleCollider)bc2, out normal, out depth)
-                },
-                {
-                    (typeof(RectangleCollider), typeof(CircleCollider)),
-                    (BaseCollider bc1, BaseCollider bc2, out Vector2 normal, out float depth) =>
-                        TryFindRectangleCircleCollision((RectangleCollider)bc1, (CircleCollider)bc2, out normal, out depth)
-                },
-                {
-                    (typeof(CircleCollider), typeof(RectangleCollider)),
-                    (BaseCollider bc1, BaseCollider bc2, out Vector2 normal, out float depth) =>
-                        TryFindCircleRectangleCollision((CircleCollider)bc1, (RectangleCollider)bc2, out normal, out depth)
-                }
-            };
-        
-        public static bool TryFindCollision((BaseCollider bc1, BaseCollider bc2) pair, 
+        public static bool TryFindCollision(BaseCollider bc1, BaseCollider bc2, 
             out Vector2 normal, out float depth)
         {
             normal = default;
             depth = 0f;
-
-            var key = (pair.bc1.GetType(), pair.bc2.GetType());
             
-            if (!_dispatchMap.TryGetValue(key, out var dispatchFunc))
+            switch (bc1, bc2)
             {
-                return false;
+                case (CircleCollider c1, CircleCollider c2):
+                {
+                    return TryFindCircleCircleCollision(c1, c2, out normal, out depth);
+                }
+                case (RectangleCollider r1, RectangleCollider r2):
+                {
+                    return TryFindRectangleRectangleCollision(r1, r2, out normal, out depth);
+                }
+                case (RectangleCollider r, CircleCollider c):
+                {
+                    return TryFindRectangleCircleCollision(r, c, out normal, out depth);
+                }
+                case (CircleCollider c, RectangleCollider r):
+                {
+                    return TryFindCircleRectangleCollision(c, r, out normal, out depth);
+                }
             }
             
-            return dispatchFunc(pair.bc1, pair.bc2, out normal, out depth);
+            return false;
         }
 
         public static bool TryFindCircleCircleCollision(CircleCollider c1, CircleCollider c2, 
@@ -103,7 +87,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
                 return false;
             }
             
-            CalculateMinSeparationNormalAndDepth(cFigure, rFigure, out normal, out depth);
+            CalculateMinSeparationNormalAndDepth(cFigure.GetBoundingRectangleFigure(), rFigure, out normal, out depth);
             
             return true;
         }
@@ -122,7 +106,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
                 return false;
             }
             
-            CalculateMinSeparationNormalAndDepth(rFigure, cFigure, out normal, out depth);
+            CalculateMinSeparationNormalAndDepth(rFigure, cFigure.GetBoundingRectangleFigure(), out normal, out depth);
             
             return true;
         }
@@ -187,16 +171,13 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
             normal.Normalize();
         }
 
-        private static void CalculateMinSeparationNormalAndDepth(IPhysicsFigure f1, IPhysicsFigure f2, 
+        private static void CalculateMinSeparationNormalAndDepth(RectangleFigure f1, RectangleFigure f2, 
             out Vector2 normal, out float depth)
         {
-            var boundingRect1 = f1.GetBoundingRectangleFigure();
-            var boundingRect2 = f2.GetBoundingRectangleFigure();
-            
-            var distanceToLowerX = Mathf.Abs(boundingRect1.PointBB.x - boundingRect2.PointAA.x);
-            var distanceToUpperX = Mathf.Abs(boundingRect2.PointBB.x - boundingRect1.PointAA.x);
-            var distanceToLowerY = Mathf.Abs(boundingRect1.PointBB.y - boundingRect2.PointAA.y);
-            var distanceToUpperY = Mathf.Abs(boundingRect2.PointBB.y - boundingRect1.PointAA.y);
+            var distanceToLowerX = Mathf.Abs(f1.PointBB.x - f2.PointAA.x);
+            var distanceToUpperX = Mathf.Abs(f2.PointBB.x - f1.PointAA.x);
+            var distanceToLowerY = Mathf.Abs(f1.PointBB.y - f2.PointAA.y);
+            var distanceToUpperY = Mathf.Abs(f2.PointBB.y - f1.PointAA.y);
             
             depth = Mathf.Min(
                 Mathf.Min(distanceToLowerX, distanceToUpperX),
