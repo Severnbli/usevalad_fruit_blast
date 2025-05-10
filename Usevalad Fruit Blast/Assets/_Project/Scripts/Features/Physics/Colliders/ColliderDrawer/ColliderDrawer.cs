@@ -40,14 +40,14 @@ namespace _Project.Scripts.Features.Physics.Colliders.ColliderDrawer
 
         private void DrawCircleGizmo(CircleCollider circle)
         {
-            var circleFigure = circle.GetModifiedCircleFigure();
+            var circleFigure = circle.CircleFigure;
             
             Gizmos.DrawWireSphere(new Vector3(circleFigure.Point.x, circleFigure.Point.y), circleFigure.Radius);
         }
 
         private void DrawRectangleGizmo(RectangleCollider rectangle)
         {
-            var rectangleFigure = rectangle.GetModifiedRectangleFigure();
+            var rectangleFigure = rectangle.RectangleFigure;
             
             Gizmos.DrawLine(new Vector3(rectangleFigure.PointAA.x, rectangleFigure.PointBB.y), rectangleFigure.PointBB);
             Gizmos.DrawLine(new Vector3(rectangleFigure.PointAA.x, rectangleFigure.PointBB.y), rectangleFigure.PointAA);

@@ -13,7 +13,7 @@ namespace _Project.Scripts.Features.Physics.Engine
 {
     public class PhysicsEngine : BaseFeature, IConfigurableFeature<PhysicsEngineConfig>, IFixedUpdatableFeature
     {
-        [SerializeField] private PhysicsEngineConfig _physicsEngineConfig;
+        private PhysicsEngineConfig _physicsEngineConfig;
         
         private CollisionResolver _collisionResolver;
         

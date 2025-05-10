@@ -2,7 +2,6 @@
 using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Physics.Colliders;
-using _Project.Scripts.Features.Physics.Figures;
 using _Project.Scripts.Features.Physics.Forces.ExplosionForceProvider;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder;
 using UnityEngine;
@@ -30,33 +29,31 @@ namespace _Project.Scripts.Features.Physics.Services.Explosions.ExplosionProvide
         
         public void Explode(ExplodingObject.ExplodingObject explodingObject)
         {
-            if (!explodingObject.TryGetComponent(out BaseCollider collider))
+            if (!explodingObject.TryGetComponent(out BaseCollider explodingCollider))
             {
                 return;
             }
-            
-            collider.GetFigure().GetBoundingCircle(out var point, out var radius);
-            var boundCircle = new CircleFigure(point, radius + _explosionProviderConfig.MaxAffectedDistance);
 
+            var explodingCircleFigure = explodingCollider.GetBoundingCircleFigure();
+            explodingCircleFigure.Radius += _explosionProviderConfig.MaxAffectedDistance;
+            
             foreach (var containerableObject in _objectsContainer.ContainerableObjects)
             {
-                if (!containerableObject.TryGetComponent(out BaseCollider containingCollider))
+                if (!containerableObject.TryGetComponent(out BaseCollider collider))
                 {
                     continue;
                 }
                 
-                var figure = containingCollider.GetFigure();
+                var circleFigure = collider.GetBoundingCircleFigure();
                 
-                if (!CollisionFinder.IsFiguresCollide(boundCircle, figure))
+                if (!CollisionFinder.IsCircleCircleCollide(explodingCircleFigure, circleFigure))
                 {
                     continue;
                 }
 
-                figure.GetBoundingCircle(out var containingPoint, out var containingRadius);
-
-                var distanceVector = containingPoint - point;
+                var distanceVector = circleFigure.Point - explodingCircleFigure.Point;
                 
-                var distance = distanceVector.magnitude - radius - containingRadius;
+                var distance = distanceVector.magnitude - explodingCircleFigure.Radius - circleFigure.Radius;
                 var t = Mathf.Clamp01(distance / _explosionProviderConfig.MaxAffectedDistance);
                 var falloff = 1f - t;
                 

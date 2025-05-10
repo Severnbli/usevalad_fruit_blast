@@ -6,25 +6,36 @@ namespace _Project.Scripts.Features.Physics.Colliders
 {
     public sealed class CircleCollider : BaseCollider
     {
-        [SerializeField, HideLabel] private CircleFigure _circleFigure = new();
+        [SerializeField, HideLabel] private CircleFigure _circleFigure;
 
-        public CircleFigure CircleFigure { get => _circleFigure; set => _circleFigure = value; }
+        public CircleFigure CircleFigure {
+            get
+            {
+                var circleFigure = _circleFigure;
 
-        public override IPhysicsFigure GetUnmodifiedFigure()
-        {
-            return _circleFigure;
+                circleFigure.Point += GetPosition();
+                circleFigure.Radius *= GetMaxScale();
+            
+                return circleFigure;
+            }
+            set => _circleFigure = value;
         }
 
-        public override IPhysicsFigure GetFigure() => GetModifiedCircleFigure();
+        public CircleFigure UnModifiedCircleFigure => _circleFigure;
 
-        public CircleFigure GetModifiedCircleFigure()
+        public override float GetArea()
         {
-            var circleFigure = _circleFigure.Clone();
+            return CircleFigure.GetArea();
+        }
 
-            circleFigure.Point += GetPosition();
-            circleFigure.Radius *= GetMaxScale();
-            
-            return circleFigure;
+        public override CircleFigure GetBoundingCircleFigure()
+        {
+            return CircleFigure;
+        }
+
+        public override RectangleFigure GetBoundingRectangleFigure()
+        {
+            return CircleFigure.GetBoundingRectangleFigure();
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Figures;
-using Unity.Profiling;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
@@ -43,9 +42,13 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
             depth = 0f;
 
             var key = (pair.bc1.GetType(), pair.bc2.GetType());
-
-            return _dispatchMap.TryGetValue(key, out var resolver) 
-                   && resolver(pair.bc1, pair.bc2, out normal, out depth);
+            
+            if (!_dispatchMap.TryGetValue(key, out var dispatchFunc))
+            {
+                return false;
+            }
+            
+            return dispatchFunc(pair.bc1, pair.bc2, out normal, out depth);
         }
 
         public static bool TryFindCircleCircleCollision(CircleCollider c1, CircleCollider c2, 
@@ -54,8 +57,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
             normal = default;
             depth = 0f;
 
-            var c1Figure = c1.GetModifiedCircleFigure();
-            var c2Figure = c2.GetModifiedCircleFigure();
+            var c1Figure = c1.CircleFigure;
+            var c2Figure = c2.CircleFigure;
             
             if (!IsCircleCircleCollide(c1Figure, c2Figure))
             {
@@ -73,8 +76,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
             normal = default;
             depth = 0f;
             
-            var r1Figure = r1.GetModifiedRectangleFigure();
-            var r2Figure = r2.GetModifiedRectangleFigure();
+            var r1Figure = r1.RectangleFigure;
+            var r2Figure = r2.RectangleFigure;
 
             if (!IsRectangleRectangleCollide(r1Figure, r2Figure))
             {
@@ -92,8 +95,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
             normal = default;
             depth = 0f;
             
-            var cFigure = c.GetModifiedCircleFigure();
-            var rFigure = r.GetModifiedRectangleFigure();
+            var cFigure = c.CircleFigure;
+            var rFigure = r.RectangleFigure;
             
             if (!IsCircleRectangleCollide(cFigure, rFigure))
             {
@@ -111,8 +114,8 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
             normal = default;
             depth = 0f;
 
-            var rFigure = r.GetModifiedRectangleFigure();
-            var cFigure = c.GetModifiedCircleFigure();
+            var rFigure = r.RectangleFigure;
+            var cFigure = c.CircleFigure;
             
             if (!IsCircleRectangleCollide(cFigure, rFigure))
             {
@@ -187,13 +190,13 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
         private static void CalculateMinSeparationNormalAndDepth(IPhysicsFigure f1, IPhysicsFigure f2, 
             out Vector2 normal, out float depth)
         {
-            f1.GetBoundingRectangle(out var minPos1, out var maxPos1);
-            f2.GetBoundingRectangle(out var minPos2, out var maxPos2);
+            var boundingRect1 = f1.GetBoundingRectangleFigure();
+            var boundingRect2 = f2.GetBoundingRectangleFigure();
             
-            var distanceToLowerX = Mathf.Abs(maxPos1.x - minPos2.x);
-            var distanceToUpperX = Mathf.Abs(maxPos2.x - minPos1.x);
-            var distanceToLowerY = Mathf.Abs(maxPos1.y - minPos2.y);
-            var distanceToUpperY = Mathf.Abs(maxPos2.y - minPos1.y);
+            var distanceToLowerX = Mathf.Abs(boundingRect1.PointBB.x - boundingRect2.PointAA.x);
+            var distanceToUpperX = Mathf.Abs(boundingRect2.PointBB.x - boundingRect1.PointAA.x);
+            var distanceToLowerY = Mathf.Abs(boundingRect1.PointBB.y - boundingRect2.PointAA.y);
+            var distanceToUpperY = Mathf.Abs(boundingRect2.PointBB.y - boundingRect1.PointAA.y);
             
             depth = Mathf.Min(
                 Mathf.Min(distanceToLowerX, distanceToUpperX),

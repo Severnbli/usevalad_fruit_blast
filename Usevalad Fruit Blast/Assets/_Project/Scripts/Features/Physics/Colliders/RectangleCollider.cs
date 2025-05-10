@@ -6,28 +6,39 @@ namespace _Project.Scripts.Features.Physics.Colliders
 {
     public sealed class RectangleCollider : BaseCollider
     {
-        [SerializeField, HideLabel] private RectangleFigure _rectangleFigure = new();
+        [SerializeField, HideLabel] private RectangleFigure _rectangleFigure;
 
-        public RectangleFigure RectangleFigure { get => _rectangleFigure; set => _rectangleFigure = value; }
+        public RectangleFigure RectangleFigure {
+            get
+            {
+                var rectangleFigure = _rectangleFigure;
 
-        public override IPhysicsFigure GetUnmodifiedFigure()
-        {
-            return _rectangleFigure;
+                rectangleFigure.PointAA *= GetMaxScale();
+                rectangleFigure.PointAA += GetPosition();
+                    
+                rectangleFigure.PointBB *= GetMaxScale();
+                rectangleFigure.PointBB += GetPosition();
+                
+                return rectangleFigure;
+            }
+            set => _rectangleFigure = value; 
         }
 
-        public override IPhysicsFigure GetFigure() => GetModifiedRectangleFigure();
-
-        public RectangleFigure GetModifiedRectangleFigure()
+        public RectangleFigure UnModifiedRectangleFigure => _rectangleFigure;
+        
+        public override float GetArea()
         {
-            var rectangleFigure = _rectangleFigure.Clone();
+            return RectangleFigure.GetArea();
+        }
 
-            rectangleFigure.PointAA *= GetMaxScale();
-            rectangleFigure.PointAA += GetPosition();
-                    
-            rectangleFigure.PointBB *= GetMaxScale();
-            rectangleFigure.PointBB += GetPosition();
-                
-            return rectangleFigure;
+        public override CircleFigure GetBoundingCircleFigure()
+        {
+            return RectangleFigure.GetBoundingCircleFigure();
+        }
+
+        public override RectangleFigure GetBoundingRectangleFigure()
+        {
+            return RectangleFigure;
         }
     }
 }
