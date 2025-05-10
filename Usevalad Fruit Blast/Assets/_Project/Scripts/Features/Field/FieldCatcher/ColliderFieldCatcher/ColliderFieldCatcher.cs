@@ -73,18 +73,21 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
                 halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y - ColliderFieldCatcherConfig.BordersWidth);
             rectangleFigure.PointBB = new Vector2(-halfCatcherSize.x, 
                 halfFieldSize.y + Mathf.Abs(FieldCatcherConfig.CatcherProtectHeight));
+            _leftCollider.RectangleFigure = rectangleFigure;
             
             rectangleFigure = _rightCollider.RectangleFigure;
             rectangleFigure.PointAA = new Vector2(halfCatcherSize.x, 
                 halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y - ColliderFieldCatcherConfig.BordersWidth);
             rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + ColliderFieldCatcherConfig.BordersWidth, 
                 halfFieldSize.y + Mathf.Abs(FieldCatcherConfig.CatcherProtectHeight));
+            _rightCollider.RectangleFigure = rectangleFigure;
             
             rectangleFigure = _bottomCollider.RectangleFigure;
             rectangleFigure.PointAA = new Vector2(-halfCatcherSize.x - ColliderFieldCatcherConfig.BordersWidth, 
                 halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y - ColliderFieldCatcherConfig.BordersWidth);
             rectangleFigure.PointBB = new Vector2(halfCatcherSize.x + ColliderFieldCatcherConfig.BordersWidth, 
                 halfFieldSize.y - FieldCatcherConfig.Margin.Top - catcherSize.y);
+            _bottomCollider.RectangleFigure = rectangleFigure;
         }
 
         public override Vector2 GetCatcherSize()

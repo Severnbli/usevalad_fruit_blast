@@ -42,8 +42,8 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
             {
                 return false;
             }
-            
-            configuredObject.name = Guid.NewGuid().ToString();
+
+            configuredObject.name = $"{configuredObject.name} - {Guid.NewGuid().ToString()}";
             
             var randScale = (float) _randomProvider.Random.NextDouble() 
                             * (_objectSpawnerConfig.MaxScale - _objectSpawnerConfig.MinScale) 

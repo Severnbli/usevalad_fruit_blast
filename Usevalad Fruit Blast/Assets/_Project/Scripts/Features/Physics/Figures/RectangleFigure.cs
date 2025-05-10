@@ -5,15 +5,13 @@ using UnityEngine;
 namespace _Project.Scripts.Features.Physics.Figures
 {
     [Serializable]
-    public class RectangleFigure : IPhysicsFigure, ICloneableObject<RectangleFigure>
+    public struct RectangleFigure : IPhysicsFigure, ICloneableObject<RectangleFigure>
     {
-        [SerializeField] private Vector2 _pointAA = new (-0.5f, -0.5f);
-        [SerializeField] private Vector2 _pointBB = new (0.5f, 0.5f);
+        [SerializeField] private Vector2 _pointAA;
+        [SerializeField] private Vector2 _pointBB;
         
         public Vector2 PointAA { get => _pointAA; set => _pointAA = value; }
         public Vector2 PointBB { get => _pointBB; set => _pointBB = value; }
-        
-        public RectangleFigure() {}
 
         public RectangleFigure(Vector2 pointAA, Vector2 pointBB)
         {

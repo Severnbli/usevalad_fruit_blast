@@ -5,7 +5,8 @@ using _Project.Scripts.Features.Controls.Gyroscope;
 using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
-using _Project.Scripts.Features.Effects.SplitDestroyEffect.SplitDestroyProvider;
+using _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer;
+using _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider;
 using _Project.Scripts.Features.FeatureCore;
 using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
@@ -20,6 +21,7 @@ using _Project.Scripts.Features.Physics.Forces.GravityForceProvider;
 using _Project.Scripts.Features.Physics.Services.Explosions.ExplosionProvider;
 using _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityChanger;
 using _Project.Scripts.Features.Random;
+using Unity.Profiling;
 using UnityEngine;
 
 namespace _Project.Scripts.Bootstrap
@@ -29,7 +31,10 @@ namespace _Project.Scripts.Bootstrap
         [SerializeField] private SystemConfig _systemConfig;
         
         private List<IUpdatableFeature> _updatableFeatures;
+        private Dictionary<IUpdatableFeature, ProfilerMarker> _updatableFeaturesMarkers;
+        
         private List<IFixedUpdatableFeature> _fixedUpdatableFeatures;
+        private Dictionary<IFixedUpdatableFeature, ProfilerMarker> _fixedUpdatableFeaturesMarkers;
         
         public Context<BaseFeature> Context { get; private set; }
         public SystemConfig SystemConfig => _systemConfig;
@@ -45,21 +50,23 @@ namespace _Project.Scripts.Bootstrap
             
             Context?.Clear();
             _updatableFeatures?.Clear();
+            _updatableFeaturesMarkers?.Clear();
             _fixedUpdatableFeatures?.Clear();
+            _fixedUpdatableFeaturesMarkers?.Clear();
         }
         
         private void Setup()
         {
             SetupContext();
             SetupFeatures();
-            
-            _updatableFeatures = Context.Container.OfType<IUpdatableFeature>().ToList();
-            _fixedUpdatableFeatures = Context.Container.OfType<IFixedUpdatableFeature>().ToList();
+            SetupUpdatableFeatures();
+            SetupFixedUpdatableFeatures();
         }
 
         private void SetupContext()
         {
             Context = new Context<BaseFeature>();
+            Context.SetCancellationToken(destroyCancellationToken);
         }
 
         private void SetupFeatures()
@@ -86,14 +93,48 @@ namespace _Project.Scripts.Bootstrap
             
             Context.AddFeatureWithConfig(new GyroscopeGravityChanger(), _systemConfig.GyroscopeGravityChangerConfig);
             
-            Context.AddFeatureWithConfig(new SplitDestroyProvider(), _systemConfig.SplitDestroyProviderConfig);
+            Context.AddFeatureWithConfig(new EffectObjectsContainer(), _systemConfig.EffectObjectsContainerConfig);
+            Context.AddFeatureWithConfig(new SplitSpriteEffectProvider(), _systemConfig.SplitSpriteEffectProviderConfig);
+        }
+
+        private void SetupUpdatableFeatures()
+        {
+            _updatableFeatures = Context.Container.OfType<IUpdatableFeature>().ToList();
+            _updatableFeaturesMarkers = new();
+            
+            foreach (var updatableFeature in _updatableFeatures)
+            {
+                _updatableFeaturesMarkers.TryAdd(updatableFeature, 
+                    new ProfilerMarker(updatableFeature.GetType().Name));
+            }
+        }
+
+        private void SetupFixedUpdatableFeatures()
+        {
+            _fixedUpdatableFeatures = Context.Container.OfType<IFixedUpdatableFeature>().ToList();
+            _fixedUpdatableFeaturesMarkers = new();
+
+            foreach (var fixedUpdatableFeature in _fixedUpdatableFeatures)
+            {
+                _fixedUpdatableFeaturesMarkers.TryAdd(fixedUpdatableFeature, 
+                    new ProfilerMarker(fixedUpdatableFeature.GetType().Name));
+            }
         }
 
         private void Update()
         {
             foreach (var updatableFeature in _updatableFeatures)
             {
-                updatableFeature.Update();
+                if (!_updatableFeaturesMarkers.TryGetValue(updatableFeature, out var marker))
+                {
+                    updatableFeature.Update();
+                    continue;
+                }
+
+                using (marker.Auto())
+                {
+                    updatableFeature.Update();
+                }
             }
         }
 
@@ -101,14 +142,23 @@ namespace _Project.Scripts.Bootstrap
         {
             foreach (var fixedUpdatableFeature in _fixedUpdatableFeatures)
             {
-                fixedUpdatableFeature.FixedUpdate();
+                if (!_fixedUpdatableFeaturesMarkers.TryGetValue(fixedUpdatableFeature, out var marker))
+                {
+                    fixedUpdatableFeature.FixedUpdate();
+                    continue;
+                }
+
+                using (marker.Auto())
+                {
+                    fixedUpdatableFeature.FixedUpdate();
+                }
             }
         }
 
         private void DestroyDestroyableFeatures()
         {
             var destroyableFeatures = Context.Container.OfType<IDestroyableFeature>().ToList();
-
+            
             foreach (var destroyableFeature in destroyableFeatures)
             {
                 destroyableFeature.OnDestroy();

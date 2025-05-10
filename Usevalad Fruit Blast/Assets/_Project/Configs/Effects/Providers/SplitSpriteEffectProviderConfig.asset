@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d49acc96b1f94fc690430c000d5f3b4f, type: 3}
-  m_Name: SplitDestroyProviderConfig
+  m_Script: {fileID: 11500000, guid: 3e885c41fc0d4bbf9902385be8285ce7, type: 3}
+  m_Name: SplitSpriteEffectProviderConfig
   m_EditorClassIdentifier: 
-  _splitX: 1
-  _splitY: 1
-  _destroyForce: 5
+  _effectSortingLayerName: Effects
+  _minStartVelocity: {x: 2, y: 2}
+  _maxStartVelocity: {x: 3, y: 4}

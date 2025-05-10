@@ -3,6 +3,7 @@ using _Project.Scripts.Common.Finders;
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Engine;
 using _Project.Scripts.Features.Physics.Figures;
+using _Project.Scripts.Features.Physics.Services.Collisions.Triggers;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Colliders
@@ -14,10 +15,13 @@ namespace _Project.Scripts.Features.Physics.Colliders
         [SerializeField] private bool _isTrigger = false;
         
         public bool IsTrigger { get => _isTrigger; set => _isTrigger = value; }
+        public ColliderTrigger ColliderTrigger { get; private set; }
         public DynamicBody DynamicBody { get; set; }
         
         protected void Start()
         {
+            ColliderTrigger = GetComponent<ColliderTrigger>();
+            
             if (!ObjectFinder.TryFindObjectByType(out SystemCoordinator systemCoordinator))
             {
                 return;

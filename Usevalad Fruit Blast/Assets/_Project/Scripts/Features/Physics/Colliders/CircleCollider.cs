@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Colliders
 {
-    public class CircleCollider : BaseCollider
+    public sealed class CircleCollider : BaseCollider
     {
         [SerializeField, HideLabel] private CircleFigure _circleFigure = new();
 

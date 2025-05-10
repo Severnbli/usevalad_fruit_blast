@@ -6,6 +6,7 @@ using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
 using _Project.Scripts.Features.Physics.Forces;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver;
+using Unity.Profiling;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Engine
