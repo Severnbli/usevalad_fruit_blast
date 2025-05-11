@@ -9,9 +9,11 @@ namespace _Project.Scripts.Features.Effects.Objects
     public class EffectEmitterObject : MonoBehaviour
     {
         [SerializeField] private EffectType _effectType;
+        [SerializeField] private bool _isActive = false;
         
         private EffectProvider _effectProvider;
-        
+        public bool IsActive { get => _isActive; set => _isActive = value; }
+
         private void Start()
         {
             if (!ObjectFinder.TryFindObjectByType(out SystemCoordinator systemCoordinator))
