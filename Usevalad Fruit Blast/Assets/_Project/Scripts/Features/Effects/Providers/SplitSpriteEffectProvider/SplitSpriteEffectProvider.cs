@@ -90,6 +90,9 @@ namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
             
             leftSpriteRenderer.sortingLayerName = rightSpriteRenderer.sortingLayerName = 
                 SplitSpriteEffectProviderConfig.EffectSortingLayerName;
+            leftSpriteRenderer.sortingOrder = rightSpriteRenderer.sortingOrder =
+                SplitSpriteEffectProviderConfig.EffectSortingLayerOrder;
+            
             leftSpriteRenderer.sprite = sprites.Item1;
             rightSpriteRenderer.sprite = sprites.Item2;
             
