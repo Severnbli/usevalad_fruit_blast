@@ -8,16 +8,14 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers
 {
     public abstract class ObjectDestroyer : BaseFeature
     {
-        public virtual async UniTaskVoid DestroyObject(GameObject gameObject, float delay)
+        public void DestroyObject(GameObject gameObject, float delay)
         {
-            await UniTask.WaitForSeconds(delay, cancellationToken: Context.CancellationToken);
-
             if (gameObject.TryGetComponent(out DestroyEmitterObject destroyEmitterObject))
             {
                 destroyEmitterObject.IsActive = true;
             }
-            
-            Object.Destroy(gameObject);
+
+            Object.Destroy(gameObject, delay);
         }
         
         public abstract void DestroyObjectAt(Vector2 position);

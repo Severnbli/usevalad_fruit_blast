@@ -241,7 +241,7 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
             {
                 if (orderToDelay.TryGetValue(order, out var delay))
                 {
-                    DestroyObject(obj.gameObject, delay).Forget();
+                    DestroyObject(obj.gameObject, delay);
                 }
             }
         }
