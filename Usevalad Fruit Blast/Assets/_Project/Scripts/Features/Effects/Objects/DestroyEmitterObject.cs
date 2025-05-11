@@ -2,8 +2,6 @@
 {
     public class DestroyEmitterObject : EffectEmitterObject
     {
-        public bool IsActive { get; set; } = false;
-        
         private void OnDestroy()
         {
             if (!IsActive)
