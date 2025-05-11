@@ -8,8 +8,12 @@ namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
     {
         [SerializeField] private Vector2 _minStartVelocity = Vector2.zero;
         [SerializeField] private Vector2 _maxStartVelocity = Vector2.zero;
+        [SerializeField] private int _uniqueSplitsQuantity = 3;
+        [SerializeField] private float _spritesSafeAreaPercentage = 0.2f;
         
         public Vector2 MinStartVelocity => _minStartVelocity;
         public Vector2 MaxStartVelocity => _maxStartVelocity;
+        public int UniqueSplitsQuantity => _uniqueSplitsQuantity;
+        public float SpritesSafeAreaPercentage => _spritesSafeAreaPercentage;
     }
 }
