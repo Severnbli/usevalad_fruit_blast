@@ -9,8 +9,10 @@ namespace _Project.Scripts.Features.Effects.Providers
     {
         [ValueDropdown("GetSortingLayerNames")]
         [SerializeField] private string _effectSortingLayerName;
+        [SerializeField] private int _effectSortingLayerOrder;
         
         public string EffectSortingLayerName => _effectSortingLayerName;
+        public int EffectSortingLayerOrder => _effectSortingLayerOrder;
         
         private static string[] GetSortingLayerNames()
         {
