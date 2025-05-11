@@ -54,6 +54,12 @@ namespace _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer
 
             for (var i = _effectObjects.Count - 1; i >= 0; i--)
             {
+                if (_effectObjects[i] == null)
+                {
+                    _effectObjects.RemoveAt(i);
+                    continue;
+                }
+                
                 if (Vector2.Distance(fieldPosition, _effectObjects[i].transform.position) <= maxAvailableDistance)
                 {
                     return;
