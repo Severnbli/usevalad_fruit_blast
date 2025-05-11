@@ -11,7 +11,7 @@ namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
     public class SplitSpriteEffectProvider : EffectProvider, IConfigurableFeature<SplitSpriteEffectProviderConfig>
     {
         private RandomProvider _randomProvider;
-        private readonly Dictionary<Sprite, (Sprite, Sprite)> _splitSprites = new();
+        private readonly Dictionary<Sprite, List<(Sprite, Sprite)>> _splitSprites = new();
         
         public SplitSpriteEffectProviderConfig SplitSpriteEffectProviderConfig { get; private set; }
 
@@ -34,41 +34,63 @@ namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
                 return;
             }
 
-            if (!_splitSprites.TryGetValue(spriteRenderer.sprite, out var splitSprite))
+            if (!_splitSprites.TryGetValue(spriteRenderer.sprite, out var splitSpritesList))
             {
-                splitSprite = GetSplitSprites(spriteRenderer.sprite);
-                _splitSprites.TryAdd(spriteRenderer.sprite, splitSprite);
+                splitSpritesList = GetSplitSpritesList(spriteRenderer.sprite);
+                _splitSprites.TryAdd(spriteRenderer.sprite, splitSpritesList);
             }
             
-            SpawnEffectObjects(emitterObject, splitSprite);
+            SpawnEffectObjects(emitterObject, splitSpritesList[_randomProvider.Random.Next(splitSpritesList.Count)]);
         }
 
-        public static (Sprite, Sprite) GetSplitSprites(Sprite sprite)
+        public List<(Sprite, Sprite)> GetSplitSpritesList(Sprite sprite)
         {
+            var config = SplitSpriteEffectProviderConfig;
+            var uniqueSplitsQuantity = config.UniqueSplitsQuantity;
+            var splitSpritesList = new List<(Sprite, Sprite)>(uniqueSplitsQuantity);
+            
             var texture = sprite.texture;
             var rect = sprite.textureRect;
             var pixelsPerUnit = sprite.pixelsPerUnit;
+            var pivot = new Vector2(0.5f, 0.5f);
             
-            var halfWidth = rect.width / 2f;
-            
-            var leftRect = new Rect(rect.x, rect.y, halfWidth, rect.height);
-            var leftPivot = new Vector2(
-                Mathf.Clamp01(sprite.pivot.x / rect.width),
-                Mathf.Clamp01(sprite.pivot.y / rect.height)
-            );
-            leftPivot = new Vector2(leftPivot.x * 2f, leftPivot.y);
+            for (var i = 0; i < uniqueSplitsQuantity; i++)
+            {
+                Rect leftRect;
+                Rect rightRect;
 
-            var leftSprite = Sprite.Create(texture, leftRect, leftPivot, pixelsPerUnit);
+                var isVerticalSplit = _randomProvider.Random.Next(2) != 0;
 
-            var rightRect = new Rect(rect.x + halfWidth, rect.y, halfWidth, rect.height);
-            var rightPivot = new Vector2(
-                Mathf.Clamp01((sprite.pivot.x - halfWidth) / halfWidth),
-                Mathf.Clamp01(sprite.pivot.y / rect.height)
-            );
+                if (isVerticalSplit)
+                {
+                    var minHeightSplit = rect.height * config.SpritesSafeAreaPercentage;
+                    var maxHeightSplit = rect.height - minHeightSplit;
+                    
+                    var randHeightSplit = (float) _randomProvider.Random.NextDouble() 
+                        * (maxHeightSplit - minHeightSplit) + minHeightSplit;
+                    
+                    leftRect = new Rect(rect.x, rect.y + randHeightSplit, rect.width, rect.height - randHeightSplit);
+                    rightRect = new Rect(rect.x, rect.y, rect.width, randHeightSplit);
+                }
+                else
+                {
+                    var minWidthSplit = rect.width * config.SpritesSafeAreaPercentage;
+                    var maxWidthSplit = rect.width - minWidthSplit;
+                    
+                    var randWidthSplit = (float) _randomProvider.Random.NextDouble() 
+                        * (maxWidthSplit - minWidthSplit) + minWidthSplit;
+                    
+                    leftRect = new Rect(rect.x, rect.y, randWidthSplit, rect.height);
+                    rightRect = new Rect(rect.x + randWidthSplit, rect.y, rect.width - randWidthSplit, rect.height);
+                }
+                
+                var leftSprite = Sprite.Create(texture, leftRect, pivot, pixelsPerUnit);
+                var rightSprite = Sprite.Create(texture, rightRect, pivot, pixelsPerUnit);
+                
+                splitSpritesList.Add((leftSprite, rightSprite));
+            }
 
-            var rightSprite = Sprite.Create(texture, rightRect, rightPivot, pixelsPerUnit);
-
-            return (leftSprite, rightSprite);
+            return splitSpritesList;
         }
 
         private void SpawnEffectObjects(EffectEmitterObject source, (Sprite, Sprite) sprites)
