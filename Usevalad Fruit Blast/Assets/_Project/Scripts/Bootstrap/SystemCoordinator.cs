@@ -89,12 +89,13 @@ namespace _Project.Scripts.Bootstrap
             
             Context.AddFeatureWithConfig(new FieldCatcherSpawner(), _systemConfig.PhysicsObjectSpawnerConfig);
             Context.AddFeatureWithConfig(new ClickObjectDestroyer(), _systemConfig.ClickObjectDestroyerConfig);
-            Context.AddFeatureWithConfig(new LifecycleManager(), _systemConfig.LifecycleManagerConfig);
             
             Context.AddFeatureWithConfig(new GyroscopeGravityChanger(), _systemConfig.GyroscopeGravityChangerConfig);
             
             Context.AddFeatureWithConfig(new EffectObjectsContainer(), _systemConfig.EffectObjectsContainerConfig);
             Context.AddFeatureWithConfig(new SplitSpriteEffectProvider(), _systemConfig.SplitSpriteEffectProviderConfig);
+            
+            Context.AddFeatureWithConfig(new LifecycleManager(), _systemConfig.LifecycleManagerConfig);
         }
 
         private void SetupUpdatableFeatures()
