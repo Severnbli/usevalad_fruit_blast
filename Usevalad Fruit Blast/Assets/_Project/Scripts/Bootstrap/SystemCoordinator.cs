@@ -12,7 +12,7 @@ using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer;
-using _Project.Scripts.Features.Lifecycle.LifecycleManager;
+using _Project.Scripts.Features.Lifecycle.LifecycleStateMachine;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
 using _Project.Scripts.Features.Physics.Engine;
@@ -21,6 +21,8 @@ using _Project.Scripts.Features.Physics.Forces.GravityForceProvider;
 using _Project.Scripts.Features.Physics.Services.Explosions.ExplosionProvider;
 using _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityChanger;
 using _Project.Scripts.Features.Random;
+using _Project.Scripts.Features.Stats.Experience;
+using _Project.Scripts.Features.Stats.Health;
 using Unity.Profiling;
 using UnityEngine;
 
@@ -35,6 +37,9 @@ namespace _Project.Scripts.Bootstrap
         
         private List<IFixedUpdatableFeature> _fixedUpdatableFeatures;
         private Dictionary<IFixedUpdatableFeature, ProfilerMarker> _fixedUpdatableFeaturesMarkers;
+        
+        private List<IResettableFeature> _resettableFeatures;
+        private Dictionary<IResettableFeature, ProfilerMarker> _resettableFeaturesMarkers;
         
         public Context<BaseFeature> Context { get; private set; }
         public SystemConfig SystemConfig => _systemConfig;
@@ -59,8 +64,10 @@ namespace _Project.Scripts.Bootstrap
         {
             SetupContext();
             SetupFeatures();
+            
             SetupUpdatableFeatures();
             SetupFixedUpdatableFeatures();
+            SetupResettableFeatures();
         }
 
         private void SetupContext()
@@ -89,12 +96,16 @@ namespace _Project.Scripts.Bootstrap
             
             Context.AddFeatureWithConfig(new FieldCatcherSpawner(), _systemConfig.PhysicsObjectSpawnerConfig);
             Context.AddFeatureWithConfig(new ClickObjectDestroyer(), _systemConfig.ClickObjectDestroyerConfig);
-            Context.AddFeatureWithConfig(new LifecycleManager(), _systemConfig.LifecycleManagerConfig);
             
             Context.AddFeatureWithConfig(new GyroscopeGravityChanger(), _systemConfig.GyroscopeGravityChangerConfig);
             
             Context.AddFeatureWithConfig(new EffectObjectsContainer(), _systemConfig.EffectObjectsContainerConfig);
             Context.AddFeatureWithConfig(new SplitSpriteEffectProvider(), _systemConfig.SplitSpriteEffectProviderConfig);
+            
+            Context.AddFeatureWithConfig(new HealthFeature(), _systemConfig.HealthFeatureConfig);
+            Context.AddFeatureWithConfig(new ExperienceFeature(), _systemConfig.ExperienceFeatureConfig);
+            
+            Context.AddFeature(new LifecycleStateMachine());
         }
 
         private void SetupUpdatableFeatures()
@@ -118,6 +129,18 @@ namespace _Project.Scripts.Bootstrap
             {
                 _fixedUpdatableFeaturesMarkers.TryAdd(fixedUpdatableFeature, 
                     new ProfilerMarker(fixedUpdatableFeature.GetType().Name));
+            }
+        }
+
+        private void SetupResettableFeatures()
+        {
+            _resettableFeatures = Context.Container.OfType<IResettableFeature>().ToList();
+            _resettableFeaturesMarkers = new();
+
+            foreach (var resettableFeature in _resettableFeatures)
+            {
+                _resettableFeaturesMarkers.TryAdd(resettableFeature,
+                    new ProfilerMarker(resettableFeature.GetType().Name));   
             }
         }
 
@@ -162,6 +185,23 @@ namespace _Project.Scripts.Bootstrap
             foreach (var destroyableFeature in destroyableFeatures)
             {
                 destroyableFeature.OnDestroy();
+            }
+        }
+
+        public void Reset()
+        {
+            foreach (var resettableFeature in _resettableFeatures)
+            {
+                if (!_resettableFeaturesMarkers.TryGetValue(resettableFeature, out var marker))
+                {
+                    resettableFeature.Reset();
+                    continue;
+                }
+
+                using (marker.Auto())
+                {
+                    resettableFeature.Reset();
+                }
             }
         }
     }

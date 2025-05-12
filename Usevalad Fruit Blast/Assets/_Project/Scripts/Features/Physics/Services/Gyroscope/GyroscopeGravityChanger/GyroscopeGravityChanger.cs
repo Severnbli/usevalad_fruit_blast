@@ -55,5 +55,10 @@ namespace _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityC
             
             _gravityForceProvider.ForceProviderConfig.Direction = limitedGravityVector;
         }
+
+        public void SetIsEnable(bool isEnable)
+        {
+            IsEnable = isEnable;
+        }
     }
 }
