@@ -993,13 +993,23 @@ MonoBehaviour:
     _explosionProviderConfig: {fileID: 11400000, guid: 2d4677b788c3f9d45bdf3335d678347e, type: 2}
     _physicsObjectSpawnerConfig: {fileID: 11400000, guid: aa501d050b8fae942ad73a095856e00e, type: 2}
     _scaleProviderConfig: {fileID: 11400000, guid: 7ee2b05eefef81f40af0026a14d1a11c, type: 2}
-    _lifecycleManagerConfig: {fileID: 11400000, guid: 2b1f751cacd40ca46a36c68417644385, type: 2}
     _clickObjectDestroyerConfig: {fileID: 11400000, guid: bd9bec295080b104982b50c44c3f48d4, type: 2}
     _gyroscopeGravityChangerConfig: {fileID: 11400000, guid: 9d85ecbbbd6e33d44967c2f4e2ed137b, type: 2}
     _effectObjectsContainerConfig:
       _effectObjectsContainerTransform: {fileID: 79218060}
       _deleteFieldOffset: 0.1
     _splitSpriteEffectProviderConfig: {fileID: 11400000, guid: 7990ff91d898c8143a6ecedb72b4f21e, type: 2}
+    _healthFeatureConfig:
+      _healthText: {fileID: 1491203487}
+      _maxHealth: 5
+    _experienceFeatureConfig:
+      _levelText: {fileID: 905114310}
+      _progressText: {fileID: 1107841579}
+      _progressPercentageText: {fileID: 1075981045}
+      _startLevel: 1
+      _startLevelMaxExperience: 200
+      _experienceGrowthType: 0
+      _experienceGrowthRate: 50
 --- !u!1 &1011431694
 GameObject:
   m_ObjectHideFlags: 0
