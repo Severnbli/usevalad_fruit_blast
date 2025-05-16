@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FieldCatcherSpawnerConfig
   m_EditorClassIdentifier: 
   _physicsObjectSpawnerConfig: {fileID: 11400000, guid: aa501d050b8fae942ad73a095856e00e, type: 2}
-  _timeToFillTheCatcher: 3
+  _timeToFillTheCatcher: 2
   _maxCorruptedFieldCatcherArea: 0.85
   _continuousFillDelay: 0.5
