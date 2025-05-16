@@ -4,34 +4,37 @@ using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 
 namespace _Project.Scripts.Features.Stats.Health
 {
-    public class HealthFeature : StatsFeature, IConfigurableFeature<HealthFeatureConfig>, IResettableFeature
+    public class HealthProvider : StatsFeature, IConfigurableFeature<HealthProviderConfig>, IResettableFeature
     {
         private int _currentHealth;
         
         public event Action<int> OnHealthUpdate;
-        public HealthFeatureConfig HealthFeatureConfig { get; private set; }
+        public HealthProviderConfig HealthProviderConfig { get; private set; }
         
         public int CurrentHealth
         {
             get => _currentHealth;
-            private set
+            set
             {
                 _currentHealth = value;
-                HealthFeatureConfig.HealthText.text = _currentHealth.ToString();
+
+                foreach (var healthBar in HealthProviderConfig.HealthBars)
+                {
+                    healthBar.SetHealth(_currentHealth);
+                }
             }
         }
         
-        public void Configure(HealthFeatureConfig healthFeatureConfig)
+        public void Configure(HealthProviderConfig healthProviderConfig)
         {
-            HealthFeatureConfig = healthFeatureConfig;
+            HealthProviderConfig = healthProviderConfig;
             
             Reset();
         }
         
         public void Reset()
         {
-            _currentHealth = HealthFeatureConfig.MaxHealth;
-            HealthFeatureConfig.HealthText.text = _currentHealth.ToString();
+            CurrentHealth = HealthProviderConfig.MaxHealth;
         }
         
         public void DecreaseHealth(int amount)

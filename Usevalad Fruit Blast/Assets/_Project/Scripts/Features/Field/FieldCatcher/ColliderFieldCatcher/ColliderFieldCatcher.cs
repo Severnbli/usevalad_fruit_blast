@@ -44,7 +44,7 @@ namespace _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher
             UpdateCatcher();
         }
 
-        public void UpdateCatcher()
+        public override void UpdateCatcher()
         {
             UpdateCatcherPosition();
             UpdateColliders();

@@ -20,6 +20,7 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
         public void Configure(FieldCatcherConfig fieldCatcherConfig)
         {
             FieldCatcherConfig = fieldCatcherConfig;
+            UpdateCatcher();
         }
 
         public static Vector2 CalculateCatcherSize(FieldProvider.FieldProvider fieldProvider, FieldCatcherConfig fieldCatcherConfig)
@@ -44,6 +45,8 @@ namespace _Project.Scripts.Features.Field.FieldCatcher
             
             return new Vector2(width, height);
         }
+
+        public abstract void UpdateCatcher();
 
         public FieldProvider.FieldProvider GetFieldProvider()
         {

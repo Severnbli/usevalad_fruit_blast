@@ -20,13 +20,13 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine
             base.Init();
 
             LifecycleContainer = new LifecycleContainer(this);
-            SetupStates();
         }
         
         public void Configure(LifecycleStateMachineConfig lifecycleStateMachineConfig)
         {
             LifecycleStateMachineConfig = lifecycleStateMachineConfig;
             
+            SetupStates();
             EnterIn<BootstrapState>();
         }
 

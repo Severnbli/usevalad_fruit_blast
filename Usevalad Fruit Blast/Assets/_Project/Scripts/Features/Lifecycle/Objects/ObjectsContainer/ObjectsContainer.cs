@@ -2,21 +2,50 @@
 using System.Linq;
 using _Project.Scripts.Features.FeatureCore;
 using _Project.Scripts.Features.FeatureCore.FeatureContracts;
-using _Project.Scripts.Features.Physics.Colliders;
-using _Project.Scripts.Features.Physics.Figures;
-using _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder;
+using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
+using _Project.Scripts.Features.Field.FieldProvider;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer
 {
-    public class ObjectsContainer : BaseFeature, IConfigurableFeature<ObjectsContainerConfig>
+    public class ObjectsContainer : BaseFeature, IConfigurableFeature<ObjectsContainerConfig>, 
+        IUpdatableFeature
     {
+        private FieldProvider _fieldProvider;    
+        
         public ObjectsContainerConfig ObjectsContainerConfig { get; private set; }
         public List<ContainerableObject> ContainerableObjects { get; protected set; } = new();
+
+        public override void Init()
+        {
+            base.Init();
+            
+            Context.TryGetComponentFromContainer(out _fieldProvider);
+        }
 
         public void Configure(ObjectsContainerConfig objectsContainerConfig)
         {
             ObjectsContainerConfig = objectsContainerConfig;
+        }
+        
+        public void Update()
+        {
+            for (var i = ContainerableObjects.Count - 1; i >= 0; i--)
+            {
+                if (ContainerableObjects[i] == null)
+                {
+                    ContainerableObjects.RemoveAt(i);
+                    continue;
+                }
+                
+                if (_fieldProvider.IsObjectOutOfScreen(ContainerableObjects[i].gameObject, ObjectsContainerConfig.DeleteFieldOffset))
+                {
+                    return;
+                }
+                
+                Object.Destroy(ContainerableObjects[i].gameObject);
+                ContainerableObjects.RemoveAt(i);
+            }
         }
         
         public float GetTotalArea()

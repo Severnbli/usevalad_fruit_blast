@@ -96,43 +96,58 @@ namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
         private void SpawnEffectObjects(EffectEmitterObject source, (Sprite, Sprite) sprites)
         {
             var effectName = $"{source.gameObject.name} - SplitSpriteEffect";
-            
+
             var leftObject = new GameObject(effectName);
             var rightObject = new GameObject(effectName);
-            
-            
+
             _effectObjectsContainer.AddToContainer(leftObject);
             _effectObjectsContainer.AddToContainer(rightObject);
-            
+
             leftObject.transform.position = rightObject.transform.position = source.transform.position;
             leftObject.transform.localScale = rightObject.transform.localScale = source.transform.localScale;
-            
-            var leftSpriteRenderer = leftObject.AddComponent<SpriteRenderer>();
-            var rightSpriteRenderer = rightObject.AddComponent<SpriteRenderer>();
-            
-            leftSpriteRenderer.sortingLayerName = rightSpriteRenderer.sortingLayerName = 
+
+            var leftSpriteHolder = new GameObject("LeftSprite");
+            var rightSpriteHolder = new GameObject("RightSprite");
+
+            leftSpriteHolder.transform.SetParent(leftObject.transform, false);
+            rightSpriteHolder.transform.SetParent(rightObject.transform, false);
+
+            leftSpriteHolder.transform.localPosition = Vector3.zero;
+            rightSpriteHolder.transform.localPosition = Vector3.zero;
+
+            var leftSpriteRenderer = leftSpriteHolder.AddComponent<SpriteRenderer>();
+            var rightSpriteRenderer = rightSpriteHolder.AddComponent<SpriteRenderer>();
+
+            leftSpriteRenderer.sortingLayerName = rightSpriteRenderer.sortingLayerName =
                 SplitSpriteEffectProviderConfig.EffectSortingLayerName;
             leftSpriteRenderer.sortingOrder = rightSpriteRenderer.sortingOrder =
                 SplitSpriteEffectProviderConfig.EffectSortingLayerOrder;
-            
+
             leftSpriteRenderer.sprite = sprites.Item1;
             rightSpriteRenderer.sprite = sprites.Item2;
-            
+
+            float leftRotation = (float)_randomProvider.Random.NextDouble() * 360f;
+            float rightRotation = (float)_randomProvider.Random.NextDouble() * 360f;
+
+            leftSpriteHolder.transform.localRotation = Quaternion.Euler(0f, 0f, leftRotation);
+            rightSpriteHolder.transform.localRotation = Quaternion.Euler(0f, 0f, rightRotation);
+
             var leftCollider = leftObject.AddComponent<CircleCollider>();
             var rightCollider = rightObject.AddComponent<CircleCollider>();
-            
+
             leftCollider.IsTrigger = rightCollider.IsTrigger = true;
-            
+
             var leftDynamicBody = leftObject.AddComponent<DynamicBody>();
             var rightDynamicBody = rightObject.AddComponent<DynamicBody>();
-            
+
             var minStartVelocity = SplitSpriteEffectProviderConfig.MinStartVelocity;
             var maxStartVelocity = SplitSpriteEffectProviderConfig.MaxStartVelocity;
+
             var startVelocity = new Vector2(
-                (float) _randomProvider.Random.NextDouble() * (maxStartVelocity.x - minStartVelocity.x) + minStartVelocity.x,
-                (float) _randomProvider.Random.NextDouble() * (maxStartVelocity.y - minStartVelocity.y) + minStartVelocity.y
-                );
-            
+                (float)_randomProvider.Random.NextDouble() * (maxStartVelocity.x - minStartVelocity.x) + minStartVelocity.x,
+                (float)_randomProvider.Random.NextDouble() * (maxStartVelocity.y - minStartVelocity.y) + minStartVelocity.y
+            );
+
             leftDynamicBody.Velocity = new Vector2(-startVelocity.x, startVelocity.y);
             rightDynamicBody.Velocity = startVelocity;
         }

@@ -22,8 +22,11 @@ namespace _Project.Scripts.Features.Stats.Experience
             private set
             {
                 _currentLevel = value;
-                
-                ExperienceFeatureConfig.LevelText.text = _currentLevel.ToString();
+
+                foreach (var progressBar in ExperienceFeatureConfig.ProgressBars)
+                {
+                    progressBar.SetLevel(value);
+                }
             }
         }
 
@@ -33,12 +36,11 @@ namespace _Project.Scripts.Features.Stats.Experience
             private set
             {
                 _currentExperience = value;
-                
-                ExperienceFeatureConfig.ProgressText.text = 
-                    $"{_currentExperience.ToString()} / {CurrentLevelMaxExperience.ToString()}";
-                
-                ExperienceFeatureConfig.ProgressPercentageText.text = 
-                    $"{(_currentExperience / CurrentLevelMaxExperience).ToString()} %";
+
+                foreach (var progressBar in ExperienceFeatureConfig.ProgressBars)
+                {
+                    progressBar.SetProgress(value, CurrentLevelMaxExperience);
+                }
             }
         }
         
