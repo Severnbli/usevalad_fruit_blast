@@ -1,6 +1,8 @@
 ﻿using System;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer;
+using _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider;
+using _Project.Scripts.Features.Effects.Providers.ExplosionEffectProvider;
 using _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
@@ -40,8 +42,10 @@ namespace _Project.Scripts.Bootstrap
         [SerializeField, InlineProperty] private EffectObjectsContainerConfig _effectObjectsContainerConfig;
         [SerializeField] private SplitSpriteEffectProviderConfig _splitSpriteEffectProviderConfig;
         [SerializeField, InlineProperty] private HealthProviderConfig _healthProviderConfig;
-        [SerializeField, InlineProperty] private ExperienceFeatureConfig _experienceFeatureConfig;
+        [SerializeField, InlineProperty] private ExperienceProviderConfig _experienceProviderConfig;
         [SerializeField] private HealthInfluencerConfig _healthClickObjectDestroyerInfluencerConfig;
+        [SerializeField] private ExperienceEffectProviderConfig _experienceEffectProviderConfig;
+        [SerializeField] private ExplosionEffectProviderConfig _explosionEffectProviderConfig;
         [SerializeField] private LifecycleStateMachineConfig _lifecycleStateMachineConfig;
         
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
@@ -59,8 +63,10 @@ namespace _Project.Scripts.Bootstrap
         public EffectObjectsContainerConfig EffectObjectsContainerConfig => _effectObjectsContainerConfig;
         public SplitSpriteEffectProviderConfig SplitSpriteEffectProviderConfig => _splitSpriteEffectProviderConfig;
         public HealthProviderConfig HealthProviderConfig => _healthProviderConfig;
-        public ExperienceFeatureConfig ExperienceFeatureConfig => _experienceFeatureConfig;
+        public ExperienceProviderConfig ExperienceProviderConfig => _experienceProviderConfig;
         public HealthInfluencerConfig HealthClickObjectDestroyerInfluencerConfig => _healthClickObjectDestroyerInfluencerConfig;
+        public ExperienceEffectProviderConfig ExperienceEffectProviderConfig => _experienceEffectProviderConfig;
+        public ExplosionEffectProviderConfig ExplosionEffectProviderConfig => _explosionEffectProviderConfig;
         public LifecycleStateMachineConfig LifecycleStateMachineConfig => _lifecycleStateMachineConfig;
     }
 }

@@ -6,6 +6,8 @@ using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer;
+using _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider;
+using _Project.Scripts.Features.Effects.Providers.ExplosionEffectProvider;
 using _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider;
 using _Project.Scripts.Features.FeatureCore;
 using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
@@ -106,7 +108,10 @@ namespace _Project.Scripts.Bootstrap
             Context.AddFeatureWithConfig(new HealthProvider(), _systemConfig.HealthProviderConfig);
             Context.AddFeatureWithConfig(new HealthClickObjectDestroyerInfluencer(), _systemConfig.HealthClickObjectDestroyerInfluencerConfig);
             
-            Context.AddFeatureWithConfig(new ExperienceFeature(), _systemConfig.ExperienceFeatureConfig);
+            Context.AddFeatureWithConfig(new ExperienceProvider(), _systemConfig.ExperienceProviderConfig);
+            Context.AddFeatureWithConfig(new ExperienceEffectProvider(), _systemConfig.ExperienceEffectProviderConfig);
+
+            Context.AddFeatureWithConfig(new ExplosionEffectProvider(), _systemConfig.ExplosionEffectProviderConfig);
             
             Context.AddFeatureWithConfig(new LifecycleStateMachine(), _systemConfig.LifecycleStateMachineConfig);
         }

@@ -10,7 +10,7 @@ namespace _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer
     public class EffectObjectsContainer : BaseFeature, IConfigurableFeature<EffectObjectsContainerConfig>, 
         IUpdatableFeature
     {
-        private readonly List<GameObject> _effectObjects = new();
+        public List<GameObject> EffectObjects { get; private set; } = new();
         private FieldProvider _fieldProvider;    
             
         public EffectObjectsContainerConfig EffectObjectsContainerConfig { get; private set; }
@@ -29,21 +29,21 @@ namespace _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer
         
         public void Update()
         {
-            for (var i = _effectObjects.Count - 1; i >= 0; i--)
+            for (var i = EffectObjects.Count - 1; i >= 0; i--)
             {
-                if (_effectObjects[i] == null)
+                if (EffectObjects[i] == null)
                 {
-                    _effectObjects.RemoveAt(i);
+                    EffectObjects.RemoveAt(i);
                     continue;
                 }
                 
-                if (_fieldProvider.IsObjectOutOfScreen(_effectObjects[i], EffectObjectsContainerConfig.DeleteFieldOffset))
+                if (_fieldProvider.IsObjectOutOfScreen(EffectObjects[i], EffectObjectsContainerConfig.DeleteFieldOffset))
                 {
                     return;
                 }
                 
-                Object.Destroy(_effectObjects[i]);
-                _effectObjects.RemoveAt(i);
+                Object.Destroy(EffectObjects[i]);
+                EffectObjects.RemoveAt(i);
             }
         }
 
@@ -54,7 +54,7 @@ namespace _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer
 
         public void AddToContainer(GameObject effectObject)
         {
-            _effectObjects.Add(effectObject);
+            EffectObjects.Add(effectObject);
             effectObject.transform.SetParent(GetContainerTransform());
         }
     }

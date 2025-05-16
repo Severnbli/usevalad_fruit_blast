@@ -10,17 +10,9 @@ namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
 {
     public class SplitSpriteEffectProvider : EffectProvider, IConfigurableFeature<SplitSpriteEffectProviderConfig>
     {
-        private RandomProvider _randomProvider;
         private readonly Dictionary<Sprite, List<(Sprite, Sprite)>> _splitSprites = new();
         
         public SplitSpriteEffectProviderConfig SplitSpriteEffectProviderConfig { get; private set; }
-
-        public override void Init()
-        {
-            base.Init();
-            
-            Context.TryGetComponentFromContainer(out _randomProvider);
-        }
 
         public void Configure(SplitSpriteEffectProviderConfig splitSpriteEffectProviderConfig)
         {

@@ -33,6 +33,7 @@ namespace _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityC
         {
             if (!IsEnable || !_gyroscopeProvider.TryGetGravity(out var deviceGravity))
             {
+                _gravityForceProvider.ForceProviderConfig.Direction = Vector2.down;
                 return;
             }
 
@@ -50,8 +51,6 @@ namespace _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityC
 
             var clampedAngleRad = clampedAngle * Mathf.Deg2Rad;
             var limitedGravityVector = new Vector2(Mathf.Sin(clampedAngleRad), -Mathf.Cos(clampedAngleRad)).normalized;
-            
-            Debug.Log(limitedGravityVector);
             
             _gravityForceProvider.ForceProviderConfig.Direction = limitedGravityVector;
         }

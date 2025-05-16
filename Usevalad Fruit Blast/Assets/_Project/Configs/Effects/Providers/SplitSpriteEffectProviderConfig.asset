@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SplitSpriteEffectProviderConfig
   m_EditorClassIdentifier: 
   _effectSortingLayerName: Effects
-  _effectSortingLayerOrder: 0
+  _effectSortingLayerOrder: 1
   _minStartVelocity: {x: 2, y: 2}
   _maxStartVelocity: {x: 6, y: 5}
   _uniqueSplitsQuantity: 5

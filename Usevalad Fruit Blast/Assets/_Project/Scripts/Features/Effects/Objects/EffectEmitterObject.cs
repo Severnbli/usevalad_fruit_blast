@@ -1,6 +1,10 @@
-﻿using _Project.Scripts.Bootstrap;
+﻿using System.Collections.Generic;
+using System.Linq;
+using _Project.Scripts.Bootstrap;
 using _Project.Scripts.Common.Finders;
 using _Project.Scripts.Features.Effects.Providers;
+using _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider;
+using _Project.Scripts.Features.Effects.Providers.ExplosionEffectProvider;
 using _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider;
 using UnityEngine;
 
@@ -8,10 +12,10 @@ namespace _Project.Scripts.Features.Effects.Objects
 {
     public class EffectEmitterObject : MonoBehaviour
     {
-        [SerializeField] private EffectType _effectType;
+        [SerializeField] private List<EffectType> _effectType;
         [SerializeField] private bool _isActive = false;
         
-        private EffectProvider _effectProvider;
+        private List<EffectProvider> _effectProviders = new();
         public bool IsActive { get => _isActive; set => _isActive = value; }
 
         private void Start()
@@ -22,21 +26,39 @@ namespace _Project.Scripts.Features.Effects.Objects
             }
             
             var context = systemCoordinator.Context;
-            
-            switch (_effectType)
+
+            foreach (var effectType in _effectType.Where((x, y) => x.GetType() != y.GetType()).ToList())
             {
-                case EffectType.SplitSprite:
+                switch (effectType)
                 {
-                    context.TryGetComponentFromContainer(out SplitSpriteEffectProvider splitSpriteEffectProvider);
-                    _effectProvider = splitSpriteEffectProvider;
-                    break;
-                }
+                    case EffectType.SplitSprite:
+                    {
+                        context.TryGetComponentFromContainer(out SplitSpriteEffectProvider splitSpriteEffectProvider);
+                        _effectProviders.Add(splitSpriteEffectProvider);
+                        break;
+                    }
+                    case EffectType.Experience:
+                    {
+                        context.TryGetComponentFromContainer(out ExperienceEffectProvider experienceEffectProvider);
+                        _effectProviders.Add(experienceEffectProvider);
+                        break;
+                    }
+                    case EffectType.Explosion:
+                    {
+                        context.TryGetComponentFromContainer(out ExplosionEffectProvider explosionEffectProvider);
+                        _effectProviders.Add(explosionEffectProvider);
+                        break;
+                    }
+                }   
             }
         }
 
         public void Emit()
         {
-            _effectProvider?.Emit(this);
+            foreach (var effectProvider in _effectProviders)
+            {
+                effectProvider?.Emit(this);
+            }
         }
     }
 }

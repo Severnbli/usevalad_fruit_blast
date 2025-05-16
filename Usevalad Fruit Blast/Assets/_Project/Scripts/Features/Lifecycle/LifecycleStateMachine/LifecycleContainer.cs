@@ -1,8 +1,10 @@
 ﻿using _Project.Scripts.Bootstrap;
 using _Project.Scripts.Common.Finders;
 using _Project.Scripts.Features.Controls.Pointer;
+using _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer;
 using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider;
+using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
 using _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityChanger;
 using _Project.Scripts.Features.Stats.Health;
@@ -17,6 +19,8 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine
         public GyroscopeGravityChanger GyroscopeGravityChanger { get; private set; }
         public FieldCatcherSpawner FieldCatcherSpawner { get; private set; }
         public HealthProvider HealthProvider { get; private set; }
+        public ObjectsContainer ObjectsContainer { get; private set; }
+        public EffectObjectsContainer EffectObjectsContainer { get; private set; }
 
         public LifecycleContainer(LifecycleStateMachine lifecycleStateMachine)
         {
@@ -50,6 +54,16 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine
             if (context.TryGetComponentFromContainer(out HealthProvider healthProvider))
             {
                 HealthProvider = healthProvider;
+            }
+
+            if (context.TryGetComponentFromContainer(out ObjectsContainer objectsContainer))
+            {
+                ObjectsContainer = objectsContainer;
+            }
+
+            if (context.TryGetComponentFromContainer(out EffectObjectsContainer effectObjectsContainer))
+            {
+                EffectObjectsContainer = effectObjectsContainer;
             }
         }
 
