@@ -19,5 +19,5 @@ MonoBehaviour:
   _maxBounciness: 0.8
   _minGravityFactor: 1
   _maxGravityFactor: 1
-  _minStartVelocity: {x: 0, y: -1}
-  _maxStartVelocity: {x: 0, y: -4}
+  _minStartVelocity: {x: -6, y: -1}
+  _maxStartVelocity: {x: 6, y: -4}

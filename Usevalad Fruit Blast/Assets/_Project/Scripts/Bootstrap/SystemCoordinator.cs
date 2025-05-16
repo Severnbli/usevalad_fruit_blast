@@ -23,6 +23,7 @@ using _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityChang
 using _Project.Scripts.Features.Random;
 using _Project.Scripts.Features.Stats.Experience;
 using _Project.Scripts.Features.Stats.Health;
+using _Project.Scripts.Features.Stats.Health.HealthInfluencers.HealthClickObjectDestroyerInfluencer;
 using Unity.Profiling;
 using UnityEngine;
 
@@ -94,7 +95,7 @@ namespace _Project.Scripts.Bootstrap
             
             Context.AddFeatureWithConfig(new ScaleProvider(), _systemConfig.ScaleProviderConfig);
             
-            Context.AddFeatureWithConfig(new FieldCatcherSpawner(), _systemConfig.PhysicsObjectSpawnerConfig);
+            Context.AddFeatureWithConfig(new FieldCatcherSpawner(), _systemConfig.FieldCatcherSpawnerConfig);
             Context.AddFeatureWithConfig(new ClickObjectDestroyer(), _systemConfig.ClickObjectDestroyerConfig);
             
             Context.AddFeatureWithConfig(new GyroscopeGravityChanger(), _systemConfig.GyroscopeGravityChangerConfig);
@@ -102,10 +103,12 @@ namespace _Project.Scripts.Bootstrap
             Context.AddFeatureWithConfig(new EffectObjectsContainer(), _systemConfig.EffectObjectsContainerConfig);
             Context.AddFeatureWithConfig(new SplitSpriteEffectProvider(), _systemConfig.SplitSpriteEffectProviderConfig);
             
-            Context.AddFeatureWithConfig(new HealthFeature(), _systemConfig.HealthFeatureConfig);
+            Context.AddFeatureWithConfig(new HealthProvider(), _systemConfig.HealthProviderConfig);
+            Context.AddFeatureWithConfig(new HealthClickObjectDestroyerInfluencer(), _systemConfig.HealthClickObjectDestroyerInfluencerConfig);
+            
             Context.AddFeatureWithConfig(new ExperienceFeature(), _systemConfig.ExperienceFeatureConfig);
             
-            Context.AddFeature(new LifecycleStateMachine());
+            Context.AddFeatureWithConfig(new LifecycleStateMachine(), _systemConfig.LifecycleStateMachineConfig);
         }
 
         private void SetupUpdatableFeatures()

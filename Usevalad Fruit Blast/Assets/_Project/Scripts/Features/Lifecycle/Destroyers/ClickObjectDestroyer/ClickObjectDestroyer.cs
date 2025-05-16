@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
@@ -8,7 +9,6 @@ using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Lifecycle.Objects;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Physics.Colliders;
-using _Project.Scripts.Features.Physics.Figures;
 using _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,6 +26,8 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
 
         private readonly Dictionary<ContainerableObject, int> _objectsToDestroy = new();
         private readonly Dictionary<ContainerableObject, int> _filterObjects = new();
+
+        public event Action OnObjectsDestroy; 
 
         public override void Init()
         {
@@ -84,6 +86,7 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
             }
             
             DestroyWithEasing(_objectsToDestroy);
+            OnObjectsDestroy?.Invoke();
         }
 
         public override bool TryGetNearestObjectThatMatchRules(Vector2 position, out ContainerableObject nearestObject)

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _effectSortingLayerName: Effects
   _effectSortingLayerOrder: 0
-  _minStartVelocity: {x: 2, y: 3}
-  _maxStartVelocity: {x: 3, y: 4}
+  _minStartVelocity: {x: 2, y: 2}
+  _maxStartVelocity: {x: 6, y: 5}
   _uniqueSplitsQuantity: 5
   _spritesSafeAreaPercentage: 0.3

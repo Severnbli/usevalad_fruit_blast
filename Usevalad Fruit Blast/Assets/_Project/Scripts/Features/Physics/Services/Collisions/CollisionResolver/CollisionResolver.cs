@@ -21,7 +21,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
             for (var i = 0; i < _collisionResolverConfig.CollisionResolvingIterations - 1; i++)
             {
                 ResolveCollisions(colliders);
-            }   
+            }
         }
 
         public void ResolveCollisions(List<BaseCollider> colliders)
