@@ -761,6 +761,11 @@ MonoBehaviour:
   m_FlexibleWidth: 1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!224 &807727248 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1428938140957733057, guid: e76932b440fce20458663a38938c88d5, type: 3}
+  m_PrefabInstance: {fileID: 1039712685629801546}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &811437425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,7 +1032,7 @@ MonoBehaviour:
       _experienceGrowthRate: 1
       _progressBars:
       - {fileID: 1993705683}
-      _experienceTarget: {fileID: 1993705679}
+      _experienceTarget: {fileID: 807727248}
       _liftDistance: 0.1
     _healthClickObjectDestroyerInfluencerConfig: {fileID: 11400000, guid: d5c7351870858dc47a29c5230e59c37e, type: 2}
     _experienceEffectProviderConfig: {fileID: 11400000, guid: 532a119d07beeac44b4f03204e0a39d9, type: 2}
