@@ -130,8 +130,8 @@ MonoBehaviour:
   _leftCap: {fileID: 8163199195787208682}
   _centerFill: {fileID: 546692374562644103}
   _rightCap: {fileID: 1428938140957733057}
-  animationDuration: 0.3
-  ease: 23
+  animationDuration: 1
+  ease: 6
 --- !u!1 &1354157547702479165
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,15 +578,15 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2834436977778506237}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3500378339924381147}
   - {fileID: 4725107322785598595}
   - {fileID: 7006585326690381134}
   - {fileID: 4103775878753616834}
+  - {fileID: 3500378339924381147}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.037611112, y: 0.31634098}

@@ -28,6 +28,7 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
         private readonly Dictionary<ContainerableObject, int> _filterObjects = new();
 
         public event Action OnObjectsDestroy; 
+        public event Action<List<GameObject>> OnObjectsDestroyWithInformation; 
 
         public override void Init()
         {
@@ -84,9 +85,16 @@ namespace _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer
             {
                 return;
             }
+
+            OnObjectsDestroyWithInformation?.Invoke(
+                _objectsToDestroy.Keys
+                    .Select(x => x.gameObject)
+                    .ToList()
+            );
+            
+            OnObjectsDestroy?.Invoke();
             
             DestroyWithEasing(_objectsToDestroy);
-            OnObjectsDestroy?.Invoke();
         }
 
         public override bool TryGetNearestObjectThatMatchRules(Vector2 position, out ContainerableObject nearestObject)

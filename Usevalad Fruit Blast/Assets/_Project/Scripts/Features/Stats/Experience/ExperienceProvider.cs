@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Features.Stats.Experience
 {
-    public class ExperienceFeature : BaseFeature, IConfigurableFeature<ExperienceFeatureConfig>, IResettableFeature
+    public class ExperienceProvider : BaseFeature, IConfigurableFeature<ExperienceProviderConfig>, IResettableFeature
     {
         private int _currentLevel;
         private int _currentExperience;
@@ -14,7 +14,7 @@ namespace _Project.Scripts.Features.Stats.Experience
         public event Action<int> OnLevelUp;
         public event Action<int> OnLevelDown;
 
-        public ExperienceFeatureConfig ExperienceFeatureConfig { get; private set; }
+        public ExperienceProviderConfig ExperienceProviderConfig { get; private set; }
 
         public int CurrentLevel
         {
@@ -23,7 +23,7 @@ namespace _Project.Scripts.Features.Stats.Experience
             {
                 _currentLevel = value;
 
-                foreach (var progressBar in ExperienceFeatureConfig.ProgressBars)
+                foreach (var progressBar in ExperienceProviderConfig.ProgressBars)
                 {
                     progressBar.SetLevel(value);
                 }
@@ -37,7 +37,7 @@ namespace _Project.Scripts.Features.Stats.Experience
             {
                 _currentExperience = value;
 
-                foreach (var progressBar in ExperienceFeatureConfig.ProgressBars)
+                foreach (var progressBar in ExperienceProviderConfig.ProgressBars)
                 {
                     progressBar.SetProgress(value, CurrentLevelMaxExperience);
                 }
@@ -46,17 +46,17 @@ namespace _Project.Scripts.Features.Stats.Experience
         
         public int CurrentLevelMaxExperience { get; private set; }
         
-        public void Configure(ExperienceFeatureConfig experienceFeatureConfig)
+        public void Configure(ExperienceProviderConfig experienceProviderConfig)
         {
-            ExperienceFeatureConfig = experienceFeatureConfig;
+            ExperienceProviderConfig = experienceProviderConfig;
             
             Reset();
         }
         
         public void Reset()
         {
-            CurrentLevel = ExperienceFeatureConfig.StartLevel;
-            CurrentLevelMaxExperience = ExperienceFeatureConfig.StartLevelMaxExperience;
+            CurrentLevel = ExperienceProviderConfig.StartLevel;
+            CurrentLevelMaxExperience = ExperienceProviderConfig.StartLevelMaxExperience;
             CurrentExperience = 0;
         }
 
@@ -72,7 +72,7 @@ namespace _Project.Scripts.Features.Stats.Experience
                 UpdateCurrentLevelMaxExperience();
             }
             
-            while (CurrentExperience < 0 && CurrentLevel > ExperienceFeatureConfig.StartLevel)
+            while (CurrentExperience < 0 && CurrentLevel > ExperienceProviderConfig.StartLevel)
             {
                 CurrentLevel--;
                 UpdateCurrentLevelMaxExperience();
@@ -88,8 +88,8 @@ namespace _Project.Scripts.Features.Stats.Experience
         
         private void UpdateCurrentLevelMaxExperience()
         {
-            var baseValue = ExperienceFeatureConfig.StartLevelMaxExperience;
-            var levelDelta = ExperienceFeatureConfig.StartLevelMaxExperience - CurrentLevel;
+            var baseValue = ExperienceProviderConfig.StartLevelMaxExperience;
+            var levelDelta = ExperienceProviderConfig.StartLevelMaxExperience - CurrentLevel;
             
             if (levelDelta == 0)
             {
@@ -97,7 +97,7 @@ namespace _Project.Scripts.Features.Stats.Experience
                 return;
             }
             
-            var multiplier = ExperienceFeatureConfig.ExperienceGrowthType switch
+            var multiplier = ExperienceProviderConfig.ExperienceGrowthType switch
             {
                 ExperienceGrowthType.Linear => levelDelta,
                 ExperienceGrowthType.Exponential => Mathf.Pow(levelDelta, 2f),
@@ -105,7 +105,18 @@ namespace _Project.Scripts.Features.Stats.Experience
                 _ => 1f
             };
 
-            CurrentLevelMaxExperience = Mathf.RoundToInt(baseValue + multiplier * ExperienceFeatureConfig.ExperienceGrowthRate);
+            CurrentLevelMaxExperience = Mathf.RoundToInt(baseValue + multiplier * ExperienceProviderConfig.ExperienceGrowthRate);
+        }
+
+        public Transform GetExperienceTarget()
+        {
+            return ExperienceProviderConfig.ExperienceTarget;
+        }
+
+        public bool IsEffectNear(GameObject experienceEffect)
+        {
+            return Vector2.Distance(experienceEffect.transform.position, GetExperienceTarget().transform.position) <
+                   ExperienceProviderConfig.LiftDistance;
         }
     }
 }

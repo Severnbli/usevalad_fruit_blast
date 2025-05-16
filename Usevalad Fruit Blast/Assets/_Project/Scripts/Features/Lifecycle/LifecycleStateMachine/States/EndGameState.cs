@@ -4,7 +4,6 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
 {
     public class EndGameState : LifecycleState
     {
-        // TODO: open the catcher, finish all anims
         public override void Enter()
         {
             base.Enter();
@@ -14,14 +13,29 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
             _lifecycleContainer.SetPointerProvidersEnableStatus(false);
             _lifecycleContainer.GyroscopeGravityChanger.SetIsEnable(false);
             
-            Wait5Seconds().Forget();
+            WaitTillTheEnd().Forget();
         }
 
-        private async UniTask Wait5Seconds()
+        private async UniTaskVoid WaitTillTheEnd()
         {
-            await UniTask.WaitForSeconds(5f, cancellationToken: _contextCancellationToken);
+            while (!_contextCancellationToken.IsCancellationRequested)
+            {
+                var isZeroContainerableObjects = _lifecycleContainer.ObjectsContainer.ContainerableObjects.Count == 0;
+                var isZeroEffectContainerableObjects = _lifecycleContainer.EffectObjectsContainer.EffectObjects.Count == 0;
+                
+                var isGameEnd = 
+                        isZeroContainerableObjects
+                        && isZeroEffectContainerableObjects;
+
+                if (isGameEnd)
+                {
+                    break;
+                }
+                
+                await UniTask.Yield();
+            }
             
-            _lifecycleStateMachine.EnterIn<ResetGameState>();
+            _lifecycleStateMachine.EnterIn<DefeatDialogState>();
         }
     }
 }

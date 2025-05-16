@@ -49,9 +49,9 @@ TagManager:
   - name: InteractibleObjects
     uniqueID: 4114646543
     locked: 0
-  - name: Effects
-    uniqueID: 3500844743
-    locked: 0
   - name: OverlayUI
     uniqueID: 1669483777
+    locked: 0
+  - name: Effects
+    uniqueID: 3500844743
     locked: 0

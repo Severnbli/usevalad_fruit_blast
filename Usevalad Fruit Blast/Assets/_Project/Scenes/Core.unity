@@ -450,14 +450,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555752565}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.20751503, y: 0.08314382, z: 0.005914767, w: 0.9746741}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 514949423}
   m_Father: {fileID: 742113311}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 23.799, y: 10.359, z: 2.884}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1017,17 +1017,21 @@ MonoBehaviour:
       _deleteFieldOffset: 0.5
     _splitSpriteEffectProviderConfig: {fileID: 11400000, guid: 7990ff91d898c8143a6ecedb72b4f21e, type: 2}
     _healthProviderConfig:
-      _maxHealth: 5
+      _maxHealth: 15
       _healthBars:
       - {fileID: 1711489716}
-    _experienceFeatureConfig:
+    _experienceProviderConfig:
       _startLevel: 1
       _startLevelMaxExperience: 200
       _experienceGrowthType: 0
-      _experienceGrowthRate: 50
+      _experienceGrowthRate: 1
       _progressBars:
       - {fileID: 1993705683}
+      _experienceTarget: {fileID: 1993705679}
+      _liftDistance: 0.1
     _healthClickObjectDestroyerInfluencerConfig: {fileID: 11400000, guid: d5c7351870858dc47a29c5230e59c37e, type: 2}
+    _experienceEffectProviderConfig: {fileID: 11400000, guid: 532a119d07beeac44b4f03204e0a39d9, type: 2}
+    _explosionEffectProviderConfig: {fileID: 11400000, guid: 4c0cb41cd22b165408cba2b6b8af8331, type: 2}
     _lifecycleStateMachineConfig:
       _textPopup: {fileID: 514949424}
       _startGamePhrases:
@@ -1925,10 +1929,6 @@ PrefabInstance:
     - target: {fileID: 2834436977778506237, guid: e76932b440fce20458663a38938c88d5, type: 3}
       propertyPath: m_Name
       value: ProgressBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 3500378339924381147, guid: e76932b440fce20458663a38938c88d5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 4.9995117
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

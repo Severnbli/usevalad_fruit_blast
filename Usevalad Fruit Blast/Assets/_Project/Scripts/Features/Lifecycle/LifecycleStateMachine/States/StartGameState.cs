@@ -1,12 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
 {
     public class StartGameState : LifecycleState
     {
-        // TODO: show start messages and go to core
-        
         public override void Enter()
         {
             base.Enter();
@@ -22,12 +19,16 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
         {
             var config = _lifecycleStateMachine.LifecycleStateMachineConfig;
 
+            if (_contextCancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+            
             await UniTask
                 .WhenAll(
                     _lifecycleContainer.FieldCatcherSpawner.FillCatcher(_contextCancellationToken),
-                    config.TextPopup.AnimateTexts(config.StartGamePhrases, config.PhrasesDuration)
+                    config.TextPopup?.AnimateTexts(config.StartGamePhrases, config.PhrasesDuration)  ?? UniTask.CompletedTask
                 );
-                
             
             _lifecycleStateMachine.EnterIn<CoreGameState>();
         }
