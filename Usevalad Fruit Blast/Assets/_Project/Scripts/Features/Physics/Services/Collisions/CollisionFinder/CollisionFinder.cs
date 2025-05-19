@@ -138,6 +138,26 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionFinder
             }
         }
 
+        public static bool IsPointPointCollide(PointFigure p1, PointFigure p2)
+        {
+            return p1.Point == p2.Point;
+        }
+
+        public static bool IsPointCircleCollide(PointFigure p, CircleFigure c)
+        {
+            var distance = Vector2.Distance(p.Point, c.Point);
+            
+            return distance < c.Radius;
+        }
+
+        public static bool IsPointRectangleCollide(PointFigure p, RectangleFigure r)
+        {
+            return !(p.Point.x < r.PointAA.x
+                     || r.PointBB.x < p.Point.x
+                     || p.Point.y < r.PointAA.y
+                     || r.PointBB.y < p.Point.y);
+        }
+
         public static bool IsCircleCircleCollide(CircleFigure c1, CircleFigure c2)
         {
             double dx = c1.Point.x - c2.Point.x;

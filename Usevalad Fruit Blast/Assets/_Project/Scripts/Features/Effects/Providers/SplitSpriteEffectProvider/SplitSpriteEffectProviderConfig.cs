@@ -1,5 +1,4 @@
-﻿using _Project.Scripts.Features.FeatureCore;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
 {
