@@ -20,7 +20,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
         public RandomProvider RandomProvider => _randomProvider;
         public ObjectsContainer ObjectsContainer => _objectsContainer;
         
-        public abstract void Spawn();
+        public abstract GameObject Spawn();
         
         public override void Init()
         {
@@ -42,7 +42,7 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
             {
                 return false;
             }
-
+            
             configuredObject.name = $"{configuredObject.name} - {Guid.NewGuid().ToString()}";
             
             var randScale = (float) _randomProvider.Random.NextDouble() 

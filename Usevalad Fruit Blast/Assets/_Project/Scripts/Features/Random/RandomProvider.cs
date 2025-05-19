@@ -19,5 +19,10 @@ namespace _Project.Scripts.Features.Random
         {
             Random = new global::System.Random(seed);
         }
+
+        public float GetRandomInRange(float min, float max)
+        {
+            return (float) Random.NextDouble() * (max - min) + min;
+        }
     }
 }
