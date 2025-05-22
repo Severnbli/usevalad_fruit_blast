@@ -101,6 +101,9 @@ GameObject:
   - component: {fileID: -8786941547912948246}
   - component: {fileID: -4735790218021950441}
   - component: {fileID: -4951667490306315304}
+  - component: {fileID: -4462472415667678592}
+  - component: {fileID: -7194920480711796841}
+  - component: {fileID: 5897969567867338570}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -272,8 +275,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f73be188954e918cc515093294c0aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _effectType: 000000000100000002000000
   _isActive: 0
+--- !u!114 &-4462472415667678592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413519283949544479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cd801fff256415cacd03c67850ec139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 4966109046579939203}
+--- !u!114 &-7194920480711796841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413519283949544479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4519d812df53418e81ff3386ab426bab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionParticleSystem: {fileID: 2627255239640246862, guid: ddb5dcb42a9b99e43b0d52b105553994, type: 3}
+--- !u!114 &5897969567867338570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413519283949544479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b7ffc1c7694a74b74eac4c281ce1e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5659858685402035900
 GameObject:
   m_ObjectHideFlags: 0

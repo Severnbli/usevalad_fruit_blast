@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _effectSortingLayerName: Effects
   _effectSortingLayerOrder: 2
-  _experiencePrefab: {fileID: 3079473413724514092, guid: bf522e077f6d777448e06a1266d64730, type: 3}
+  _experienceEffectPrefab: {fileID: -6267132442098826036, guid: bf522e077f6d777448e06a1266d64730, type: 3}
   _experienceEffectObjects:
   - _icon: {fileID: 21300000, guid: 206167d9fabfe29488470f5742a0bea1, type: 3}
-    _minExperienceAmount: 20
-    _maxExperienceAmount: 30
-    _probability: 0.6
+    _minExperienceAmount: 10
+    _maxExperienceAmount: 25
+    _probability: 0.8
     _isActive: 1
   - _icon: {fileID: 21300000, guid: 265f43e15e9fbf548b09412a0addb672, type: 3}
-    _minExperienceAmount: 50
-    _maxExperienceAmount: 60
-    _probability: 0.3
+    _minExperienceAmount: 40
+    _maxExperienceAmount: 75
+    _probability: 0.15
     _isActive: 1
   - _icon: {fileID: 21300000, guid: d1aadac198693a24780db187757af167, type: 3}
-    _minExperienceAmount: 100
-    _maxExperienceAmount: 110
-    _probability: 0.1
+    _minExperienceAmount: 120
+    _maxExperienceAmount: 130
+    _probability: 0.05
     _isActive: 1

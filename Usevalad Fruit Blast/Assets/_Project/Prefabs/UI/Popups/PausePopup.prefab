@@ -733,7 +733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8982880766602996016
 RectTransform:
   m_ObjectHideFlags: 0
@@ -763,7 +763,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6867920155645585700}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -783,7 +783,7 @@ MonoBehaviour:
   _resumeButton: {fileID: 3473199383665753653}
   _restartButton: {fileID: 7739181228179934378}
   _canvasGroup: {fileID: 6982279125780743662}
-  _animationDuration: 1
+  _animationDuration: 0.5
   _popupTransform: {fileID: 4915503334241504296}
 --- !u!1 &8207882994683441743
 GameObject:

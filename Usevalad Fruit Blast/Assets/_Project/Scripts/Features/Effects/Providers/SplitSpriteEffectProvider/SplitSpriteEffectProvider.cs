@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using _Project.Scripts.Features.Effects.Objects;
+using _Project.Scripts.Features.Effects.Objects.Emitters;
 using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using _Project.Scripts.Features.Physics.Colliders;
 using _Project.Scripts.Features.Physics.Dynamic;
-using _Project.Scripts.Features.Random;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
 {
-    public class SplitSpriteEffectProvider : EffectProvider, IConfigurableFeature<SplitSpriteEffectProviderConfig>
+    public class SplitSpriteEffectProvider : EffectProvider, IConfigurableFeature<SplitSpriteEffectProviderConfig>, 
+        IEmitProvider<SplitSpriteEffectEmitterObject>
     {
         private readonly Dictionary<Sprite, List<(Sprite, Sprite)>> _splitSprites = new();
         
@@ -19,20 +19,18 @@ namespace _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider
             SplitSpriteEffectProviderConfig = splitSpriteEffectProviderConfig;
         }
         
-        public override void Emit(EffectEmitterObject emitterObject)
+        public void Emit(SplitSpriteEffectEmitterObject splitSpriteEffectEmitterObject)
         {
-            if (!emitterObject.gameObject.TryGetComponent(out SpriteRenderer spriteRenderer))
-            {
-                return;
-            }
-
+            var spriteRenderer = splitSpriteEffectEmitterObject.SpriteRenderer;
+            
             if (!_splitSprites.TryGetValue(spriteRenderer.sprite, out var splitSpritesList))
             {
                 splitSpritesList = GetSplitSpritesList(spriteRenderer.sprite);
                 _splitSprites.TryAdd(spriteRenderer.sprite, splitSpritesList);
             }
             
-            SpawnEffectObjects(emitterObject, splitSpritesList[_randomProvider.Random.Next(splitSpritesList.Count)]);
+            SpawnEffectObjects(splitSpriteEffectEmitterObject, 
+                splitSpritesList[_randomProvider.Random.Next(splitSpritesList.Count)]);
         }
 
         public List<(Sprite, Sprite)> GetSplitSpritesList(Sprite sprite)

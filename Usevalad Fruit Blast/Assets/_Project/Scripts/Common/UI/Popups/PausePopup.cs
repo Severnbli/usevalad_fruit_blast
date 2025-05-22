@@ -42,7 +42,7 @@ namespace _Project.Scripts.Common.UI.Popups
         public async UniTask Show()
         {
             _canvasGroup.alpha = 0f;
-            _canvasGroup.interactable = false;
+            _canvasGroup.interactable = true;
             _canvasGroup.blocksRaycasts = true;
 
             _popupTransform.localScale = Vector3.zero;
@@ -57,13 +57,11 @@ namespace _Project.Scripts.Common.UI.Popups
                 .SetEase(Ease.OutBack);
 
             await UniTask.WhenAll(fade.ToUniTask(cancellationToken: _ct), scale.ToUniTask(cancellationToken: _ct));
-            
-            _canvasGroup.interactable = true;
         }
         
         public async UniTask Hide()
         {
-            _canvasGroup.interactable = true;
+            _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = true;
 
             var fade = _canvasGroup
@@ -77,7 +75,6 @@ namespace _Project.Scripts.Common.UI.Popups
             await UniTask.WhenAll(fade.ToUniTask(cancellationToken: _ct), scale.ToUniTask(cancellationToken: _ct));
 
             _canvasGroup.gameObject.SetActive(false);
-            _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
         }
     }

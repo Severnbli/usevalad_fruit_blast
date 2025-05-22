@@ -28,7 +28,7 @@ namespace _Project.Scripts.Features.Stats.Experience
             if (Context.TryGetComponentFromContainer(out _uiProvider))
             {
                 ProgressBar = _uiProvider.UIProviderConfig.ProgressBar;
-                ProgressTarget = _uiProvider.UIProviderConfig.ProgressBar.ProgressTarget;
+                ProgressTarget = _uiProvider.UIProviderConfig.ProgressBar.ProgressTarget; 
             }
         }
 

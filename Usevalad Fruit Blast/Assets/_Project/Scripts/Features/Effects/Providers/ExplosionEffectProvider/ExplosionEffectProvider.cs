@@ -1,11 +1,11 @@
-﻿using _Project.Scripts.Features.Effects.Objects;
+﻿using _Project.Scripts.Features.Effects.Objects.Emitters;
 using _Project.Scripts.Features.FeatureCore.FeatureContracts;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Effects.Providers.ExplosionEffectProvider
 {
-    public class ExplosionEffectProvider : EffectProvider, IConfigurableFeature<ExplosionEffectProviderConfig>
+    public class ExplosionEffectProvider : EffectProvider, IConfigurableFeature<ExplosionEffectProviderConfig>,
+        IEmitProvider<ExplosionEffectEmitterObject>
     {
         public ExplosionEffectProviderConfig ExplosionEffectProviderConfig { get; private set; }
         
@@ -14,13 +14,17 @@ namespace _Project.Scripts.Features.Effects.Providers.ExplosionEffectProvider
             ExplosionEffectProviderConfig = explosionEffectProviderConfig;
         }
         
-        public override void Emit(EffectEmitterObject emitterObject)
+        public void Emit(ExplosionEffectEmitterObject explosionEffectEmitterObject)
         {
-            SpawnExplosion(emitterObject);
-        }
-
-        private void SpawnExplosion(EffectEmitterObject emitterObject)
-        {
+            var explosionSystem = Object.Instantiate(explosionEffectEmitterObject.ExplosionParticleSystem,
+                explosionEffectEmitterObject.transform.position,
+                Quaternion.identity);
+            
+            _effectObjectsContainer.AddToContainer(explosionSystem.gameObject);
+            
+            explosionSystem.Play();
+            Object.Destroy(explosionSystem.gameObject, 
+                explosionSystem.main.duration);
         }
     }
 }
