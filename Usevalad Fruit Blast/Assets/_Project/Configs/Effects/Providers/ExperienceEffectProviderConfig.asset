@@ -21,13 +21,13 @@ MonoBehaviour:
     _maxExperienceAmount: 25
     _probability: 0.8
     _isActive: 1
-  - _icon: {fileID: 21300000, guid: 265f43e15e9fbf548b09412a0addb672, type: 3}
-    _minExperienceAmount: 40
-    _maxExperienceAmount: 75
-    _probability: 0.15
-    _isActive: 1
   - _icon: {fileID: 21300000, guid: d1aadac198693a24780db187757af167, type: 3}
+    _minExperienceAmount: 30
+    _maxExperienceAmount: 45
+    _probability: 0.19
+    _isActive: 1
+  - _icon: {fileID: 21300000, guid: 265f43e15e9fbf548b09412a0addb672, type: 3}
     _minExperienceAmount: 120
     _maxExperienceAmount: 130
-    _probability: 0.05
+    _probability: 0.01
     _isActive: 1
