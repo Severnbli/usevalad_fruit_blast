@@ -21,24 +21,6 @@ namespace _Project.Scripts.Features.Effects.Providers.ExplosionEffectProvider
 
         private void SpawnExplosion(EffectEmitterObject emitterObject)
         {
-            var config = ExplosionEffectProviderConfig;
-            var position = emitterObject.transform.position;
-            var count = _randomProvider.Random.Next(config.MinExplosionsCount, config.MaxExplosionsCount + 1);
-
-            for (var i = 0; i < count; i++)
-            {
-                var sprite = config.ExplosionSprites[_randomProvider.Random.Next(0, config.ExplosionSprites.Length)];
-
-                var obj = UnityEngine.Object.Instantiate(config.ExplosionPrefab, position, Quaternion.identity);
-                var effect = obj.GetComponent<ExplosionEffectObject>();
-
-                if (effect != null)
-                {
-                    effect.Initialize(sprite, config.ExplosionDuration);
-                }
-                
-                _effectObjectsContainer.AddToContainer(obj);
-            }
         }
     }
 }

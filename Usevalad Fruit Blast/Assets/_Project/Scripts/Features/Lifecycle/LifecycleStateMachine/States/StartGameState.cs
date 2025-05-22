@@ -13,6 +13,8 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
             _lifecycleContainer.GyroscopeGravityChanger.SetIsEnable(false);
             
             StartGame().Forget();
+
+            _lifecycleContainer.ChangeUserInputAvailability(false);
         }
 
         private async UniTaskVoid StartGame()
@@ -27,7 +29,8 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
             await UniTask
                 .WhenAll(
                     _lifecycleContainer.FieldCatcherSpawner.FillCatcher(_contextCancellationToken),
-                    config.TextPopup?.AnimateTexts(config.StartGamePhrases, config.PhrasesDuration)  ?? UniTask.CompletedTask
+                    _lifecycleContainer.UIProvider.UIProviderConfig.TextPopup?
+                        .AnimateTexts(config.StartGamePhrases, config.PhrasesDuration) ?? UniTask.CompletedTask
                 );
             
             _lifecycleStateMachine.EnterIn<CoreGameState>();

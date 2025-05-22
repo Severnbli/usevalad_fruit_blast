@@ -1,18 +1,13 @@
-﻿using System;
-using _Project.Scripts.Common.UI.Bars.HealthBar;
-using _Project.Scripts.Features.FeatureCore;
-using TMPro;
+﻿using _Project.Scripts.Features.FeatureCore;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Stats.Health
 {
-    [Serializable]
-    public class HealthProviderConfig : IFeatureConfig
+    [CreateAssetMenu(fileName = "HealthProviderConfig", menuName = "Configs/Stats/Health Provider Config")]
+    public class HealthProviderConfig : ScriptableObject, IFeatureConfig
     {
-        [SerializeField] private int _maxHealth = 5;
-        [SerializeField] private HealthBar[] _healthBars;
+        [SerializeField] private int _maxHealth = 15;
         
         public int MaxHealth => _maxHealth;
-        public HealthBar[] HealthBars => _healthBars;
     }
 }

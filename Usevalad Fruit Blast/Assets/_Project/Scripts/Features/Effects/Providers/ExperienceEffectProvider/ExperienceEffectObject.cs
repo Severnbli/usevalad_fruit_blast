@@ -38,7 +38,7 @@ namespace _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider
             context.TryGetComponentFromContainer(out _experienceProvider);
             context.TryGetComponentFromContainer(out _randomProvider);
 
-            _target = _experienceProvider.GetExperienceTarget();
+            _target = _experienceProvider.ProgressTarget;
             if (_target == null) return;
 
             _start = transform.position;

@@ -20,6 +20,8 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
             _lifecycleContainer.FieldCatcherSpawner.ContinuousFillCatcher(_linkedCoreGameCts.Token).Forget();
             
             SwitchStateOnCondition().Forget();
+
+            _lifecycleContainer.ChangeUserInputAvailability(true);
         }
 
         public override void Exit()

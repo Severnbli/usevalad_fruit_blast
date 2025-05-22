@@ -12,7 +12,8 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
             
             _lifecycleContainer.SetPointerProvidersEnableStatus(false);
             _lifecycleContainer.GyroscopeGravityChanger.SetIsEnable(false);
-            
+            _lifecycleContainer.ChangeUserInputAvailability(false);
+
             WaitTillTheEnd().Forget();
         }
 

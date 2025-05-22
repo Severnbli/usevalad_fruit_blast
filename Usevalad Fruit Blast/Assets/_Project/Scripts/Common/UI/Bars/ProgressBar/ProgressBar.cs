@@ -9,6 +9,9 @@ namespace _Project.Scripts.Common.UI.Bars.ProgressBar
         [SerializeField] private TextMeshProUGUI _progressText;
         [SerializeField] private TextMeshProUGUI _progressPercentageText;
         [SerializeField] private TextMeshProUGUI _levelText;
+        [SerializeField] private Transform _progressTarget;
+        
+        public Transform ProgressTarget => _progressTarget;
         
         public void SetLevel(int level)
         {

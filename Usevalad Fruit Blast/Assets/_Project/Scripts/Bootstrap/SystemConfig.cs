@@ -7,6 +7,7 @@ using _Project.Scripts.Features.Effects.Providers.SplitSpriteEffectProvider;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer;
+using _Project.Scripts.Features.Lifecycle.GameTime.GameTimeProvider;
 using _Project.Scripts.Features.Lifecycle.LifecycleStateMachine;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
@@ -18,15 +19,17 @@ using _Project.Scripts.Features.Random;
 using _Project.Scripts.Features.Stats.Experience;
 using _Project.Scripts.Features.Stats.Health;
 using _Project.Scripts.Features.Stats.Health.HealthInfluencers;
+using _Project.Scripts.Features.UI.UIProvider;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Bootstrap
 {
     [Serializable]
     public class SystemConfig
     {
+        [SerializeField] private GameTimeProviderConfig _gameTimeProviderConfig;
+        [SerializeField] private UIProviderConfig _uiProviderConfig;
         [SerializeField] private PhysicsEngineConfig _physicsEngineConfig;
         [SerializeField] private ForceProviderConfig _gravityForceProviderConfig;
         [SerializeField] private ForceProviderConfig _explosionForceProviderConfig;
@@ -48,6 +51,8 @@ namespace _Project.Scripts.Bootstrap
         [SerializeField] private ExplosionEffectProviderConfig _explosionEffectProviderConfig;
         [SerializeField] private LifecycleStateMachineConfig _lifecycleStateMachineConfig;
         
+        public GameTimeProviderConfig GameTimeProviderConfig => _gameTimeProviderConfig;
+        public UIProviderConfig UIProviderConfig => _uiProviderConfig;
         public PhysicsEngineConfig PhysicsEngineConfig => _physicsEngineConfig;
         public ForceProviderConfig GravityForceProviderConfig => _gravityForceProviderConfig;
         public ForceProviderConfig ExplosionForceProviderConfig => _explosionForceProviderConfig;
