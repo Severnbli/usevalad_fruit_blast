@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 1320178616750743231}
   - component: {fileID: 6516060383464818755}
   - component: {fileID: -6267132442098826036}
+  - component: {fileID: 3743437833666667101}
+  - component: {fileID: -2805061982031709114}
   m_Layer: 0
-  m_Name: Emerald
+  m_Name: Experience
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.31, y: 0.37, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -97,8 +99,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc645056fcf4c5e9a92a2abb4e1952c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDuration: 2
-  accelerationCurve:
+  _spriteRenderer: {fileID: 6516060383464818755}
+--- !u!114 &3743437833666667101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079473413724514092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bcccdbfe5e479494c5e99a902f596a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controlPointsRandomRangeX: {x: -5, y: 5}
+  _controlPointsRandomRangeY: {x: -2, y: 2}
+  _effectDuration: 1.5
+  _effectCalmPercentage: 0.4
+  _animationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -113,8 +131,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -122,3 +140,15 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-2805061982031709114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079473413724514092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae55505df7e4d029c080f2b2cc0af44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

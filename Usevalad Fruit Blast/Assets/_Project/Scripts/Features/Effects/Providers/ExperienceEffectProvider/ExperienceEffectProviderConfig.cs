@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using _Project.Scripts.Features.FeatureCore;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider
@@ -8,10 +7,10 @@ namespace _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider
 
     public class ExperienceEffectProviderConfig : EffectProviderConfig
     {
-        [SerializeField] private GameObject _experiencePrefab;
+        [SerializeField] private ExperienceEffectObject _experienceEffectPrefab;
         [SerializeField] private List<ExperienceEffectGroup> _experienceEffectObjects;
         
-        public GameObject ExperiencePrefab => _experiencePrefab;
+        public ExperienceEffectObject ExperienceEffectPrefab => _experienceEffectPrefab;
         public List<ExperienceEffectGroup> ExperienceEffectObjects => _experienceEffectObjects;
     }
 }

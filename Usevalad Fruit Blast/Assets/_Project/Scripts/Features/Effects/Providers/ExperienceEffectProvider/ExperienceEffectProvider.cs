@@ -1,27 +1,38 @@
 ﻿using System.Linq;
-using _Project.Scripts.Features.Effects.Objects;
+using _Project.Scripts.Common.Objects;
+using _Project.Scripts.Features.Effects.Objects.Emitters;
 using _Project.Scripts.Features.FeatureCore.FeatureContracts;
+using _Project.Scripts.Features.Stats.Experience;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider
 {
-    public class ExperienceEffectProvider : EffectProvider, IConfigurableFeature<ExperienceEffectProviderConfig>
+    public class ExperienceEffectProvider : EffectProvider, IConfigurableFeature<ExperienceEffectProviderConfig>, 
+        IEmitProvider<ExperienceEffectEmitterObject>
     {
+        public ExperienceProvider _experienceProvider;
         public ExperienceEffectProviderConfig ExperienceEffectProviderConfig { get; private set; }
-        
+
+        public override void Init()
+        {
+            base.Init();
+
+            Context.TryGetComponentFromContainer(out _experienceProvider);
+        }
+
         public void Configure(ExperienceEffectProviderConfig experienceEffectProviderConfig)
         {
             ExperienceEffectProviderConfig = experienceEffectProviderConfig;
         }
         
-        public override void Emit(EffectEmitterObject emitterObject)
+        public void Emit(ExperienceEffectEmitterObject experienceEffectEmitterObject)
         {
             if (!TryGetRandomExperienceEffectGroup(out var randomExperienceEffectGroup))
             {
                 return;
             }
             
-            SpawnExperienceEffectObject(randomExperienceEffectGroup, emitterObject);
+            SpawnExperienceEffectObject(randomExperienceEffectGroup, experienceEffectEmitterObject);
         }
 
         private bool TryGetRandomExperienceEffectGroup(out ExperienceEffectGroup experienceEffectGroup)
@@ -60,21 +71,27 @@ namespace _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider
 
         private void SpawnExperienceEffectObject(ExperienceEffectGroup experienceEffectGroup, EffectEmitterObject emitterObject)
         {
-            var experienceEffectObject = Object.Instantiate(ExperienceEffectProviderConfig.ExperiencePrefab);
+            var config = ExperienceEffectProviderConfig;
+            
+            var experienceEffectObject = Object.Instantiate(config.ExperienceEffectPrefab);
             
             experienceEffectObject.transform.position = emitterObject.transform.position;
-            _effectObjectsContainer.AddToContainer(experienceEffectObject);
+            _effectObjectsContainer.AddToContainer(experienceEffectObject.gameObject);
 
-            if (experienceEffectObject.TryGetComponent(out SpriteRenderer spriteRenderer))
-            {
-                spriteRenderer.sprite = experienceEffectGroup.Icon;
-                spriteRenderer.sortingLayerName = ExperienceEffectProviderConfig.EffectSortingLayerName;
-                spriteRenderer.sortingOrder = ExperienceEffectProviderConfig.EffectSortingLayerOrder;
-            }
+            var spriteRenderer = experienceEffectObject.SpriteRenderer;
+            
+            spriteRenderer.sprite = experienceEffectGroup.Icon;
+            spriteRenderer.sortingLayerName = config.EffectSortingLayerName;
+            spriteRenderer.sortingOrder = config.EffectSortingLayerOrder;
+            
+            var randExperience = _randomProvider.Random.Next(experienceEffectGroup.MinExperienceAmount, 
+                experienceEffectGroup.MaxExperienceAmount);
+            
+            experienceEffectObject.Setup(randExperience, _experienceProvider.ProgressTarget, _experienceProvider);
 
-            if (experienceEffectObject.TryGetComponent(out ExperienceEffectObject experienceEffect))
+            if (experienceEffectObject.gameObject.TryGetComponent(out BezierMover bezierMover))
             {
-                experienceEffect.Experience = _randomProvider.Random.Next(experienceEffectGroup.MaxExperienceAmount, experienceEffectGroup.MaxExperienceAmount);
+                bezierMover.Setup(_experienceProvider.ProgressTarget, _randomProvider.Random);
             }
         }
     }
