@@ -14,6 +14,7 @@ using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
 using _Project.Scripts.Features.Field.FieldCatcher.ColliderFieldCatcher;
 using _Project.Scripts.Features.Field.FieldProvider.CameraFieldProvider;
 using _Project.Scripts.Features.Lifecycle.Destroyers.ClickObjectDestroyer;
+using _Project.Scripts.Features.Lifecycle.GameTime.GameTimeProvider;
 using _Project.Scripts.Features.Lifecycle.LifecycleStateMachine;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
@@ -26,6 +27,8 @@ using _Project.Scripts.Features.Random;
 using _Project.Scripts.Features.Stats.Experience;
 using _Project.Scripts.Features.Stats.Health;
 using _Project.Scripts.Features.Stats.Health.HealthInfluencers.HealthClickObjectDestroyerInfluencer;
+using _Project.Scripts.Features.UI.Screens.PauseScreen;
+using _Project.Scripts.Features.UI.UIProvider;
 using Unity.Profiling;
 using UnityEngine;
 
@@ -81,6 +84,10 @@ namespace _Project.Scripts.Bootstrap
 
         private void SetupFeatures()
         {
+            Context.AddFeatureWithConfig(new GameTimeProvider(), _systemConfig.GameTimeProviderConfig);
+            
+            Context.AddFeatureWithConfig(new UIProvider(), _systemConfig.UIProviderConfig);
+            
             Context.AddFeatureWithConfig(new PhysicsEngine(), _systemConfig.PhysicsEngineConfig);
             Context.AddFeatureWithConfig(new GravityForceProvider(), _systemConfig.GravityForceProviderConfig);
             Context.AddFeatureWithConfig(new ExplosionForceProvider(), _systemConfig.ExplosionForceProviderConfig);
@@ -114,6 +121,7 @@ namespace _Project.Scripts.Bootstrap
             Context.AddFeatureWithConfig(new ExplosionEffectProvider(), _systemConfig.ExplosionEffectProviderConfig);
             
             Context.AddFeatureWithConfig(new LifecycleStateMachine(), _systemConfig.LifecycleStateMachineConfig);
+            Context.AddFeature(new PauseScreen());
         }
 
         private void SetupUpdatableFeatures()

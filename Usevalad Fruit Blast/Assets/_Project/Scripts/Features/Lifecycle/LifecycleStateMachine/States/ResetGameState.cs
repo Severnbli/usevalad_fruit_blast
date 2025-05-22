@@ -9,6 +9,8 @@
             _lifecycleContainer.SystemCoordinator.Reset();
             
             _lifecycleStateMachine.EnterIn<StartGameState>();
+
+            _lifecycleContainer.ChangeUserInputAvailability(false);
         }
     }
 }

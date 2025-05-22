@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Features.Physics.Colliders;
-using Unity.Profiling;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolver
@@ -16,9 +15,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
         public void IterativeResolveCollisions(List<BaseCollider> colliders)
         {
-            ResolveCollisionsWithImpulse(colliders);
-            
-            for (var i = 0; i < _collisionResolverConfig.CollisionResolvingIterations - 1; i++)
+            for (var i = 0; i < _collisionResolverConfig.CollisionResolvingIterations; i++)
             {
                 ResolveCollisions(colliders);
             }
@@ -40,40 +37,14 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
             }
         }
         
-        public void ResolveCollisionsWithImpulse(List<BaseCollider> colliders)
-        {
-            for (var i = 0; i < colliders.Count - 1; i++)
-            {
-                for (var j = i + 1; j < colliders.Count; j++)
-                {
-                    if (!IsCollidersSuitable(colliders[i], colliders[j]))
-                    {
-                        continue;
-                    }
-
-                    ResolveCollisionWithImpulse(colliders[i], colliders[j]);
-                }
-            }
-        }
-        
         public void ResolveCollision(BaseCollider bc1, BaseCollider bc2)
         {
             if (!CollisionFinder.CollisionFinder.TryFindCollision(bc1, bc2, out var normal, out var depth))
             {
                 return;
             }
-                
-            PositionalCorrection(bc1, bc2, normal, depth);
-        }
-
-        public void ResolveCollisionWithImpulse(BaseCollider bc1, BaseCollider bc2)
-        {
-            if (!CollisionFinder.CollisionFinder.TryFindCollision(bc1, bc2, out var normal, out var depth))
-            {
-                return;
-            }
-
-            if (TryApplyImpulse(bc1, bc2, normal))
+            
+            if (TryStoreImpulse(bc1, bc2, normal))
             {
                 PositionalCorrection(bc1, bc2, normal, depth);
             }
@@ -102,7 +73,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
             return true;
         }
 
-        private bool TryApplyImpulse(BaseCollider bc1, BaseCollider bc2, Vector2 normal)
+        private bool TryStoreImpulse(BaseCollider bc1, BaseCollider bc2, Vector2 normal)
         {
             var obj1 = bc1.DynamicBody;
             var obj2 = bc2.DynamicBody;
@@ -130,7 +101,7 @@ namespace _Project.Scripts.Features.Physics.Services.Collisions.CollisionResolve
 
             if (!obj2.IsStatic)
             {
-                obj2.Velocity -= impulse / obj2.Mass;
+                obj2.Velocity += -impulse / obj2.Mass;
             }
             
             return true;

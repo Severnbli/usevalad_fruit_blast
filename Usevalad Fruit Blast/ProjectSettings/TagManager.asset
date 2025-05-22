@@ -49,7 +49,7 @@ TagManager:
   - name: InteractibleObjects
     uniqueID: 4114646543
     locked: 0
-  - name: OverlayUI
+  - name: MiddleUI
     uniqueID: 1669483777
     locked: 0
   - name: Effects

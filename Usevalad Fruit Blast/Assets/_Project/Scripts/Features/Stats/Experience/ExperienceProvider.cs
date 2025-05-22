@@ -1,20 +1,36 @@
 ﻿using System;
+using _Project.Scripts.Common.UI.Bars.ProgressBar;
 using _Project.Scripts.Features.FeatureCore;
 using _Project.Scripts.Features.FeatureCore.FeatureContracts;
 using _Project.Scripts.Features.FeatureCore.FeatureContracts.GameLoop;
+using _Project.Scripts.Features.UI.UIProvider;
 using UnityEngine;
 
 namespace _Project.Scripts.Features.Stats.Experience
 {
     public class ExperienceProvider : BaseFeature, IConfigurableFeature<ExperienceProviderConfig>, IResettableFeature
     {
+        private UIProvider _uiProvider;
         private int _currentLevel;
         private int _currentExperience;
-
+        
         public event Action<int> OnLevelUp;
         public event Action<int> OnLevelDown;
 
         public ExperienceProviderConfig ExperienceProviderConfig { get; private set; }
+        public ProgressBar ProgressBar { get; private set; }
+        public Transform ProgressTarget { get; private set; }
+
+        public override void Init()
+        {
+            base.Init();
+
+            if (Context.TryGetComponentFromContainer(out _uiProvider))
+            {
+                ProgressBar = _uiProvider.UIProviderConfig.ProgressBar;
+                ProgressTarget = _uiProvider.UIProviderConfig.ProgressBar.ProgressTarget;
+            }
+        }
 
         public int CurrentLevel
         {
@@ -23,10 +39,7 @@ namespace _Project.Scripts.Features.Stats.Experience
             {
                 _currentLevel = value;
 
-                foreach (var progressBar in ExperienceProviderConfig.ProgressBars)
-                {
-                    progressBar.SetLevel(value);
-                }
+                ProgressBar.SetLevel(value);
             }
         }
 
@@ -37,10 +50,7 @@ namespace _Project.Scripts.Features.Stats.Experience
             {
                 _currentExperience = value;
 
-                foreach (var progressBar in ExperienceProviderConfig.ProgressBars)
-                {
-                    progressBar.SetProgress(value, CurrentLevelMaxExperience);
-                }
+                ProgressBar.SetProgress(value, CurrentLevelMaxExperience);
             }
         }
         
@@ -108,14 +118,9 @@ namespace _Project.Scripts.Features.Stats.Experience
             CurrentLevelMaxExperience = Mathf.RoundToInt(baseValue + multiplier * ExperienceProviderConfig.ExperienceGrowthRate);
         }
 
-        public Transform GetExperienceTarget()
-        {
-            return ExperienceProviderConfig.ExperienceTarget;
-        }
-
         public bool IsEffectNear(GameObject experienceEffect)
         {
-            return Vector2.Distance(experienceEffect.transform.position, GetExperienceTarget().transform.position) <
+            return Vector2.Distance(experienceEffect.transform.position, ProgressTarget.position) <
                    ExperienceProviderConfig.LiftDistance;
         }
     }
