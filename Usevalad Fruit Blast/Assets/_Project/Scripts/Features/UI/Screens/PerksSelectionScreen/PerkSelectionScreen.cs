@@ -58,12 +58,12 @@ namespace _Project.Scripts.Features.UI.Screens.PerksSelectionScreen
                 SelectRightPerk();
             });
 
-            LevelBar.OnLevelUp += CreateSelectionOnLevelUp;
+            // LevelBar.OnLevelUp += CreateSelectionOnLevelUp;
         }
 
         public void OnDestroy()
         {
-            LevelBar.OnLevelUp -= CreateSelectionOnLevelUp;
+            // LevelBar.OnLevelUp -= CreateSelectionOnLevelUp;
         }
 
         private void CreateSelectionOnLevelUp(int level)
