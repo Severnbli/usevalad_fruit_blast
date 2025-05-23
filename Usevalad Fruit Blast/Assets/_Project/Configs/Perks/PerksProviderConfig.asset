@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45a369a827043dcb0630a529c6c6bab, type: 3}
+  m_Name: PerksProviderConfig
+  m_EditorClassIdentifier: 
+  _perkPrefab: {fileID: 7535199062024547887, guid: fe89afbfd79c3ae4f9ca9b4a0e8b167d, type: 3}
+  _volumeBombPerks:
+  - _icon: {fileID: 21300000, guid: a30287e944ecbe9419bacca4de2bd0dc, type: 3}
+    _level: 1
+    _occurrenceChance: 0.2
+    _triggerChance: 0.6
+    _discoveryLevel: 1
+    _triggeringCooldown: 0
+    _radius: 2
+  _verticalBombPerks:
+  - _icon: {fileID: 21300000, guid: 1de13c5cc4ef5434db3ea082354f63e0, type: 3}
+    _level: 1
+    _occurrenceChance: 0.2
+    _triggerChance: 0.6
+    _discoveryLevel: 1
+    _triggeringCooldown: 0
+    _explosionStrength: 200
+    _lineOffset: 1
+  _horizontalBombPerks:
+  - _icon: {fileID: 21300000, guid: f4f1646ff56adce49817e211a3357519, type: 3}
+    _level: 1
+    _occurrenceChance: 0.2
+    _triggerChance: 0.6
+    _discoveryLevel: 1
+    _triggeringCooldown: 0
+    _explosionStrength: 200
+    _lineOffset: 1
+  _luckyGuyPerks: []
+  _fastFingerPerks: []
+  _toughNutPerks: []

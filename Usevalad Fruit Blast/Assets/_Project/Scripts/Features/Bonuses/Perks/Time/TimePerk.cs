@@ -4,7 +4,7 @@ using UnityEngine;
 namespace _Project.Scripts.Features.Bonuses.Perks.Time
 {
     [Serializable]
-    public abstract class TimePerk
+    public abstract class TimePerk : BasePerk
     {
         [SerializeField] protected float _duration;
         

@@ -47,6 +47,7 @@ namespace _Project.Scripts.Features.UI.Screens.PauseScreen
             PausePopup.RestartButton.onClick.AddListener(() =>
             {
                 _lifecycleStateMachine.EnterIn<EndGameState>();
+                _lifecycleStateMachine.LifecycleContainer.IsRestarting = true;
                 _gameTimeProvider.ResumeGame();
                 _lifecycleStateMachine.LifecycleContainer
                     .SetPointerProvidersEnableStatus(_lifecycleStateMachine.LifecycleContainer.UserInputAvailability);

@@ -33,6 +33,7 @@ namespace _Project.Scripts.Common.UI.Bars.ProgressBar
         
         public Transform ProgressTarget => _progressTarget;
         public bool IsProgressBarOnUpdate { get; private set; } = false;
+        public LevelBar.LevelBar LevelBar => _levelBar;
 
         private void Awake()
         {

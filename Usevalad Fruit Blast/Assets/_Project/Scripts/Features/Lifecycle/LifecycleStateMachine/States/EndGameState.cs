@@ -20,10 +20,6 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
 
         private async UniTaskVoid WaitTillTheEnd()
         {
-            await UniTask.WhenAll(
-                WaitForProgressBar()
-                );
-            
             while (!_contextCancellationToken.IsCancellationRequested)
             {
                 var isZeroContainerableObjects = _lifecycleContainer.ObjectsContainer.ContainerableObjects.Count == 0;
@@ -41,7 +37,18 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
                 await UniTask.Yield();
             }
             
-            _lifecycleStateMachine.EnterIn<DefeatDialogState>();
+            await UniTask.WhenAll(
+                WaitForProgressBar()
+            );
+
+            if (_lifecycleContainer.IsRestarting)
+            {
+                _lifecycleStateMachine.EnterIn<ResetGameState>();   
+            }
+            else
+            {
+                _lifecycleStateMachine.EnterIn<DefeatDialogState>();
+            }
         }
 
         private async UniTask WaitForProgressBar()

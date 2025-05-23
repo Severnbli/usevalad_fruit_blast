@@ -9,5 +9,9 @@ namespace _Project.Scripts.Features.Bonuses.Perks.Experience
         [SerializeField] protected float _experienceMultiplier;
         
         public float ExperienceMultiplier => _experienceMultiplier;
+        public override void UsePerk(PerkableObject perkableObject)
+        {
+            
+        }
     }
 }

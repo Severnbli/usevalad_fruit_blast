@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using _Project.Scripts.Common.Repositories;
+using _Project.Scripts.Features.Bonuses.Perks.PerksProvider;
 using _Project.Scripts.Features.Controls.Gyroscope;
 using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
@@ -28,7 +29,9 @@ using _Project.Scripts.Features.Random;
 using _Project.Scripts.Features.Stats.Experience;
 using _Project.Scripts.Features.Stats.Health;
 using _Project.Scripts.Features.Stats.Health.HealthInfluencers.HealthClickObjectDestroyerInfluencer;
+using _Project.Scripts.Features.UI.Screens.DefeatScreen;
 using _Project.Scripts.Features.UI.Screens.PauseScreen;
+using _Project.Scripts.Features.UI.Screens.PerksSelectionScreen;
 using _Project.Scripts.Features.UI.UIProvider;
 using Unity.Profiling;
 using UnityEngine;
@@ -120,12 +123,18 @@ namespace _Project.Scripts.Bootstrap
             Context.AddFeatureWithConfig(new ExperienceEffectProvider(), _systemConfig.ExperienceEffectProviderConfig);
 
             Context.AddFeatureWithConfig(new ExplosionEffectProvider(), _systemConfig.ExplosionEffectProviderConfig);
+
+            Context.AddFeature(new DefeatScreen());
             
             Context.AddFeatureWithConfig(new LifecycleStateMachine(), _systemConfig.LifecycleStateMachineConfig);
             
             Context.AddFeature(new PauseScreen());
             
             Context.AddFeatureWithConfig(new DifficultyScaler(), _systemConfig.DifficultyScalerConfig);
+            
+            Context.AddFeatureWithConfig(new PerksProvider(), _systemConfig.PerksProviderConfig);
+
+            Context.AddFeature(new PerkSelectionScreen());
         }
 
         private void SetupUpdatableFeatures()
