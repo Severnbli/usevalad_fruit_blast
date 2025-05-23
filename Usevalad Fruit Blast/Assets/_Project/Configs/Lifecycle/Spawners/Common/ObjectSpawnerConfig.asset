@@ -16,10 +16,10 @@ MonoBehaviour:
   _spawnGroups:
   - _id: 0
     _sprite: {fileID: 21300000, guid: 6aac0edf03ed18848aea804f3f448a4b, type: 3}
-    _isActive: 1
+    _isActive: 0
   - _id: 1
     _sprite: {fileID: 21300000, guid: 33a159c37276d4d4799e7f572b1facd1, type: 3}
-    _isActive: 1
+    _isActive: 0
   - _id: 2
     _sprite: {fileID: 21300000, guid: 4d16ccef4d3ee8a4bb233a51f6ac60d6, type: 3}
     _isActive: 0
@@ -31,13 +31,13 @@ MonoBehaviour:
     _isActive: 0
   - _id: 5
     _sprite: {fileID: 21300000, guid: fd2eb77934a335743bc59f17de7cb252, type: 3}
-    _isActive: 0
+    _isActive: 1
   - _id: 6
     _sprite: {fileID: 21300000, guid: 4656394cc68a87d408e565cfd8a06d81, type: 3}
     _isActive: 0
   - _id: 7
     _sprite: {fileID: 21300000, guid: 5097bebfd7ab8184f8db9e80e9f8d509, type: 3}
-    _isActive: 0
+    _isActive: 1
   - _id: 8
     _sprite: {fileID: 21300000, guid: 6a831fa24251d0046ab5d8ff74848e05, type: 3}
     _isActive: 0
@@ -46,9 +46,9 @@ MonoBehaviour:
     _isActive: 0
   - _id: 10
     _sprite: {fileID: 21300000, guid: 3f4bc2c3cb9b35e4a9f9837c9958789e, type: 3}
-    _isActive: 1
+    _isActive: 0
   - _id: 11
     _sprite: {fileID: 21300000, guid: 6ce42e22994b6084691c1cab82f7bcc3, type: 3}
-    _isActive: 0
+    _isActive: 1
   _minScale: 0.3
   _maxScale: 0.4

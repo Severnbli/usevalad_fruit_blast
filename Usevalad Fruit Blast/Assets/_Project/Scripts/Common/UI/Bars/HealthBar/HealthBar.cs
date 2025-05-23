@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Cysharp.Threading.Tasks;
+﻿using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -17,6 +16,8 @@ namespace _Project.Scripts.Common.UI.Bars.HealthBar
 
         private Tween _idleTween;
         
+        public event Action<int> OnHealthUpdate;
+        
         private void Awake()
         {
             StartIdlePulse();
@@ -29,6 +30,7 @@ namespace _Project.Scripts.Common.UI.Bars.HealthBar
 
         public void SetHealth(int amount)
         {
+            OnHealthUpdate?.Invoke(amount);
             _healthAmount.text = amount.ToString();
             AnimateChangePulse();
         }

@@ -13,6 +13,6 @@ namespace _Project.Scripts.Features.Lifecycle.Spawners
         
         public int Id => _id;
         public Sprite Sprite => _sprite;
-        public bool IsActive => _isActive;
+        public bool IsActive { get => _isActive; set => _isActive = value; }
     }
 }
