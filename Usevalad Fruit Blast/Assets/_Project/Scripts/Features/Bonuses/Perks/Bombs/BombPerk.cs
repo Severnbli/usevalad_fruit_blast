@@ -9,5 +9,10 @@ namespace _Project.Scripts.Features.Bonuses.Perks.Bombs
         [SerializeField] private float _explosionStrength = 200f;
 
         public float ExplosionStrength => _explosionStrength;
+        
+        public override void UsePerk(PerkableObject perkableObject)
+        {
+            
+        }
     }
 }

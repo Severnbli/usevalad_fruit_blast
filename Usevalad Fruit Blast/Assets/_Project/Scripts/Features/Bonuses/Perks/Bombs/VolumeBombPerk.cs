@@ -9,5 +9,9 @@ namespace _Project.Scripts.Features.Bonuses.Perks.Bombs
         [SerializeField] protected float _radius;
         
         public float Radius => _radius;
+        public override void UsePerk(PerkableObject perkableObject)
+        {
+            
+        }
     }
 }

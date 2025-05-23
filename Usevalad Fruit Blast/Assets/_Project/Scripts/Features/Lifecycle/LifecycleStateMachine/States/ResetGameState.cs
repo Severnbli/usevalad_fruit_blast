@@ -11,6 +11,8 @@
             _lifecycleStateMachine.EnterIn<StartGameState>();
 
             _lifecycleContainer.ChangeUserInputAvailability(false);
+            
+            _lifecycleContainer.IsRestarting = false;
         }
     }
 }

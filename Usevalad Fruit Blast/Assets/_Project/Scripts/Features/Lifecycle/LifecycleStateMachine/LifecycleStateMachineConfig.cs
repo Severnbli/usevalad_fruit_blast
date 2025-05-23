@@ -9,8 +9,7 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine
     {
         [Header("Start Game State")] 
         [SerializeField] private string[] _startGamePhrases;
-
-        [SerializeField] private float _phrasesDuration;
+        [SerializeField] private float _startGamePhrasesDuration;
         
         [Header("Core Game State")]
         [SerializeField] private int _minHpAmount = 0;
@@ -18,9 +17,16 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine
         [Header("End Game State")] 
         [SerializeField] private float _noProgressBarUpdatesDelay = 3f;
         
+        [Header("Defeat Dialog State")] 
+        [SerializeField] private string[] _defeatDialogPhrases;
+        [SerializeField] private float _defeatDialogPhrasesDuration;
+        
+        
         public string[] StartGamePhrases => _startGamePhrases;
-        public float PhrasesDuration => _phrasesDuration;
+        public float StartGamePhrasesDuration => _startGamePhrasesDuration;
         public int MinHpAmount => _minHpAmount;
         public float NoProgressBarUpdatesDelay => _noProgressBarUpdatesDelay;
+        public string[] DefeatDialogPhrases => _defeatDialogPhrases;
+        public float DefeatDialogPhrasesDuration => _defeatDialogPhrasesDuration;
     }
 }
