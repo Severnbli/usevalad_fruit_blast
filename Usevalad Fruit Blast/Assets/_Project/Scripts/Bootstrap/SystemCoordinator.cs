@@ -4,6 +4,7 @@ using _Project.Scripts.Common.Repositories;
 using _Project.Scripts.Features.Controls.Gyroscope;
 using _Project.Scripts.Features.Controls.Pointer.MouseProvider;
 using _Project.Scripts.Features.Controls.Pointer.Touch;
+using _Project.Scripts.Features.Difficulty.DifficultyScaler;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer;
 using _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider;
@@ -121,7 +122,10 @@ namespace _Project.Scripts.Bootstrap
             Context.AddFeatureWithConfig(new ExplosionEffectProvider(), _systemConfig.ExplosionEffectProviderConfig);
             
             Context.AddFeatureWithConfig(new LifecycleStateMachine(), _systemConfig.LifecycleStateMachineConfig);
+            
             Context.AddFeature(new PauseScreen());
+            
+            Context.AddFeatureWithConfig(new DifficultyScaler(), _systemConfig.DifficultyScalerConfig);
         }
 
         private void SetupUpdatableFeatures()

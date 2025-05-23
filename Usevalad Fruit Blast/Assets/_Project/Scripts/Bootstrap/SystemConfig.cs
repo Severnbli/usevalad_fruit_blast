@@ -1,4 +1,5 @@
 ﻿using System;
+using _Project.Scripts.Features.Difficulty.DifficultyScaler;
 using _Project.Scripts.Features.Dimensions.Scale.ScaleProvider;
 using _Project.Scripts.Features.Effects.Objects.EffectObjectsContainer;
 using _Project.Scripts.Features.Effects.Providers.ExperienceEffectProvider;
@@ -50,6 +51,7 @@ namespace _Project.Scripts.Bootstrap
         [SerializeField] private ExperienceEffectProviderConfig _experienceEffectProviderConfig;
         [SerializeField] private ExplosionEffectProviderConfig _explosionEffectProviderConfig;
         [SerializeField] private LifecycleStateMachineConfig _lifecycleStateMachineConfig;
+        [SerializeField] private DifficultyScalerConfig _difficultyScalerConfig;
         
         public GameTimeProviderConfig GameTimeProviderConfig => _gameTimeProviderConfig;
         public UIProviderConfig UIProviderConfig => _uiProviderConfig;
@@ -73,5 +75,6 @@ namespace _Project.Scripts.Bootstrap
         public ExperienceEffectProviderConfig ExperienceEffectProviderConfig => _experienceEffectProviderConfig;
         public ExplosionEffectProviderConfig ExplosionEffectProviderConfig => _explosionEffectProviderConfig;
         public LifecycleStateMachineConfig LifecycleStateMachineConfig => _lifecycleStateMachineConfig;
+        public DifficultyScalerConfig DifficultyScalerConfig => _difficultyScalerConfig;
     }
 }

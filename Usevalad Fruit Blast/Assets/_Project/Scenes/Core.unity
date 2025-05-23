@@ -1096,7 +1096,8 @@ MonoBehaviour:
       - Start!
       _phrasesDuration: 2
       _minHpAmount: 0
-      _noProgressBarUpdatesDelay: 2
+      _noProgressBarUpdatesDelay: 3
+    _difficultyScalerConfig: {fileID: 11400000, guid: 765f6bb36c88b2542a6aafc3b1b03d98, type: 2}
 --- !u!1 &1011431694
 GameObject:
   m_ObjectHideFlags: 0
