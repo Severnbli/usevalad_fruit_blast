@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
 {
@@ -19,6 +20,10 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
 
         private async UniTaskVoid WaitTillTheEnd()
         {
+            await UniTask.WhenAll(
+                WaitForProgressBar()
+                );
+            
             while (!_contextCancellationToken.IsCancellationRequested)
             {
                 var isZeroContainerableObjects = _lifecycleContainer.ObjectsContainer.ContainerableObjects.Count == 0;
@@ -37,6 +42,25 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine.States
             }
             
             _lifecycleStateMachine.EnterIn<DefeatDialogState>();
+        }
+
+        private async UniTask WaitForProgressBar()
+        {
+            var progressBar = _lifecycleContainer.ExperienceProvider.ProgressBar;
+            var noUpdatesDelay = _lifecycleStateMachine.LifecycleStateMachineConfig.NoProgressBarUpdatesDelay;
+
+            var timer = 0f;
+
+            while (timer < noUpdatesDelay)
+            {
+                await UniTask.Yield();
+                timer += Time.deltaTime;
+
+                if (progressBar.IsProgressBarOnUpdate)
+                {
+                    timer = 0f;
+                }
+            }
         }
     }
 }

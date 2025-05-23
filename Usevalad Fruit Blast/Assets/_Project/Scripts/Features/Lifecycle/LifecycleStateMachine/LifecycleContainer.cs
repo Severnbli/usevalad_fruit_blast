@@ -7,6 +7,7 @@ using _Project.Scripts.Features.Field.FieldCatcher;
 using _Project.Scripts.Features.Lifecycle.Objects.ObjectsContainer;
 using _Project.Scripts.Features.Lifecycle.Spawners.PhysicsObjectSpawner.FieldCatcherSpawner;
 using _Project.Scripts.Features.Physics.Services.Gyroscope.GyroscopeGravityChanger;
+using _Project.Scripts.Features.Stats.Experience;
 using _Project.Scripts.Features.Stats.Health;
 using _Project.Scripts.Features.UI.Screens.PauseScreen;
 using _Project.Scripts.Features.UI.UIProvider;
@@ -24,6 +25,7 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine
         private ObjectsContainer _objectsContainer;
         private EffectObjectsContainer _effectObjectsContainer;
         private UIProvider _uiProvider;
+        private ExperienceProvider _experienceProvider;
         
         public SystemCoordinator SystemCoordinator => _systemCoordinator;
         public FieldCatcher FieldCatcher => _fieldCatcher;
@@ -34,6 +36,7 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine
         public ObjectsContainer ObjectsContainer => _objectsContainer;
         public EffectObjectsContainer EffectObjectsContainer => _effectObjectsContainer;
         public UIProvider UIProvider => _uiProvider;
+        public ExperienceProvider ExperienceProvider => _experienceProvider;
 
         public event Action<bool> OnChangeUserInputAvailability;
         public bool UserInputAvailability { get; private set; }
@@ -55,6 +58,7 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine
             context.TryGetComponentFromContainer(out _objectsContainer);
             context.TryGetComponentFromContainer(out _effectObjectsContainer);
             context.TryGetComponentFromContainer(out _uiProvider);
+            context.TryGetComponentFromContainer(out _experienceProvider);
         }
 
         public void SetPointerProvidersEnableStatus(bool isEnable)

@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace _Project.Scripts.Features.Stats.Experience
+namespace _Project.Scripts.Common.UI.Bars.ProgressBar
 {
     [Serializable]
-    public enum ExperienceGrowthType
+    public enum ProgressGrowthType
     {
         Linear = 0,
         Exponential = 1,

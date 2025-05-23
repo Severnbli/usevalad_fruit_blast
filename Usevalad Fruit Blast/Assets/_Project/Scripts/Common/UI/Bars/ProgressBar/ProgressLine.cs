@@ -1,4 +1,6 @@
-﻿using DG.Tweening;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace _Project.Scripts.Common.UI.Bars.ProgressBar
@@ -9,33 +11,13 @@ namespace _Project.Scripts.Common.UI.Bars.ProgressBar
         [SerializeField] private RectTransform _leftCap;
         [SerializeField] private RectTransform _centerFill;
         [SerializeField] private RectTransform _rightCap;
-        [SerializeField] private float animationDuration = 0.3f;
-        [SerializeField] private Ease ease = Ease.InElastic;
 
-        private float _previousProgress;
-        private float _animatedProgress;
-        private Tween _progressTween;
-
-        public bool TryUpdateProgress(float progress)
+        private void Update()
         {
-            progress = Mathf.Clamp01(progress);
-
-            if (Mathf.Approximately(_previousProgress, progress))
-                return false;
-
-            _previousProgress = progress;
-
-            _progressTween?.Kill();
-
-            _progressTween = DOTween
-                .To(() => _animatedProgress, x => {
-                    _animatedProgress = x;
-                    UpdateBar();
-                }, progress, animationDuration)
-                .SetEase(ease);
-
-            return true;
+            UpdateBar();
         }
+
+        public float Progress { get; set; }
 
         private void UpdateBar()
         {
@@ -43,7 +25,7 @@ namespace _Project.Scripts.Common.UI.Bars.ProgressBar
             var leftWidth = _leftCap.rect.width;
             var rightWidth = _rightCap.rect.width;
 
-            var fillArea = totalWidth * _animatedProgress;
+            var fillArea = totalWidth * Progress;
 
             var isAreaEnough = fillArea >= leftWidth + rightWidth;
 
@@ -52,7 +34,10 @@ namespace _Project.Scripts.Common.UI.Bars.ProgressBar
             _rightCap.gameObject.SetActive(isAreaEnough);
 
             if (!isAreaEnough)
+            {
+                _rightCap.transform.position = _leftCap.transform.position;
                 return;
+            }
 
             _leftCap.anchoredPosition = Vector2.zero;
 

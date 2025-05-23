@@ -14,9 +14,13 @@ namespace _Project.Scripts.Features.Lifecycle.LifecycleStateMachine
         
         [Header("Core Game State")]
         [SerializeField] private int _minHpAmount = 0;
+
+        [Header("End Game State")] 
+        [SerializeField] private float _noProgressBarUpdatesDelay = 3f;
         
         public string[] StartGamePhrases => _startGamePhrases;
         public float PhrasesDuration => _phrasesDuration;
         public int MinHpAmount => _minHpAmount;
+        public float NoProgressBarUpdatesDelay => _noProgressBarUpdatesDelay;
     }
 }
