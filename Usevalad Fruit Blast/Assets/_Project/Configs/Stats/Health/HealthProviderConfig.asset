@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77cf657a4cdf45e1825afb7ea4bd3520, type: 3}
   m_Name: HealthProviderConfig
   m_EditorClassIdentifier: 
-  _maxHealth: 30
+  _maxHealth: 5
